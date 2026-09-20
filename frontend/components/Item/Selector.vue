@@ -1,0 +1,267 @@
+<template>
+  <div class="flex flex-col gap-1">
+    <Label :for="id" class="px-1">
+      {{ label }}
+    </Label>
+    <Popover v-model:open="open">
+      <PopoverTrigger as-child>
+        <Button :id="id" variant="outline" role="combobox" :aria-expanded="open" class="w-full justify-between">
+          <span class="truncate text-left">
+            <slot name="display" v-bind="{ item: value }">
+              {{ displayValue(value) || localizedPlaceholder }}
+            </slot>
+          </span>
+
+          <span class="ml-2 flex items-center">
+            <button
+              v-if="value"
+              type="button"
+              class="shrink-0 rounded p-1 hover:bg-primary/20"
+              :aria-label="t('components.item.selector.clear')"
+              @click.stop.prevent="clearSelection"
+            >
+              <X class="size-4" />
+            </button>
+
+            <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
+          </span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent class="w-[--reka-popper-anchor-width] p-0">
+        <Command :ignore-filter="true">
+          <CommandInput v-model="search" :placeholder="localizedSearchPlaceholder" :display-value="_ => ''" />
+          <CommandEmpty>
+            <div v-if="isLoading" class="flex items-center justify-center p-4">
+              <div class="size-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+              <span class="ml-2">{{ t("components.item.selector.searching") }}</span>
+            </div>
+            <div v-else>
+              {{ localizedNoResultsText }}
+            </div>
+          </CommandEmpty>
+          <CommandList ref="listRef" :key="commandListKey">
+            <CommandGroup>
+              <div v-if="topPadding > 0" aria-hidden="true" :style="{ height: topPadding + 'px' }" />
+              <CommandItem
+                v-for="entry in visibleItems"
+                :key="itemKey(entry.item)"
+                :value="itemKey(entry.item)"
+                :style="{ height: itemHeightPx + 'px' }"
+                @select="select(entry.item)"
+              >
+                <Check :class="cn('mr-2 h-4 w-4', isSelected(entry.item) ? 'opacity-100' : 'opacity-0')" />
+                <slot name="display" v-bind="{ item: entry.item }">
+                  {{ displayValue(entry.item) }}
+                </slot>
+              </CommandItem>
+              <div v-if="bottomPadding > 0" aria-hidden="true" :style="{ height: bottomPadding + 'px' }" />
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { computed, ref, watch } from "vue";
+  import { Check, ChevronsUpDown, X } from "lucide-vue-next";
+  import fuzzysort from "fuzzysort";
+  import { unrefElement, useElementSize, useScroll, useVModel } from "@vueuse/core";
+  import { useI18n } from "vue-i18n";
+  import { Button } from "~/components/ui/button";
+  import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "~/components/ui/command";
+  import { Label } from "~/components/ui/label";
+  import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+  import { cn } from "~/lib/utils";
+
+  const { t } = useI18n();
+
+  type ItemsObject = {
+    [key: string]: unknown;
+  };
+
+  interface Props {
+    label?: string;
+    modelValue?: string | ItemsObject | null | undefined;
+    items?: ItemsObject[] | string[];
+    itemText?: string;
+    itemValue?: string;
+    search?: string;
+    searchPlaceholder?: string;
+    noResultsText?: string;
+    placeholder?: string;
+    excludeItems?: ItemsObject[];
+    isLoading?: boolean;
+    triggerSearch?: () => Promise<boolean>;
+    itemHeight?: number;
+  }
+
+  const emit = defineEmits(["update:modelValue", "update:search"]);
+  const props = withDefaults(defineProps<Props>(), {
+    label: "",
+    modelValue: "",
+    items: () => [],
+    itemText: "text",
+    itemValue: "value",
+    search: "",
+    searchPlaceholder: undefined,
+    noResultsText: undefined,
+    placeholder: undefined,
+    excludeItems: undefined,
+    isLoading: false,
+    triggerSearch: undefined,
+    itemHeight: 32,
+  });
+
+  const id = useId();
+  const open = ref(false);
+  const search = useVModel(props, "search", emit);
+  const value = useVModel(props, "modelValue", emit);
+  const hasInitialSearch = ref(false);
+
+  const localizedSearchPlaceholder = computed(
+    () => props.searchPlaceholder ?? t("components.item.selector.search_placeholder")
+  );
+  const localizedNoResultsText = computed(() => props.noResultsText ?? t("components.item.selector.no_results"));
+  const localizedPlaceholder = computed(() => props.placeholder ?? t("components.item.selector.placeholder"));
+
+  // Trigger search when popover opens for the first time if no results exist
+  async function handlePopoverOpen() {
+    if (hasInitialSearch.value || props.items.length !== 0 || !props.triggerSearch) return;
+
+    try {
+      const success = await props.triggerSearch();
+      if (success) {
+        // Only mark as attempted after successful completion
+        hasInitialSearch.value = true;
+      }
+      // If not successful, leave hasInitialSearch false to allow retries
+    } catch (err) {
+      console.error("triggerSearch failed:", err);
+      // Leave hasInitialSearch false to allow retries on subsequent opens
+    }
+  }
+
+  watch(
+    () => open.value,
+    isOpen => {
+      if (isOpen) {
+        handlePopoverOpen();
+      }
+    }
+  );
+
+  function isStrings(arr: string[] | ItemsObject[]): arr is string[] {
+    return arr.length > 0 && typeof arr[0] === "string";
+  }
+
+  function displayValue(item: string | ItemsObject | null | undefined): string {
+    if (!item) return "";
+    if (typeof item === "string") return item;
+    return (item[props.itemText] as string) || "";
+  }
+
+  function itemKey(item: string | ItemsObject): string {
+    if (typeof item === "string") return item;
+    return (item[props.itemValue] as string) || displayValue(item);
+  }
+
+  function isSelected(item: string | ItemsObject): boolean {
+    if (!value.value) return false;
+    if (typeof item === "string") return value.value === item;
+    if (typeof value.value === "string") return itemKey(item) === value.value;
+    return itemKey(item) === itemKey(value.value);
+  }
+
+  function select(item: string | ItemsObject) {
+    if (isSelected(item)) {
+      value.value = null;
+    } else {
+      value.value = item;
+    }
+    open.value = false;
+  }
+
+  function clearSelection() {
+    value.value = null;
+    search.value = "";
+    open.value = false;
+  }
+
+  const filtered = computed(() => {
+    // Explicitly depend on all reactive sources
+    const items = props.items;
+    const searchTerm = search.value;
+    const excludeItems = props.excludeItems;
+
+    let baseItems = items;
+
+    if (!isStrings(baseItems) && excludeItems) {
+      const excludeIds = excludeItems.map(i => i.id);
+      baseItems = baseItems.filter(item => !excludeIds?.includes(item.id));
+    }
+
+    if (!searchTerm) return baseItems;
+
+    if (isStrings(baseItems)) {
+      return baseItems.filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()));
+    } else {
+      // Fuzzy search on itemText
+      return fuzzysort.go(searchTerm, baseItems, { key: props.itemText, all: true }).map(i => i.obj);
+    }
+  });
+
+  // Generate a unique key to force CommandList re-render when items change
+  const commandListKey = computed(() => {
+    return JSON.stringify(filtered.value.map(item => itemKey(item)));
+  });
+
+  // Virtualize the list so the popover stays responsive with thousands of items.
+  const itemHeightPx = computed(() => props.itemHeight);
+  const OVERSCAN = 5;
+
+  const listRef = ref();
+  const scrollContainer = computed<HTMLElement | null>(() => {
+    return (unrefElement(listRef.value) as HTMLElement | null) ?? null;
+  });
+  const { y: scrollTop } = useScroll(scrollContainer);
+  const { height: viewportHeight } = useElementSize(scrollContainer);
+
+  const visibleRange = computed(() => {
+    const total = filtered.value.length;
+    if (total === 0) return { start: 0, end: 0 };
+    const h = viewportHeight.value || 300;
+    const ih = itemHeightPx.value;
+    const start = Math.max(0, Math.floor(scrollTop.value / ih) - OVERSCAN);
+    const visibleCount = Math.ceil(h / ih) + OVERSCAN * 2;
+    const end = Math.min(total, start + visibleCount);
+    return { start, end };
+  });
+
+  const visibleItems = computed(() => {
+    const { start, end } = visibleRange.value;
+    return filtered.value.slice(start, end).map((item, i) => ({
+      item,
+      index: start + i,
+    }));
+  });
+
+  const topPadding = computed(() => visibleRange.value.start * itemHeightPx.value);
+  const bottomPadding = computed(
+    () => Math.max(0, filtered.value.length - visibleRange.value.end) * itemHeightPx.value
+  );
+
+  watch([() => search.value, () => props.items], () => {
+    const el = scrollContainer.value;
+    if (el) el.scrollTop = 0;
+  });
+
+  watch(open, isOpen => {
+    if (!isOpen) return;
+    nextTick(() => {
+      const el = scrollContainer.value;
+      if (el) el.scrollTop = 0;
+    });
+  });
+</script>

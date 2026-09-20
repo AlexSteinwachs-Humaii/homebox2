@@ -1,0 +1,588 @@
+{
+    "components": {
+        "app": {
+            "create_modal": {
+                "createAndAddAnother": "Uporabite {shiftKey} + {enterKey}, da ustvarite vnos in dodate še enega.",
+                "enter": "Enter",
+                "shift": "Shift"
+            },
+            "import_dialog": {
+                "change_warning": "Delovanje pri uvozih z obstoječimi import_refs se je spremenilo. Če je import_ref prisoten v datoteki CSV, bo\nelement posodobljen z vrednostmi v datoteki CSV.",
+                "description": "Uvozite datoteko CSV, ki vsebuje vaše predmete, oznake in lokacije. Poglejte si dokumentacijo za več informacij o\nzahtevani obliki.",
+                "title": "Uvozi CSV datoteko",
+                "toast": {
+                    "import_failed": "Uvoz ni uspel. Poskusite pozneje.",
+                    "import_success": "Uvoz uspešen!",
+                    "please_select_file": "Izberite datoteko za uvoz."
+                }
+            },
+            "outdated": {
+                "current_version": "Trenutna različica",
+                "dismiss": "Opusti",
+                "latest_version": "Najnovejša različica",
+                "new_version_available": "Nova različica je na voljo",
+                "new_version_available_link": "Kliknite tukaj za ogled opomb ob izdaji"
+            }
+        },
+        "color_selector": {
+            "clear": "Počisti barvo",
+            "color": "Barva",
+            "no_color": "Ni barve",
+            "no_color_selected": "Barva ni izbrana",
+            "randomize": "Naključna barva"
+        },
+        "form": {
+            "password": {
+                "toggle_show": "Preklopi prikaz gesla"
+            }
+        },
+        "global": {
+            "copy_text": {
+                "documentation": "dokumentacija",
+                "failed_to_copy": "Kopiranje v odložišče ni uspelo",
+                "https_required": "ker je potreben https",
+                "learn_more": "Več o tem v"
+            },
+            "date_time": {
+                "ago": "pred {0}",
+                "days": "dni",
+                "hour": "ura",
+                "hours": "ure",
+                "in": "v {0}",
+                "just-now": "Pravkar",
+                "last-month": "pretekli mesec",
+                "last-week": "pretekli teden",
+                "last-year": "lansko leto",
+                "minute": "minuta",
+                "minutes": "minut",
+                "months": "mesecev",
+                "next-month": "prihodnji mesec",
+                "next-week": "prihodnji teden",
+                "next-year": "prihodnje leto",
+                "second": "sekunda",
+                "seconds": "sekund",
+                "tomorrow": "jutri",
+                "week": "teden",
+                "weeks": "tedni",
+                "years": "leta",
+                "yesterday": "včeraj"
+            },
+            "label_maker": {
+                "browser_print": "Tiskanje iz brskalnika",
+                "confirm_description": "Ali ste prepričani, da želite natisniti to etiketo?",
+                "download": "Prenesi nalepko",
+                "print": "Natisni nalepko",
+                "server_print": "Natisni na strežniku",
+                "titles": "Nalepke",
+                "toast": {
+                    "load_status_failed": "Stanja ni bilo mogoče naložiti",
+                    "print_failed": "Nalepke ni bilo mogoče natisniti",
+                    "print_success": "Nalepka natisnjena"
+                }
+            },
+            "page_qr_code": {
+                "page_url": "URL strani",
+                "qr_tooltip": "Prikaži kodo QR"
+            },
+            "password_score": {
+                "password_strength": "Moč gesla"
+            }
+        },
+        "item": {
+            "attachments_list": {
+                "download": "Prenesi",
+                "open_new_tab": "Odpri v novem zavihku"
+            },
+            "create_modal": {
+                "delete_photo": "Izbrišite fotografijo",
+                "item_description": "opis predmeta",
+                "item_name": "ime predmeta",
+                "item_photo": "fotografija predmeta 📷",
+                "item_quantity": "količina",
+                "parent_item": "Nadrejeni predmet",
+                "rotate_photo": "Zasukaj fotografijo",
+                "set_as_primary_photo": "Nastavi kot { isPrimary, select, true {non-} false {} other {}}glavno fotografijo",
+                "title": "Ustvari predmet",
+                "toast": {
+                    "already_creating": "Že v ustvarjanju predmeta",
+                    "create_failed": "Predmeta ni bilo mogoče ustvariti",
+                    "create_success": "Predmet ustvarjen",
+                    "failed_load_parent": "Nalaganje nadrejenega elementa ni uspelo - izberite ročno",
+                    "no_canvas_support": "Vaš brskalnik ne podpira canvas funkcionalnosti",
+                    "please_select_location": "Prosimo izberite lokacijo.",
+                    "rotate_failed": "Slike ni bilo mogoče zavrteti: { error }",
+                    "rotate_process_failed": "Obdelava zasukane slike ni uspela",
+                    "some_photos_failed": "{count, plural, =0 {Ni fotografij za nalaganje.} =1 {1 fotografija ni bila naložena.} other {Nekatere fotografije niso bile naložene.}}",
+                    "upload_failed": "Ni uspelo nalaganje fotografije: {photoName}",
+                    "upload_success": "{count, plural, =0 {Ni naloženih fotografij.} =1 {Fotografija je bila uspešno naložena.} other {Vse fotografije so bile uspešno naložene.}}",
+                    "uploading_photos": "{count, plural, =0 {Ni fotografij za nalaganje} =1 {Nalaganje 1 fotografije...} other {Nalaganje {count} fotografij...}}"
+                },
+                "upload_photos": "Naloži fotografije",
+                "uploaded": "Naložena fotografija"
+            },
+            "selector": {
+                "no_results": "Ni zadetkov",
+                "placeholder": "Izberi...",
+                "search_placeholder": "Vnesite za iskanje ..."
+            },
+            "view": {
+                "selectable": {
+                    "card": "Kartica",
+                    "items": "Predmeti",
+                    "no_items": "Ni predmetov za prikaz",
+                    "table": "Tabela"
+                },
+                "table": {
+                    "headers": "Stolpci",
+                    "page": "Stran",
+                    "rows_per_page": "vrstic na stran",
+                    "table_settings": "Nastavitve tabele",
+                    "view_item": "Ogled predmeta"
+                }
+            }
+        },
+        "location": {
+            "create_modal": {
+                "location_description": "Opis lokacije",
+                "location_name": "Naziv lokacije",
+                "title": "Ustvari lokacijo",
+                "toast": {
+                    "already_creating": "Že v ustvarjanju lokacije",
+                    "create_failed": "Lokacije ni bilo mogoče ustvariti",
+                    "create_success": "Lokacija je ustvarjena"
+                }
+            },
+            "selector": {
+                "no_location_found": "Nobena lokacija ni bila najdena",
+                "parent_location": "Glavna lokacija",
+                "search_location": "Iskanje po lokacijah",
+                "select_location": "Izberite lokacijo"
+            },
+            "tree": {
+                "no_locations": "Ni razpoložljivih lokacij. Dodaj novo lokacije preko \n `<`span class=\"link-primary\"`>`Ustvari`<`/span`>` gumba v navigacijski vrstici."
+            }
+        },
+        "quick_menu": {
+            "no_results": "Ni resultatov.",
+            "shortcut_hint": "S številskimi tipkami hitro izberite dejanje."
+        }
+    },
+    "global": {
+        "add": "Dodaj",
+        "archived": "Arhivirano",
+        "build": "Gradnja: { build }",
+        "cancel": "Prekliči",
+        "confirm": "Potrdi",
+        "create": "Ustvari",
+        "create_and_add": "Ustvari in dodaj še enega",
+        "create_subitem": "Ustvari podrejeni predmet",
+        "created": "Ustvarjeno",
+        "delete": "Izbriši",
+        "delete_confirm": "Ste prepričani, da želite izbrisati ta predmet? ",
+        "demo_instance": "Predstavitvena inštalacija",
+        "details": "Podrobnosti",
+        "duplicate": "Podvoji",
+        "edit": "Uredi",
+        "email": "E-pošta",
+        "follow_dev": "Sledi razvijjalcu",
+        "footer": {
+            "api_link": "'<a href=\"https://homebox.software/en/api/\" target=\"_blank\">'API'</a>'",
+            "version_link": "'<'a href=\"https://github.com/sysadminsmedia/homebox/releases/tag/{ version }\" target=\"_blank\"'>' Verzija: { version } Gradnja: { build } '</a>'"
+        },
+        "github": "GitHub projekt",
+        "insured": "Zavarovano",
+        "items": "Predmeti",
+        "join_discord": "Pridruži se na Discord",
+        "loading": "Nalaganje...",
+        "locations": "Lokacije",
+        "maintenance": "Vzdrževanje",
+        "name": "Naziv",
+        "navigate": "Krmari",
+        "password": "Geslo",
+        "quantity": "Količina",
+        "read_docs": "Preberite dokumentacijo",
+        "return_home": "Vrnitev domov",
+        "save": "Shrani",
+        "search": "Iskanje",
+        "sign_out": "Odjava",
+        "submit": "Pošlji",
+        "unknown": "Neznano",
+        "update": "Posodobi",
+        "updating": "Posodabljanje",
+        "value": "Vrednost",
+        "version": "Verzija: { version }",
+        "welcome": "Dobrodošel, { username }"
+    },
+    "home": {
+        "quick_statistics": "Hitra statistika",
+        "recently_added": "Nedavno dodano",
+        "storage_locations": "Lokacije shramb",
+        "total_items": "Predmetov skupaj",
+        "total_locations": "Skupaj lokacij",
+        "total_value": "Skupna vrednost"
+    },
+    "index": {
+        "disabled_registration": "Registracija je onemogočena",
+        "dont_join_group": "Se ne želite pridružiti skupini?",
+        "joining_group": "Pridružujete se obstoječi skupini!",
+        "login": "Prijava",
+        "register": "Registriraj se",
+        "remember_me": "Zapomni si me",
+        "set_email": "Kakšen je vaš e-poštni naslov?",
+        "set_name": "Kako vam je ime?",
+        "set_password": "Nastavite geslo",
+        "tagline": "Sledite, organizirajte in upravljajte svoje stvari.",
+        "title": "Organizirajte in označite svoje stvari",
+        "toast": {
+            "invalid_email": "Neveljaven e-poštni naslov",
+            "invalid_email_password": "Neveljaven e-poštni naslov ali geslo",
+            "login_success": "Vpis uspešen",
+            "problem_registering": "Težava pri registraciji uporabnika",
+            "user_registered": "Uporabnik registriran"
+        }
+    },
+    "items": {
+        "add": "Dodaj",
+        "advanced": "Napredno",
+        "archived": "Arhivirano",
+        "asset_id": "ID sredstva",
+        "associated_with_multiple": "Ta ID sredstva je povezan z več predmeti",
+        "attachment": "Priloga",
+        "attachments": "Priloge",
+        "changes_persisted_immediately": "Spremembe prilog bodo takoj shranjene",
+        "created_at": "Ustvarjeno ob",
+        "custom_fields": "Polje po meri",
+        "delete_attachment_confirm": "Ali ste prepričani, da želite izbrisati to priponko?",
+        "delete_item_confirm": "Ste prepričani, da želite izbrisati ta predmet?",
+        "description": "Opis",
+        "details": "Podrobnosti",
+        "drag_and_drop": "Tu povlecite in spustite datoteke ali kliknite, da izberete datoteke",
+        "edit": {
+            "edit_attachment_dialog": {
+                "attachment_title": "Naslov priloge",
+                "attachment_type": "Tip Priponke",
+                "primary_photo": "Glavna fotografija",
+                "primary_photo_sub": "Ta možnost je na voljo samo za fotografije. Samo ena fotografija je lahko glavna. Ob izbiri te opcije glavna fotografija ne bo več glavna.",
+                "select_type": "Izberite tip",
+                "title": "Urejanje priloge"
+            }
+        },
+        "edit_details": "Uredi podrobnosti",
+        "field_selector": "Izbirnik polj",
+        "field_value": "Vrednost polja",
+        "first": "Prvi",
+        "include_archive": "Vključi arhivirane predmete",
+        "insured": "Zavarovano",
+        "invalid_asset_id": "Neveljaven ID sredstva",
+        "last": "Zadnji",
+        "lifetime_warranty": "Doživljenjska garancija",
+        "location": "Lokacija",
+        "manual": "Navodila",
+        "manuals": "Navodila za uporabo",
+        "manufacturer": "Proizvajalec",
+        "model_number": "Številka modela",
+        "name": "Naziv",
+        "next_page": "Naslednja stran",
+        "no_attachments": "Ni najdenih prilog",
+        "no_results": "Ni najdenih predmetov",
+        "notes": "Opombe",
+        "only_with_photo": "Samo elementi s fotografijo",
+        "only_without_photo": "Samo predmeti brez fotografije",
+        "options": "Možnosti",
+        "order_by": "Razvrsti po",
+        "pages": "Stran { page } od { totalPages }",
+        "parent_item": "Matični produkt",
+        "photo": "Fotografija",
+        "photos": "Fotografije",
+        "prev_page": "Prejšnja stran",
+        "purchase_date": "Datum nabave",
+        "purchase_details": "Podrobnosti nabave",
+        "purchase_price": "Nakupna cena",
+        "purchased_from": "Kupljeno pri",
+        "quantity": "Količina",
+        "query_id": "Poizvedovanje po identifikacijski številki sredstva: { id }",
+        "receipt": "Račun",
+        "receipts": "Računi",
+        "reset_search": "Ponastavi iskanje",
+        "results": "Rezultatov: { total }",
+        "select_field": "Izberite polje",
+        "serial_number": "Serijska številka",
+        "show_advanced_view_options": "Pokaži napredne možnosti",
+        "sold_at": "Prodano pri",
+        "sold_details": "Podrobnosti o prodaji",
+        "sold_price": "Prodajna cena",
+        "sold_to": "Prodano k",
+        "sync_child_locations": "Sinhronizirajte lokacije podrejenih predmetov",
+        "tip_1": "Filtri lokacij in oznak uporabljajo operacijo 'ALI'. Če je izbranih več kot ena, bo izbrana samo ena\n potrebna za ujemanje.",
+        "tip_2": "Iskanja s predpono '#' bodo iskala ID sredstva (primer '#000-001')",
+        "tip_3": "Filtri polj uporabljajo operacijo 'ALI'. Če je izbranih več kot eno, bo za ujemanje dovolj samo\n eno.",
+        "tips": "Nasveti",
+        "tips_sub": "Nasveti za iskanje",
+        "toast": {
+            "asset_not_found": "Sredstva ni bilo mogoče najti",
+            "attachment_deleted": "Priloga je izbrisana",
+            "attachment_updated": "Priloga je posodobljena",
+            "attachment_uploaded": "Priloga je naložena",
+            "child_items_location_no_longer_synced": "Lokacije podrejenih predmetov ne bodo več sinhronizirane s tem predmetom.",
+            "child_items_location_synced": "Lokacije podrejenih predmetov so bile sinhronizirane s tem predmetom",
+            "child_location_desync": "Sprememba lokacije bo onemogočila sinhronizacijo z lokacijo nadrejenega predmeta",
+            "error_loading_parent_data": "Pri nalaganju podatkov nadrejenega predmeta je prišlo do napake",
+            "failed_adjust_quantity": "Količine ni bilo mogoče spremeniti",
+            "failed_delete_attachment": "Brisanje priloge ni uspelo",
+            "failed_delete_item": "Brisanje predmeta ni uspelo",
+            "failed_duplicate_item": "Podvajanje predmeta ni uspelo",
+            "failed_load_asset": "Nalaganje sredstva ni uspelo",
+            "failed_load_item": "Nalaganje predmeta ni uspelo",
+            "failed_load_items": "Nalaganje predmetov ni uspelo",
+            "failed_save": "Shranjevanje predmeta ni uspelo",
+            "failed_save_no_location": "Shranjevanje predmeta ni uspelo: lokacija ni izbrana",
+            "failed_search_items": "Iskanje predmetov ni uspelo",
+            "failed_update_attachment": "Posodobitev priloge ni uspela",
+            "failed_upload_attachment": "Nalaganje priloge ni uspelo",
+            "item_deleted": "Predmet izbrisan",
+            "item_saved": "Predmet shranjen",
+            "quantity_cannot_negative": "Količina ne more biti negativna",
+            "sync_child_location": "Izbran nadrejen predmet sinhronizira lokacijo podrejenih predmetov s svojo. Lokacija je bila posodobljena."
+        },
+        "updated_at": "Posodobljeno ob",
+        "warranty": "Garancija",
+        "warranty_details": "Podrobnosti o garanciji",
+        "warranty_expires": "Garancija poteče"
+    },
+    "languages": {
+        "ca": "katalonščina",
+        "cs-CZ": "češčina",
+        "de": "nemščina",
+        "en": "angleščina",
+        "es": "španščina",
+        "fi-FI": "finščina",
+        "fr": "francoščina",
+        "hu": "madžarščina",
+        "id-ID": "indonezijščina",
+        "it": "italijanščina",
+        "ja-JP": "japonščina",
+        "ko-KR": "korejščina",
+        "lb-LU": "luksemburščina (Luksemburg)",
+        "lt-LT": "litovščina (Litva)",
+        "nb-NO": "norveški bokmål",
+        "nl": "nizozemščina",
+        "pl": "polščina",
+        "pt-BR": "portugalščina (Brazilija)",
+        "pt-PT": "portugalščina (Portugalska)",
+        "ru": "ruščina",
+        "sl": "slovenščina",
+        "sq-AL": "albanščina",
+        "sv": "švedščina",
+        "ta-IN": "tamilščina",
+        "th-TH": "tajščina",
+        "tr": "turščina",
+        "uk-UA": "ukrajinščina",
+        "zh-CN": "kitajščina (poenostavljena)",
+        "zh-HK": "kitajščina (Hongkong)",
+        "zh-MO": "kitajščina (Makav)",
+        "zh-TW": "kitajščina (tradicionalna)"
+    },
+    "languages.da-DK": "danščina",
+    "languages.ro-RO": "romunščina",
+    "languages.sk-SK": "slovaščina",
+    "locations": {
+        "child_locations": "Podrejene lokacije",
+        "collapse_tree": "Strni drevo",
+        "expand_tree": "Razširi drevo",
+        "location_items_delete_confirm": "Ali ste prepričani, da želite izbrisati to lokacijo in vse njene predmete? Tega dejanja ni mogoče razveljaviti.",
+        "no_results": "Ni najdenih lokacij",
+        "toast": {
+            "failed_delete_location": "Brisanje lokacije ni uspelo",
+            "failed_load_location": "Nalaganje lokacije ni uspelo",
+            "failed_update_location": "Posodobitev lokacije ni uspela",
+            "location_deleted": "Lokacija izbrisana",
+            "location_updated": "Lokacija posodobljena"
+        },
+        "update_location": "Posodobi lokacijo"
+    },
+    "maintenance": {
+        "filter": {
+            "both": "Oboje",
+            "completed": "Zaključeno",
+            "scheduled": "Načrtovano"
+        },
+        "list": {
+            "complete": "Končano",
+            "create_first": "Ustvarite prvi vnos",
+            "delete": "Izbriši",
+            "duplicate": "Podvoji",
+            "edit": "Uredi",
+            "new": "Nov"
+        },
+        "modal": {
+            "completed_date": "Datum zaključka",
+            "cost": "Stroški",
+            "delete_confirmation": "Ali ste prepričani, da želite izbrisati ta vnos?",
+            "edit_action": "Posodobi",
+            "edit_title": "Uredi vnos",
+            "entry_name": "Ime vnosa",
+            "new_action": "Ustvari",
+            "new_title": "Nov vnos",
+            "notes": "Opombe",
+            "scheduled_date": "Načrtovani datum"
+        },
+        "monthly_average": "Mesečno povprečje",
+        "toast": {
+            "failed_to_create": "Vnosa ni bilo mogoče ustvariti",
+            "failed_to_delete": "Vnosa ni bilo mogoče izbrisati",
+            "failed_to_update": "Vnosa ni bilo mogoče posodobiti"
+        },
+        "total_cost": "Skupni znesek",
+        "total_entries": "Vseh predmetov"
+    },
+    "menu": {
+        "create_item": "Predmet / Sredstvo",
+        "create_location": "Lokacija",
+        "home": "Domov",
+        "locations": "Lokacije",
+        "maintenance": "Vzdrževanje",
+        "profile": "Profil",
+        "scanner": "Optični bralnik",
+        "search": "Iskanje"
+    },
+    "profile": {
+        "active": "Aktivno",
+        "change_password": "Sprememba gesla",
+        "currency_format": "Oblika valute",
+        "current_password": "Trenutno geslo",
+        "delete_account": "Izbriši račun",
+        "delete_account_confirm": "Ste prepričani, da želite izbrisati svoj račun? Če ste zadnji član v svoji skupini, bodo vsi vaši podatki izbrisani. Tega dejanja ni mogoče razveljaviti.",
+        "delete_account_sub": "Izbrišite svoj račun in vse z njim povezane podatke. Tega ni mogoče razveljaviti.",
+        "delete_notifier_confirm": "Ali ste prepričani, da želite izbrisati to obveščanje?",
+        "display_legacy_header": "{ currentValue, select, true {Onemogoči staro glavo strani} false {Omogoči staro glavo strani} other {Ni pritisnjeno}}",
+        "enabled": "Omogočeno",
+        "example": "Primer",
+        "group_settings": "Nastavitve skupine",
+        "group_settings_sub": "Nastavitve skupine v skupni rabi. Morda boste morali osvežiti brskalnik, da bodo nekatere nastavitve veljale.",
+        "inactive": "Neaktivno",
+        "language": "Jezik",
+        "new_password": "Novo geslo",
+        "no_notifiers": "Ni nastavljenih obveščanj",
+        "no_override": "Brez spremembe",
+        "notifier_modal": "{ type, select, true {Edit} false {Create} other {Other}} Obveščevalec",
+        "notifiers": "Obveščevalci",
+        "notifiers_sub": "Prejemajte obvestila za prihajajoče opomnike o vzdrževanju",
+        "override_locale": "Spremeni jezik datuma in valute",
+        "test": "Preizkus",
+        "theme_settings": "Nastavitve teme",
+        "theme_settings_sub": "Nastavitve teme so shranjene v lokalni shrambi vašega brskalnika. Temo lahko kadar koli spremenite. Če\n imate težave z nastavitvijo teme, poskusite osvežiti brskalnik.",
+        "toast": {
+            "account_deleted": "Vaš račun je bil izbrisan.",
+            "failed_change_password": "Sprememba gesla ni uspela.",
+            "failed_create_notifier": "Ustvarjanje obveščevalca ni uspelo.",
+            "failed_delete_account": "Izbris računa ni uspel.",
+            "failed_delete_notifier": "Izbris obveščevalca ni uspel.",
+            "failed_get_currencies": "Nalaganje valut ni uspelo",
+            "failed_test_notifier": "Testiranje obveščevalca ni uspelo.",
+            "failed_update_group": "Posodobitev skupine ni uspelo",
+            "failed_update_notifier": "Posodobitev obveščevalca ni uspelo.",
+            "group_updated": "Skupina posodobljena",
+            "notifier_test_success": "Test obveščevalca uspešen.",
+            "password_changed": "Geslo je bilo uspešno spremenjeno."
+        },
+        "update_group": "Posodobi skupino",
+        "update_language": "Posodobi jezik",
+        "url": "URL",
+        "user_profile": "Profil uporabnika",
+        "user_profile_sub": "Povabite uporabnike in upravljajte svoj račun."
+    },
+    "reports": {
+        "label_generator": {
+            "asset_end": "Končno sredstvo",
+            "asset_start": "Začetno sredstvo",
+            "base_url": "Osnovni URL",
+            "bordered_labels": "Nalepke z obrobo",
+            "generate_page": "Generiraj stran",
+            "input_placeholder": "Vnesite tukaj",
+            "instruction_1": "Homebox Generator Nalepk je orodje za pomoč pri tiskanju nalepk za vaš Homebox inventar. Te so namenjene za\n tisk vnaprej, da imate več nalepk pripravljenih za uporabo",
+            "instruction_2": "Te nalepke delujejo z uporabo URL naslovne QR kode in ID sredstva na nalepki. Če ste onemogočili\nIDje sredstev v vaših Homebox nastavitvah lahko to orodje še vedno uporabljate, vendar se IDji sredstev ne bodo nanašali na noben predmet",
+            "instruction_3": "Ta funkcija je v zgodnjih stopnjah razvoja in se lahko spremeni v prihodnjih verzijah. Če želite podati mnenje \nga prosimo podajte v '<a href=\"https://github.com/sysadminsmedia/homebox/discussions/53\">'GitHub razpravah'</a>'",
+            "label_height": "Višina nalepke",
+            "label_width": "Širina nalepke",
+            "measure_type": "Merska enota",
+            "page_bottom_padding": "Spodnja obroba strani",
+            "page_height": "Višina strani",
+            "page_left_padding": "Leva obroba strani",
+            "page_right_padding": "Desna obroba strani",
+            "page_top_padding": "Zgornja obroba strani",
+            "page_width": "Širina strani",
+            "qr_code_example": "Primer QR kode",
+            "tip_1": "Standardni vnosi so za \n '<a href=\"https://www.avery.com/templates/5260\">'Avery 5260 nalepke'</a>'. Če uporabljate drug papir,\nboste morali prilagoditi nastavitve.",
+            "tip_2": "Privzete dimenzije so v palcih (in). Podane dimenzije za standardne 5260 nalepke se\nne ujemajo točno z morebitnimi nastavitvami za vaš tiskalnik.\n '<b>'Pripravljeni bodite na nekaj eksperimentiranja.'</b>'",
+            "tip_3": "Pri tisku preverite da:\n '<ol><li>'Obrobe so nastavljene na 0 ali Brez'</li><li>'Velikost strani je nastavljena na 100%'</li><li>'Onemogočen je duplex/dvostranski tisk'</li><li>'Natisnite testno stran pred tiskom več strani'</li></ol>",
+            "tips": "Nasveti",
+            "title": "Generator Nalepk",
+            "toast": {
+                "page_too_small_card": "Stran je premajhna za velikost nalepke"
+            }
+        }
+    },
+    "scanner": {
+        "error": "Med optičnim branjem je prišlo do napake",
+        "invalid_url": "Neveljaven URL naslov v črtni kodi",
+        "no_sources": "Ni kamer / video virov",
+        "permission_denied": "Dovoljenje za kamero je zavrnjeno. Dovolite dostop do kamere v nastavitvah brskalnika",
+        "select_video_source": "Izberi kamero / video vir",
+        "title": "Optični bralnik",
+        "unsupported": "API za pretok medijev ni na voljo brez HTTPS"
+    },
+    "tools": {
+        "actions": "Dejanja inventarja",
+        "actions_set": {
+            "create_missing_thumbnails": "Ustvari manjkajoče predoglede",
+            "create_missing_thumbnails_button": "Ustvari Predoglede",
+            "create_missing_thumbnails_confirm": "Ali ste prepričani, da želite ustvariti manjkajoče predoglede? To lahko traja nekaj časa in ni možno ustaviti.",
+            "create_missing_thumbnails_sub": "Ustvari predoglede za vse priloge, ki jih omogoča trenutna konfiguracija. To je uporabno za priloge, ki so bile naložene pred Homebox izdajo v0.20.0. To ne bo prepisalo obstoječih predogledov, ampak samo izdelalo nove za priloge ki še nimajo predogledov. Upoštevajte da so predogledi izdelani v ozadju in da to lahko traja nekaj časa.",
+            "ensure_ids": "Zagotovi ID-je sredstev",
+            "ensure_ids_button": "Zagotovi ID-je sredstev",
+            "ensure_ids_confirm": "Ali ste prepričani, da želite zagotoviti, da imajo vsi predmeti ID? To lahko traja nekaj časa in ni možno razveljaviti.",
+            "ensure_ids_sub": "Zagotavlja, da imajo vsi predmeti v vašem inventarju veljavno polje asset_id. To storite tako, da poiščete najvišje trenutno polje asset_id v bazi podatkov in uporabite naslednjo vrednost za vsak element, ki ima nenastavljeno polje asset_id. To se naredi po vrstnem redu polja created_at.",
+            "ensure_import_refs": "Zagotovi uvoz referenc",
+            "ensure_import_refs_button": "Zagotovi uvoz referenc",
+            "ensure_import_refs_sub": "Zagotavlja, da imajo vsi predmeti v vašem inventarju veljavno polje import_ref. To se naredi tako, da se naključno ustvari 8-mestni niz za vsak element, ki ima nenastavljeno polje import_ref.",
+            "set_primary_photo": "Nastavi primarno fotografijo",
+            "set_primary_photo_button": "Nastavi primarno fotografijo",
+            "set_primary_photo_confirm": "Ali ste prepričani, da želite nastaviti glavne fotografije? To lahko traja nekaj časa in ni možno razveljaviti.",
+            "set_primary_photo_sub": "V različici v0.10.0 Homeboxa je bilo primarno slikovno polje dodano prilogam tipa fotografija. To dejanje bo polje primarne slike nastavilo na prvo sliko v tabeli prilog v bazi podatkov, če še ni nastavljeno. '<a class=\"link\" href=\"https://github.com/hay-kot/homebox/pull/576\">'Glej GitHub PR #576'</a>'",
+            "zero_datetimes": "Datumski časi ničelnega elementa",
+            "zero_datetimes_button": "Datumski časi ničelnega elementa",
+            "zero_datetimes_confirm": "Ali ste prepričani, da želite ponastaviti vse vnose datuma in časa? To lahko traja nekaj časa in ni možno razveljaviti.",
+            "zero_datetimes_sub": "Ponastavi časovno vrednost za vsa polja datuma in časa v vašem inventarju na začetek datuma. To je namenjeno odpravljanju napake, ki je bila predstavljena zgodaj v razvoju spletnega mesta in je povzročila, da je bila časovna vrednost shranjena s časom, kar je povzročilo težave z datumskimi polji, ki prikazujejo točne vrednosti. '<a class=\"link\" href=\"https://github.com/hay-kot/homebox/issues/236\" target=\"_blank\">'Glejte številko 236 Githuba za več podrobnosti.'</a> '"
+        },
+        "actions_sub": "Uporabite dejanja v večjem obsegu za svoj inventar. To so nepovratna dejanja. '<b>'Bodite previdni.'</b>'",
+        "import_export": "Uvozi/Izvozi",
+        "import_export_set": {
+            "export": "Izvozi inventar",
+            "export_button": "Izvozi Inventar",
+            "export_sub": "Izvozi standardni format CSV za Homebox. S tem boste izvozili vse predmete v vašem inventarju.",
+            "import": "Uvozi inventar",
+            "import_button": "Uvozi inventar",
+            "import_ref_confirm": "Ali ste prepričani, da želite zagotoviti, da imajo vsa sredstva določen import_ref? To lahko traja nekaj časa in ni možno razveljaviti.",
+            "import_sub": "Uvozi standardni format CSV za Homebox. Brez stolpca '<code>'HB.import_ref'</code>' to '<b>'ne'</b>' bo prepisalo vse obstoječe elemente v vašem inventarju, samo dodaja nove elemente. Vrstice s stolpcem '<code>'HB.import_ref'</code>' so združene v obstoječe elemente z istim import_ref, če le ta obstaja."
+        },
+        "import_export_sub": "Uvozite in izvozite svoj inventar v in iz datoteke CSV. To je uporabno za selitev vašega inventarja v novo namestitev Homeboxa.",
+        "reports": "Poročila",
+        "reports_set": {
+            "asset_labels": "Oznake ID-jev sredstev",
+            "asset_labels_button": "Generator etiket",
+            "asset_labels_sub": "Ustvari natisljiv PDF z nalepkami za vrsto ID-jev sredstev. Te niso specifične za vaš inventar, zato lahko nalepke natisnete vnaprej in jih uporabite v svojem inventarju, ko jih prejmete.",
+            "bill_of_materials": "Kosovnica",
+            "bill_of_materials_button": "Ustvari kosovnico",
+            "bill_of_materials_sub": "Ustvari datoteko CSV (vrednosti, ločene z vejico), ki jo je mogoče uvoziti v program za preglednice. To je povzetek vaše zaloge z osnovnimi informacijami o izdelkih in cenah."
+        },
+        "reports_sub": "Ustvari različna poročila za svoj inventar.",
+        "toast": {
+            "asset_success": "{ results } predmetov je bilo posodobljenih.",
+            "failed_create_missing_thumbnails": "Izdelava manjkajočih predogledov ni uspela.",
+            "failed_ensure_ids": "Zagotavljanje IDjev predmetov ni uspelo.",
+            "failed_ensure_import_refs": "Zagotavljanje import_ref ni uspelo.",
+            "failed_set_primary_photos": "Nastavljanje primarnih fotografij ni uspelo.",
+            "failed_zero_datetimes": "Ponastavitev vnosov datuma in časa ni uspelo."
+        }
+    }
+}

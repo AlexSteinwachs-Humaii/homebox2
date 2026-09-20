@@ -1,0 +1,401 @@
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net"
+	"net/http"
+	"net/url"
+	"os"
+	"runtime"
+	"strings"
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/sysadminsmedia/homebox/backend/internal/core/currencies"
+	"github.com/sysadminsmedia/homebox/backend/internal/core/services"
+	"github.com/sysadminsmedia/homebox/backend/internal/core/services/reporting/eventbus"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/ent"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/repo"
+	"github.com/sysadminsmedia/homebox/backend/internal/sys/analytics"
+	"github.com/sysadminsmedia/homebox/backend/internal/sys/config"
+	"github.com/sysadminsmedia/homebox/backend/internal/sys/otel"
+	"github.com/sysadminsmedia/homebox/backend/internal/sys/validate"
+	"github.com/sysadminsmedia/homebox/backend/internal/web/mid"
+	"github.com/sysadminsmedia/homebox/backend/pkgs/hasher"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/hay-kot/httpkit/errchain"
+	"github.com/hay-kot/httpkit/graceful"
+	"github.com/riandyrn/otelchi"
+	otelchimetric "github.com/riandyrn/otelchi/metric"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog/pkgerrors"
+	"go.balki.me/anyhttp"
+
+	_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/sysadminsmedia/homebox/backend/internal/data/migrations/postgres"
+	_ "github.com/sysadminsmedia/homebox/backend/internal/data/migrations/sqlite3"
+	_ "github.com/sysadminsmedia/homebox/backend/pkgs/cgofreesqlite"
+
+	_ "gocloud.dev/pubsub/awssnssqs"
+	_ "gocloud.dev/pubsub/azuresb"
+	_ "gocloud.dev/pubsub/gcppubsub"
+	_ "gocloud.dev/pubsub/kafkapubsub"
+	_ "gocloud.dev/pubsub/mempubsub"
+	_ "gocloud.dev/pubsub/natspubsub"
+	_ "gocloud.dev/pubsub/rabbitpubsub"
+)
+
+var (
+	version   = "nightly"
+	commit    = "HEAD"
+	buildTime = "now"
+)
+
+func build() string {
+	short := commit
+	if len(commit) > 7 {
+		short = commit[:7]
+	}
+
+	return fmt.Sprintf("%s, commit %s, built at %s", version, short, buildTime)
+}
+
+func validatePostgresSSLMode(sslMode string) bool {
+	validModes := map[string]bool{
+		"":            true,
+		"disable":     true,
+		"allow":       true,
+		"prefer":      true,
+		"require":     true,
+		"verify-ca":   true,
+		"verify-full": true,
+	}
+	return validModes[strings.ToLower(strings.TrimSpace(sslMode))]
+}
+
+//	@title						Homebox API
+//	@version					1.0
+//	@description				Track, Manage, and Organize your Things.
+//	@contact.name				Homebox Team
+//	@contact.url				https://discord.homebox.software
+//	@schemes					https http
+//	@BasePath					/api
+//	@securityDefinitions.apikey	Bearer
+//	@in							header
+//	@name						Authorization
+//	@description				"Type 'Bearer TOKEN' to correctly set the API Key"
+//	@externalDocs.url			https://homebox.software/en/api
+
+func main() {
+	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
+
+	// Subcommand dispatch happens before config.New so the conf package never
+	// sees positional args (which it would treat as an error).
+	if handled, code := runResetPasswordCLI(os.Args); handled {
+		os.Exit(code)
+	}
+
+	cfg, err := config.New(build(), "Homebox inventory management system")
+	if err != nil {
+		panic(err)
+	}
+
+	if err := run(cfg); err != nil {
+		panic(err)
+	}
+}
+
+func run(cfg *config.Config) error {
+	app := new(cfg)
+	app.setupLogger()
+
+	// Fail fast on a missing or weak API key pepper. Without it, the HMAC keying
+	// for stored API key hashes would degrade to a constant key and a DB leak
+	// would expose every issued token. 32 bytes ≈ 256 bits is the cutoff.
+	if len(cfg.Auth.APIKeyPepper) < 32 {
+		return fmt.Errorf(
+			"auth.api_key_pepper must be set to at least 32 bytes; generate with `openssl rand -base64 48` " +
+				"and provide via HBOX_AUTH_API_KEY_PEPPER. Rotating it invalidates all issued API keys",
+		)
+	}
+	hasher.SetAPIKeyPepper([]byte(cfg.Auth.APIKeyPepper))
+
+	// Backstop only: harden http.DefaultClient so any redirect made through it is
+	// re-validated against the notifier SSRF policy. Notifier delivery itself goes
+	// through validate.SendNotifierMessage, which supplies its own guarded client —
+	// shoutrrr builds its own clients and never touches http.DefaultClient, so a
+	// guard installed here alone never ran on the delivery path.
+	validate.InstallNotifierRedirectGuard(&cfg.Notifier)
+
+	// =========================================================================
+	// Initialize OpenTelemetry
+	otelProvider, err := otel.NewProvider(context.Background(), &cfg.Otel, version)
+	if err != nil {
+		log.Error().Err(err).Msg("failed to initialize OpenTelemetry")
+		return fmt.Errorf("failed to initialize OpenTelemetry: %w", err)
+	}
+	app.otel = otelProvider
+
+	// Wire zerolog to OTel logs if enabled
+	app.setupOtelZerologBridge()
+
+	// =========================================================================
+	// Initialize Database & Repos
+	c, sqlDialect, err := setupDatabase(cfg, otelProvider)
+	if err != nil {
+		return err
+	}
+	defer func(c *ent.Client) {
+		err := c.Close()
+		if err != nil {
+			log.Error().Err(err).Msg("failed to close database connection")
+		}
+	}(c)
+
+	collectFuncs, err := loadCurrencies(cfg)
+	if err != nil {
+		return err
+	}
+
+	currencyData, err := currencies.CollectionCurrencies(collectFuncs...)
+	if err != nil {
+		log.Error().
+			Err(err).
+			Msg("failed to collect currencies")
+		return err
+	}
+
+	app.bus = eventbus.New()
+	app.db = c
+	app.repos = repo.New(c, app.bus, cfg.Storage, cfg.Database.PubSubConnString, cfg.Thumbnail)
+
+	// Attachment-key escaping in fileblob only flattens paths on Windows
+	// (where os.PathSeparator is "\"), so the legacy-path rename is a Windows-
+	// only concern; skip the disk scan everywhere else.
+	if runtime.GOOS == "windows" {
+		if err := app.repos.Attachments.MigrateLegacyFlatPaths(); err != nil {
+			log.Error().Err(err).Msg("failed to migrate legacy attachment file paths")
+		}
+	}
+
+	app.services = services.New(
+		app.repos,
+		services.WithAutoIncrementAssetID(cfg.Options.AutoIncrementAssetID),
+		services.WithCurrencies(currencyData),
+		services.WithNotifierConfig(&cfg.Notifier),
+		services.WithExportPlumbing(app.bus, app.db, cfg.Storage, cfg.Database.PubSubConnString, sqlDialect),
+		services.WithMailer(&app.mailer),
+	)
+
+	ensureAssetIDs(app)
+
+	// =========================================================================
+	// Start Server
+
+	logger := log.With().Caller().Logger()
+
+	router := chi.NewMux()
+
+	if otelProvider.IsEnabled() && cfg.Otel.EnableHTTPTracing {
+		otelChiBaseCfg := otelchimetric.NewBaseConfig(cfg.Otel.ServiceName, otelchimetric.WithMeterProvider(otelProvider.MeterProvider()))
+		router.Use(
+			otelchi.Middleware(cfg.Otel.ServiceName, otelchi.WithChiRoutes(router)),
+			otelchimetric.NewServerResponseBodySize(otelChiBaseCfg),
+			otelchimetric.NewServerActiveRequests(otelChiBaseCfg),
+		)
+	}
+
+	router.Use(
+		middleware.RequestID,
+		// middleware.RealIP is intentionally omitted: it unconditionally rewrites
+		// r.RemoteAddr from X-Forwarded-For / X-Real-IP / True-Client-IP headers,
+		// which is spoofable and bypasses our trustProxy gate. Client IP is
+		// resolved instead by extractClientIP, which only trusts those headers
+		// when the operator has enabled trustProxy.
+		mid.Logger(logger),
+		mid.SecurityHeaders(),
+		// Restrict the max body size to the upload limit + 1MB (for overhead).
+		// Collection-import uploads carry the full inventory zip and have
+		// their own much larger cap; everything else falls through to the
+		// default.
+		mid.MaxBodySizeByPath(cfg.Web.MaxUploadSize+1, map[string]int64{
+			"/api/v1/group/import": cfg.Web.MaxImportSize + 1,
+		}),
+		middleware.Recoverer,
+		middleware.StripSlashes,
+	)
+
+	chain := errchain.New(mid.Errors(logger))
+
+	app.mountRoutes(router, chain, app.repos)
+
+	runner := graceful.NewRunner()
+
+	// Add OpenTelemetry shutdown
+	if otelProvider.IsEnabled() {
+		runner.AddFunc("otel-shutdown", func(ctx context.Context) error {
+			<-ctx.Done()
+			shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			defer cancel()
+			return otelProvider.Shutdown(shutdownCtx)
+		})
+	}
+
+	// Flush and close the export service's cached publisher topics on exit
+	// so buffered messages are not silently dropped.
+	runner.AddFunc("export-topics-shutdown", func(ctx context.Context) error {
+		<-ctx.Done()
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		return app.services.Exports.Shutdown(shutdownCtx)
+	})
+
+	runner.AddFunc("server", func(ctx context.Context) error {
+		httpserver := http.Server{
+			Addr:         fmt.Sprintf("%s:%s", cfg.Web.Host, cfg.Web.Port),
+			Handler:      router,
+			ReadTimeout:  cfg.Web.ReadTimeout,
+			WriteTimeout: cfg.Web.WriteTimeout,
+			IdleTimeout:  cfg.Web.IdleTimeout,
+		}
+
+		go func() {
+			<-ctx.Done()
+			_ = httpserver.Shutdown(context.Background())
+		}()
+
+		listener, err := activationListener(cfg.Web.Host)
+		if err != nil {
+			return err
+		}
+		if listener != nil {
+			defer func() {
+				if err := listener.Close(); err != nil {
+					log.Error().Err(err).Msg("failed to close listener")
+				}
+			}()
+			log.Info().Msgf("Server is running on %s", cfg.Web.Host)
+			return httpserver.Serve(listener)
+		}
+		log.Info().Msgf("Server is running on %s:%s", cfg.Web.Host, cfg.Web.Port)
+		return httpserver.ListenAndServe()
+	})
+
+	// Start Reoccurring Tasks
+	registerRecurringTasks(app, cfg, runner)
+
+	// Send analytics if enabled at around midnight UTC
+	if cfg.Options.AllowAnalytics {
+		analyticsTime := time.Second
+		runner.AddPlugin(NewTask("send-analytics", analyticsTime, func(ctx context.Context) {
+			for {
+				now := time.Now().UTC()
+				nextMidnight := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, time.UTC)
+				dur := time.Until(nextMidnight)
+				analyticsTime = dur
+				select {
+				case <-ctx.Done():
+					return
+				case <-time.After(dur):
+					log.Debug().Msg("running send analytics")
+					err := analytics.Send(version, build())
+					if err != nil {
+						log.Error().Err(err).Msg("failed to send analytics")
+					}
+				}
+			}
+		}))
+	}
+
+	return runner.Start(context.Background())
+}
+
+// isActivationAddress reports whether host selects one of anyhttp's socket
+// activation modes. It mirrors anyhttp's own parsing — an address whose URL
+// path is "unix" or "sysd" — so the gate can never disagree with what
+// GetListener would have decided. Everything else, including the empty
+// default, is a plain TCP address we bind ourselves.
+func isActivationAddress(host string) bool {
+	u, err := url.Parse(host)
+	if err != nil {
+		// anyhttp treats an unparseable address as TCP; so do we.
+		return false
+	}
+	return u.Path == "unix" || u.Path == "sysd"
+}
+
+// activationListener returns a listener to Serve when Web.Host selects systemd
+// socket activation or a unix socket, and nil when the caller should bind
+// Web.Host:Web.Port itself.
+//
+// The gate runs *before* anyhttp is called, and that ordering is the whole
+// point. anyhttp.GetListener binds a TCP socket for any non-activation address
+// before it returns, and when Web.Host is empty (the default) that socket is
+// port 80, because anyhttp maps "" to ":http". Homebox never serves it, so the
+// process would sit on :80 for its entire lifetime without accepting anything:
+// under host networking that denies :80 to every other service, and clients
+// that do connect reach a socket nobody answers, so they hang rather than being
+// refused. Opening it and closing it again would still lose a startup race
+// against another service, so the only safe thing is never to ask for it.
+// See issue #1656.
+func activationListener(host string) (net.Listener, error) {
+	if !isActivationAddress(host) {
+		return nil, nil
+	}
+
+	listener, addrType, addrCfg, err := anyhttp.GetListener(host)
+	if err != nil {
+		// A malformed unix/sysd address falls back to binding Web.Host:Web.Port,
+		// matching how this behaved before.
+		log.Debug().Msgf("anyhttp error: %v", err)
+		return nil, nil
+	}
+
+	switch addrType {
+	case anyhttp.SystemdFD:
+		sysdCfg := addrCfg.(*anyhttp.SysdConfig)
+		if sysdCfg.IdleTimeout != nil {
+			closeUnusedListener(listener)
+			log.Error().Msg("idle timeout not yet supported. Please remove and try again")
+			return nil, errors.New("idle timeout not yet supported. Please remove and try again")
+		}
+		return listener, nil
+	case anyhttp.UnixSocket:
+		return listener, nil
+	default:
+		// Unreachable given the gate above, but if anyhttp ever hands back a
+		// TCP listener for a unix/sysd address, don't hold the socket.
+		closeUnusedListener(listener)
+		return nil, nil
+	}
+}
+
+func closeUnusedListener(listener net.Listener) {
+	if err := listener.Close(); err != nil {
+		log.Error().Err(err).Msg("failed to close unused listener")
+	}
+}
+
+// ensureAssetIDs assigns asset IDs to any entities that don't have one,
+// covering locations that were migrated from the old schema.
+func ensureAssetIDs(app *app) {
+	groups, err := app.repos.Groups.GetAllGroups(context.Background(), uuid.Nil)
+	if err != nil {
+		log.Warn().Err(err).Msg("failed to get groups for asset ID assignment")
+		return
+	}
+
+	for _, g := range groups {
+		n, err := app.services.Entities.EnsureAssetID(context.Background(), g.ID)
+		if err != nil {
+			log.Warn().Err(err).Str("group", g.Name).Msg("failed to ensure asset IDs")
+		} else if n > 0 {
+			log.Info().Int("count", n).Str("group", g.Name).Msg("assigned asset IDs to entities")
+		}
+	}
+}

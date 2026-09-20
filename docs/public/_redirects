@@ -1,0 +1,6 @@
+# Example german redirect
+# / /de 302 Language=de
+# /* /de/:splat 302 Language=de
+
+# This goes at the end if no other redirects match
+/ /en 302

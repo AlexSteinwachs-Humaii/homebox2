@@ -1,0 +1,293 @@
+// Package v1 provides the API handlers for version 1 of the API.
+package v1
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/hay-kot/httpkit/errchain"
+	"github.com/hay-kot/httpkit/server"
+	"github.com/rs/zerolog/log"
+	"github.com/sysadminsmedia/homebox/backend/app/api/providers"
+	"github.com/sysadminsmedia/homebox/backend/internal/core/services"
+	"github.com/sysadminsmedia/homebox/backend/internal/core/services/reporting/eventbus"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/repo"
+	"github.com/sysadminsmedia/homebox/backend/internal/sys/config"
+	"github.com/sysadminsmedia/homebox/backend/internal/sys/validate"
+
+	"github.com/olahol/melody"
+)
+
+// multipartFormError translates a ParseMultipartForm failure into a
+// RequestError. A body that tripped the MaxBytesReader cap installed by the
+// body-size middleware surfaces as 413 with an explicit message instead of a
+// misleading 400 "failed to parse multipart form" (#1538).
+func multipartFormError(err error) error {
+	var maxBytesErr *http.MaxBytesError
+	if errors.As(err, &maxBytesErr) {
+		return validate.NewRequestError(
+			fmt.Errorf("uploaded file exceeds the size limit of %d bytes", maxBytesErr.Limit),
+			http.StatusRequestEntityTooLarge)
+	}
+	return validate.NewRequestError(errors.New("failed to parse multipart form"), http.StatusBadRequest)
+}
+
+type Results[T any] struct {
+	Items []T `json:"items"`
+}
+
+func WrapResults[T any](items []T) Results[T] {
+	return Results[T]{Items: items}
+}
+
+type Wrapped struct {
+	Item interface{} `json:"item"`
+}
+
+func Wrap(v any) Wrapped {
+	return Wrapped{Item: v}
+}
+
+func WithMaxUploadSize(maxUploadSize int64) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.maxUploadSize = maxUploadSize
+	}
+}
+
+func WithMaxImportSize(maxImportSize int64) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.maxImportSize = maxImportSize
+	}
+}
+
+func WithMaxParseMemory(maxParseMemory int64) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.maxParseMemory = maxParseMemory
+	}
+}
+
+func WithDemoStatus(demoStatus bool) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.isDemo = demoStatus
+	}
+}
+
+func WithRegistration(allowRegistration bool) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.allowRegistration = allowRegistration
+	}
+}
+
+func WithSecureCookies(secure bool) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.cookieSecure = secure
+	}
+}
+
+func WithURL(url string) func(*V1Controller) {
+	return func(ctrl *V1Controller) {
+		ctrl.url = url
+	}
+}
+
+type V1Controller struct {
+	repo              *repo.AllRepos
+	svc               *services.AllServices
+	bus               *eventbus.EventBus
+	config            *config.Config
+	oidcProvider      *providers.OIDCProvider
+	url               string
+	maxUploadSize     int64
+	maxImportSize     int64
+	maxParseMemory    int64
+	cookieSecure      bool
+	isDemo            bool
+	allowRegistration bool
+}
+
+type (
+	ReadyFunc func() bool
+
+	Build struct {
+		Version   string `json:"version"`
+		Commit    string `json:"commit"`
+		BuildTime string `json:"buildTime"`
+	}
+
+	APISummary struct {
+		Healthy           bool            `json:"health"`
+		Versions          []string        `json:"versions"`
+		Title             string          `json:"title"`
+		Message           string          `json:"message"`
+		Build             Build           `json:"build"`
+		Latest            services.Latest `json:"latest"`
+		Demo              bool            `json:"demo"`
+		AllowRegistration bool            `json:"allowRegistration"`
+		LabelPrinting     bool            `json:"labelPrinting"`
+		OIDC              OIDCStatus      `json:"oidc"`
+		Telemetry         TelemetryStatus `json:"telemetry"`
+	}
+
+	OIDCStatus struct {
+		ButtonText   string `json:"buttonText,omitempty"`
+		Enabled      bool   `json:"enabled"`
+		AutoRedirect bool   `json:"autoRedirect,omitempty"`
+		AllowLocal   bool   `json:"allowLocal"`
+	}
+
+	TelemetryStatus struct {
+		Enabled bool `json:"enabled"`
+	}
+)
+
+func NewControllerV1(svc *services.AllServices, repos *repo.AllRepos, bus *eventbus.EventBus, config *config.Config, options ...func(*V1Controller)) *V1Controller {
+	ctrl := &V1Controller{
+		repo:              repos,
+		svc:               svc,
+		allowRegistration: true,
+		bus:               bus,
+		config:            config,
+	}
+
+	for _, opt := range options {
+		opt(ctrl)
+	}
+
+	ctrl.initOIDCProvider()
+
+	return ctrl
+}
+
+func (ctrl *V1Controller) initOIDCProvider() {
+	if ctrl.config.OIDC.Enabled {
+		oidcProvider, err := providers.NewOIDCProvider(ctrl.svc.User, &ctrl.config.OIDC, &ctrl.config.Options, ctrl.cookieSecure)
+		if err != nil {
+			log.Err(err).Msg("failed to initialize OIDC provider at startup")
+		} else {
+			ctrl.oidcProvider = oidcProvider
+			log.Info().Msg("OIDC provider initialized successfully at startup")
+		}
+	}
+}
+
+// HandleBase godoc
+//
+//	@Summary	Application Info
+//	@Tags		Base
+//	@Produce	json
+//	@Success	200	{object}	APISummary
+//	@Router		/v1/status [GET]
+func (ctrl *V1Controller) HandleBase(ready ReadyFunc, build Build) errchain.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) error {
+		return server.JSON(w, http.StatusOK, APISummary{
+			Healthy:           ready(),
+			Title:             "Homebox",
+			Message:           "Track, Manage, and Organize your Things",
+			Build:             build,
+			Latest:            ctrl.svc.BackgroundService.GetLatestVersion(),
+			Demo:              ctrl.isDemo,
+			AllowRegistration: ctrl.allowRegistration,
+			LabelPrinting:     ctrl.config.LabelMaker.PrintCommand != nil,
+			OIDC: OIDCStatus{
+				Enabled:      ctrl.config.OIDC.Enabled,
+				ButtonText:   ctrl.config.OIDC.ButtonText,
+				AutoRedirect: ctrl.config.OIDC.AutoRedirect,
+				AllowLocal:   ctrl.config.Options.AllowLocalLogin,
+			},
+			Telemetry: TelemetryStatus{
+				Enabled: ctrl.config.Otel.Enabled,
+			},
+		})
+	}
+}
+
+// HandleCurrency godoc
+//
+//	@Summary	Currency
+//	@Tags		Base
+//	@Produce	json
+//	@Success	200	{object}	currencies.Currency
+//	@Router		/v1/currencies [GET]
+func (ctrl *V1Controller) HandleCurrency() errchain.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) error {
+		// Set Cache for 10 Minutes
+		w.Header().Set("Cache-Control", "max-age=600")
+
+		return server.JSON(w, http.StatusOK, ctrl.svc.Currencies.Slice())
+	}
+}
+
+func (ctrl *V1Controller) HandleCacheWS() errchain.HandlerFunc {
+	type eventMsg struct {
+		Event string `json:"event"`
+	}
+
+	m := melody.New()
+	m.Upgrader.Subprotocols = []string{"hb-auth"}
+
+	m.HandleConnect(func(s *melody.Session) {
+		auth := services.NewContext(s.Request.Context())
+		s.Set("gid", auth.GID)
+	})
+
+	factory := func(e string) func(data any) {
+		// The payload depends only on the event name, so marshal it once at
+		// subscription time instead of on every dispatch.
+		jsonBytes, err := json.Marshal(&eventMsg{Event: e})
+		if err != nil {
+			log.Log().Msgf("error marshaling event %q: %v", e, err)
+			return func(any) {}
+		}
+
+		return func(data any) {
+			eventData, ok := data.(eventbus.GroupMutationEvent)
+			if !ok {
+				log.Log().Msgf("invalid event data: %v", data)
+				return
+			}
+
+			_ = m.BroadcastFilter(jsonBytes, func(s *melody.Session) bool {
+				groupIDStr, ok := s.Get("gid")
+				if !ok {
+					return false
+				}
+
+				GID := groupIDStr.(uuid.UUID)
+				return GID == eventData.GID
+			})
+		}
+	}
+
+	ctrl.bus.Subscribe(eventbus.EventTagMutation, factory("tag.mutation"))
+	ctrl.bus.Subscribe(eventbus.EventEntityMutation, factory("entity.mutation"))
+	ctrl.bus.Subscribe(eventbus.EventUserMutation, factory("user.mutation"))
+	ctrl.bus.Subscribe(eventbus.EventExportMutation, factory("export.mutation"))
+	ctrl.bus.Subscribe(eventbus.EventImportMutation, factory("import.mutation"))
+
+	// Persistent asynchronous ticker that keeps all websocket connections alive with periodic pings.
+	go func() {
+		const interval = 10 * time.Second
+
+		// The ping frame never changes, so build it once rather than on every tick.
+		pingBytes, err := json.Marshal(&eventMsg{Event: "ping"})
+		if err != nil {
+			log.Log().Msgf("error marshaling ping: %v", err)
+			return
+		}
+
+		ping := time.NewTicker(interval)
+		defer ping.Stop()
+
+		for range ping.C {
+			_ = m.Broadcast(pingBytes)
+		}
+	}()
+
+	return func(w http.ResponseWriter, r *http.Request) error {
+		return m.HandleRequest(w, r)
+	}
+}

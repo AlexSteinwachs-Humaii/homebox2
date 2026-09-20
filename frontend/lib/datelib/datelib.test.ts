@@ -1,0 +1,38 @@
+import { describe, expect, test } from "vitest";
+import { factorRange, parse, zeroTime } from "./datelib";
+
+describe("zeroTime", () => {
+  test("should zero out the time", () => {
+    const date = new Date(Date.UTC(2020, 1, 1, 12, 30, 30));
+    const zeroed = zeroTime(date);
+    expect(zeroed.getHours()).toBe(0);
+    expect(zeroed.getMinutes()).toBe(0);
+    expect(zeroed.getSeconds()).toBe(0);
+  });
+});
+
+describe("factorRange", () => {
+  test("should return a range of dates", () => {
+    const [start, end] = factorRange(10);
+
+    // Start should be today
+    expect(start).toBeInstanceOf(Date);
+    expect(start.getFullYear()).toBe(new Date().getFullYear());
+
+    // End should be 10 days from now
+    expect(end).toBeInstanceOf(Date);
+
+    // Set the future date so it works even in late December when the year changes
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 10); // Adds 10 days to the current date
+
+    expect(end.getFullYear()).toBe(futureDate.getFullYear());
+  });
+});
+
+describe("parse", () => {
+  test("should parse a date string", () => {
+    const date = parse("2020-02-01");
+    expect(date).toBeInstanceOf(Date);
+  });
+});

@@ -1,0 +1,397 @@
+{
+    "collection": {
+        "invite_token": "Token"
+    },
+    "components": {
+        "app": {
+            "create_modal": {
+                "createAndAddAnother": "Folosește {shiftKey} + {enterKey} pentru a crea și a adăuga din nou.",
+                "shift": "Shift"
+            },
+            "import_dialog": {
+                "change_warning": "Comportamentul pentru importuri cu import_refs existente s-a schimbat. Dacă un import_ref este prezent în fișierul CSV,\nobiectul v-a fi actualizat cu valorile din fișierul CSV.",
+                "description": "Importă un fișier CSV care conține toate obiectele, etichetele și locațiile tale. \nCitește documentația pentru mai multe informații privind format-ul necesar.",
+                "title": "Importă fișier CSV",
+                "toast": {
+                    "import_failed": "Importul a eșuat. Te rog, încearcă din nou mai târziu.",
+                    "import_success": "Import cu succes!",
+                    "please_select_file": "Te rog, selecteaza un fisier pentru a importa."
+                }
+            },
+            "outdated": {
+                "current_version": "Versiune Curentă",
+                "dismiss": "Revocă",
+                "latest_version": "Ultima Versiune",
+                "new_version_available": "Nouă versiune disponibilă",
+                "new_version_available_link": "Dă click aici pentru a vedea notele de lansare"
+            }
+        },
+        "color_selector": {
+            "clear": "Elimina culoarea",
+            "color": "Culoare",
+            "no_color": "Fara culoare",
+            "no_color_selected": "Nici o culoare selectata"
+        },
+        "global": {
+            "copy_text": {
+                "documentation": "documentație",
+                "failed_to_copy": "Nu s-a copiat textul în clipboard",
+                "https_required": "pentru că HTTPS este necesar",
+                "learn_more": "Învață mai multe în"
+            },
+            "date_time": {
+                "ago": "{0} în urmă",
+                "days": "zile",
+                "hour": "oră",
+                "hours": "ore",
+                "in": "în {0}",
+                "just-now": "chiar acum",
+                "last-month": "luna trecută",
+                "last-week": "săptămâna trecută",
+                "last-year": "anul trecut",
+                "minute": "minut",
+                "minutes": "minute",
+                "months": "luni",
+                "next-month": "luna următoare",
+                "next-week": "săptămâna viitoare",
+                "next-year": "anul acesta",
+                "second": "secundă",
+                "seconds": "secunde",
+                "tomorrow": "Mâine",
+                "week": "săptămâna",
+                "weeks": "săptămâni",
+                "years": "ani",
+                "yesterday": "ieri"
+            },
+            "label_maker": {
+                "browser_print": "Imprimare din browser",
+                "confirm_description": "Sigur doriți să imprimați această etichetă?",
+                "download": "Descărcare etichetă",
+                "print": "Imprimare etichetă",
+                "server_print": "Imprimare pe server",
+                "titles": "Etichete",
+                "toast": {
+                    "print_failed": "Imprimarea etichetei a eșuat",
+                    "print_success": "Etichetă imprimată"
+                }
+            },
+            "page_qr_code": {
+                "page_url": "URL Pagină",
+                "qr_tooltip": "Afișați codul QR"
+            },
+            "password_score": {
+                "password_strength": "Complexitate Parolă"
+            }
+        },
+        "item": {
+            "attachments_list": {
+                "download": "Descărcare",
+                "open_new_tab": "Deschideți într-o filă nouă"
+            },
+            "create_modal": {
+                "delete_photo": "Ştergere fotografie",
+                "item_description": "Descriere articol",
+                "item_name": "Denumire articol",
+                "item_photo": "Fotografie de articol 📷",
+                "item_quantity": "Cantitate Articol",
+                "parent_item": "Articol Părinte",
+                "product_tooltip_input_barcode": "Completare automată cu un cod de bare furnizat manual",
+                "product_tooltip_scan_barcode": "Completare automată cu un cod de bare de la 📷",
+                "rotate_photo": "Rotește fotografia",
+                "set_as_primary_photo": "Setați ca { isPrimary, select, true {non-} false {} other {}} fotografie principală",
+                "title": "Crează articol",
+                "toast": {
+                    "create_failed": "Articolul nu a putut fi creat",
+                    "create_success": "Articol creat"
+                }
+            },
+            "view": {
+                "selectable": {
+                    "card": "Cartelă",
+                    "items": "Articole",
+                    "no_items": "Nu există articole pentru afișare",
+                    "table": "Tabel"
+                },
+                "table": {
+                    "page": "Pagină",
+                    "rows_per_page": "Rânduri pe pagină"
+                }
+            }
+        },
+        "location": {
+            "create_modal": {
+                "location_description": "Descriere locatie",
+                "location_name": "Nume locație",
+                "title": "Crează Locație"
+            },
+            "selector": {
+                "parent_location": "Locație Părinte"
+            },
+            "tree": {
+                "no_locations": "Nu există locații disponibile. Folosește butonul 'Crează' pentru a adăuga o locație nouă."
+            }
+        }
+    },
+    "global": {
+        "add": "Adaugă",
+        "build": "Build: { build }",
+        "confirm": "Confirmă",
+        "create": "Crează",
+        "create_and_add": "Crează și Adaugă încă un articol",
+        "created": "Creat",
+        "delete": "Șterge",
+        "details": "Detalii",
+        "duplicate": "Duplicat",
+        "edit": "Redactare",
+        "email": "Adresă de email",
+        "follow_dev": "Urmărește developer-ul",
+        "footer": {
+            "api_link": "'<a href=\"https://homebox.software/en/api/\" target=\"_blank\">'API'</a>'",
+            "version_link": "'<'a href=\"https://github.com/sysadminsmedia/homebox/releases/tag/{ version }\" target=\"_blank\"'>' Versiune: { version } Build: { build } '</a>'"
+        },
+        "github": "Proiect GitHub",
+        "insured": "Asigurat",
+        "items": "Articole",
+        "join_discord": "Vino pe Discord",
+        "locations": "Locații",
+        "maintenance": "Mentenanță",
+        "name": "Nume",
+        "password": "Parolă",
+        "read_docs": "Citește documentația",
+        "save": "Salvare",
+        "search": "Caută",
+        "sign_out": "Ieșire",
+        "submit": "Trimite",
+        "update": "Actualizare",
+        "value": "Valoare",
+        "version": "Versiune: { version }",
+        "welcome": "Bun venit, { username }"
+    },
+    "home": {
+        "quick_statistics": "Statistici rapide",
+        "recently_added": "Adăugat recent",
+        "storage_locations": "Locații de depozitare",
+        "total_items": "Total articole",
+        "total_locations": "Total locații",
+        "total_value": "Valoare totală"
+    },
+    "index": {
+        "disabled_registration": "Înregistrare Dezactivată",
+        "dont_join_group": "Nu vrei sa te alături unui grup?",
+        "joining_group": "Te alături unui grup existent!",
+        "login": "Autentificare",
+        "register": "Înregistrare",
+        "remember_me": "Ține-mă minte",
+        "set_email": "Care este adresa ta de email?",
+        "set_name": "Care este numele tău?",
+        "set_password": "Setează-ți parola",
+        "tagline": "Urmărește, Organizează și Gestionează lucrurile tale."
+    },
+    "items": {
+        "add": "Adaugă",
+        "advanced": "Avansat",
+        "archived": "Arhivate",
+        "asset_id": "ID activ",
+        "attachment": "Atașament",
+        "attachments": "Fișiere atașate",
+        "changes_persisted_immediately": "Modificările atașamentelor vor fi salvate imediat",
+        "created_at": "Creat la",
+        "custom_fields": "Câmpuri personalizate",
+        "description": "Descriere",
+        "details": "Detalii",
+        "drag_and_drop": "Trageți și plasați fișierele aici sau faceți clic pentru a selecta fișierele",
+        "edit": {
+            "view_image": "Vizualizează Imagine"
+        },
+        "edit_details": "Editare detalii",
+        "field_selector": "Selector Câmp",
+        "field_value": "Valoare Câmp",
+        "first": "Primul",
+        "include_archive": "Include Articole Arhivate",
+        "insured": "Asigurat",
+        "last": "Ultimul",
+        "lifetime_warranty": "Garanție pe viață",
+        "location": "Locație",
+        "manual": "Manual",
+        "manuals": "Manuale",
+        "manufacturer": "Producător",
+        "model_number": "Număr model",
+        "name": "Nume",
+        "next_page": "Următoarea Pagină",
+        "no_results": "Nu s-au găsit articole",
+        "notes": "Notițe",
+        "options": "Opțiuni",
+        "order_by": "Ordonează După",
+        "pages": "Pagina { page } din { totalPages }",
+        "parent_item": "Articol Părinte",
+        "photo": "Fotografie",
+        "photos": "Fotografii",
+        "prev_page": "Pagina Anterioară",
+        "purchase_date": "Data achiziției",
+        "purchase_details": "Detalii achiziție",
+        "purchase_price": "Prețul de Achiziție",
+        "purchased_from": "Achiziționat de la",
+        "quantity": "Cantitate",
+        "query_id": "Interogarea numărului de identificare a activului: { id }",
+        "receipt": "Chitanță",
+        "receipts": "Chitanțe",
+        "reset_search": "Resetează Căutare",
+        "results": "{ total } Rezultate",
+        "serial_number": "Număr de serie",
+        "show_advanced_view_options": "Afișează opțiuni avansate",
+        "sold_at": "Vândut la",
+        "sold_details": "Detalii vânzare",
+        "sold_price": "Preț vânzare",
+        "sold_to": "Vândut către",
+        "tip_1": "Filtrele de locație și de etichete folosesc operațiunea \"SAU\". Dacă sunt selectate mai multe,\ndoar unul va fi necesar pentru potrivire.",
+        "tip_2": "Căutările prefixate cu '#' vor efectua o căutare după ID de activ (exemplu '#000-001')",
+        "tip_3": "Filtrele de câmp folosesc operația \"OR\". Dacă sunt selectate mai multe, doar unul va fi necesar\npentru potrivire.",
+        "tips": "Sfaturi",
+        "tips_sub": "Sfaturi Căutare",
+        "updated_at": "Actualizat La",
+        "warranty": "Garanție",
+        "warranty_details": "Detalii Garanție",
+        "warranty_expires": "Garanția expiră"
+    },
+    "languages": {
+        "ca": "Catalană",
+        "de": "Germană",
+        "en": "Engleză",
+        "es": "Spaniolă",
+        "fr": "Franceză",
+        "hu": "Maghiară",
+        "it": "Italiană",
+        "ja-JP": "Japoneză",
+        "nl": "Olandeză",
+        "pl": "Poloneză",
+        "pt-BR": "Portugheză (Brazilia)",
+        "pt-PT": "Portugheză (Portugalia)",
+        "ru": "Rusă",
+        "sl": "Slovenă",
+        "sv": "Suedeză",
+        "tr": "Turcă",
+        "uk-UA": "Ucraininană",
+        "zh-CN": "Chineză (Simplificată)",
+        "zh-HK": "Chineză (Hong Kong)",
+        "zh-MO": "Chineză (Macau)",
+        "zh-TW": "Chineză (Tradițională)"
+    },
+    "languages.da-DK": "Daneză",
+    "languages.ro-RO": "Română",
+    "languages.sk-SK": "Slovacă",
+    "locations": {
+        "child_locations": "Locații copii",
+        "collapse_tree": "Contrage arbore",
+        "no_results": "Nu s-au găsit Locații",
+        "update_location": "Actualizare locație"
+    },
+    "maintenance": {
+        "filter": {
+            "both": "Ambele",
+            "completed": "Finalizat",
+            "scheduled": "Programat"
+        },
+        "list": {
+            "complete": "Finalizat",
+            "create_first": "Crează Prima ta Înregistrare",
+            "delete": "Șterge",
+            "duplicate": "Duplicat",
+            "edit": "Redactare",
+            "new": "Nou"
+        },
+        "modal": {
+            "completed_date": "Dată finalizare",
+            "cost": "Preț",
+            "delete_confirmation": "Ești sigur ca dorești ștergerea acestei înregistrări?",
+            "edit_action": "Actualizare",
+            "edit_title": "Redactare Înregistrare",
+            "entry_name": "Nume Înregistrare",
+            "new_action": "Crează",
+            "new_title": "Înregistrare Nouă",
+            "notes": "Notițe",
+            "scheduled_date": "Dată Programată"
+        },
+        "monthly_average": "Media Lunară",
+        "toast": {
+            "failed_to_create": "Nu s-a putut crea înregistrarea",
+            "failed_to_delete": "Nu s-a putut șterge înregistrarea",
+            "failed_to_update": "Nu s-a putut actualiza înregistrarea"
+        },
+        "total_cost": "Preț Total",
+        "total_entries": "Înregistrări Totale"
+    },
+    "menu": {
+        "create_item": "Articol / Activ",
+        "create_location": "Locație",
+        "home": "Acasă",
+        "locations": "Locații",
+        "maintenance": "Mentenanță",
+        "profile": "Profil",
+        "search": "Caută"
+    },
+    "profile": {
+        "active": "Activ",
+        "change_password": "Schimbă Parola",
+        "currency_format": "Format monedă",
+        "current_password": "Parola Actuală",
+        "delete_account": "Șterge Cont",
+        "delete_account_sub": "Ștergeți contul și toate datele asociate acestuia. Această acțiune nu poate fi revocată.",
+        "enabled": "Activat",
+        "example": "Exemplu",
+        "group_settings": "Setări Grup",
+        "group_settings_sub": "Setări Grup Partajare. Este posibil să fie nevoie să reîncărcați browser-ul pentru aplicarea unor setări.",
+        "inactive": "Inactiv",
+        "language": "Limbă",
+        "new_password": "Parolă Nouă",
+        "no_notifiers": "Niciun notificator configurat",
+        "notifier_modal": "{ type, select, true {Edit} false {Create} other {Other}} Notifier",
+        "notifiers": "Notificatori",
+        "notifiers_sub": "Primiți notificări pentru mementourile de întreținere viitoare",
+        "test": "Test",
+        "theme_settings": "Setări Temă",
+        "theme_settings_sub": "Setările temei sunt stocate în spațiul de stocare local al browserului. Poți schimba tema oricând. Dacă ai \ndificultăți la setarea temei, poți încerca să reîmprospătezi browser-ul.",
+        "update_group": "Actualizare Grup",
+        "update_language": "Actualizare Limbă",
+        "url": "URL",
+        "user_profile": "Profil Utilizator",
+        "user_profile_sub": "Invitați utilizatori și gestionați-vă contul."
+    },
+    "tools": {
+        "actions": "Acțiuni Inventar",
+        "actions_set": {
+            "ensure_ids": "Garantează ID-urile activelor",
+            "ensure_ids_button": "Garantează ID-urile activelor",
+            "ensure_ids_sub": "Garantează că toate articolele din inventar au un câmp asset_id valid. Acest lucru se face găsind câmpul cu cel mai mare asset_id curent și aplicând următoarea valoare fiecărui articol care nu are câmpul assed_id completat. Acest lucru se face în ordinea dată de câmpul created_at.",
+            "ensure_import_refs": "Garantează Import Refs",
+            "ensure_import_refs_button": "Garantează Import Refs",
+            "ensure_import_refs_sub": "Garantează că toate articolele din inventar au un câmp import_ref valid. Acest lucru se face prin generarea unui șir de 8 caractere aleatoare pentru fiecare articol ce nu are câmp import_ref.",
+            "set_primary_photo": "Setează ca Imagine Principală",
+            "set_primary_photo_button": "Setează ca Imagine Principală",
+            "set_primary_photo_sub": "În versiunea v0.10.0 a Homebox, câmpul de imagine primară a fost adăugat la atașamentele de tip fotografie. Această acțiune va seta câmpul de imagine primară la prima imagine din matricea de atașamente din baza de date, dacă acest lucru nu este facut deja. '<a class=\"link\" href=\"https://github.com/hay-kot/homebox/pull/576\">'Vezi GitHub PR #576'</a>'",
+            "zero_datetimes": "Zero articol Data Ore",
+            "zero_datetimes_button": "Zero articol Data Ore",
+            "zero_datetimes_sub": "Resetează valoarea de timp pentru toate câmpurile de dată și oră din inventar la începutul datei. Acesta este un fix pentru un bug care a fost introdus la începutul dezvoltării și care a cauzat valoarea timpului să fie stocată cu timpul ceea ce a provocat probleme cu afișarea corectă a câmpurilor de dată. '<a class=\"link\" href=\"https://github.com/hay-kot/homebox/issues/236\" target=\"_blank\">'Vezi Github Issue #236 pentru mai multe detalii.'</a>'"
+        },
+        "actions_sub": "Aplicați acțiuni în inventar în bloc. Aceste acțiuni sunt ireversibile. '<b>'Procedați cu atenție.'</b>'",
+        "import_export": "Import/Export",
+        "import_export_set": {
+            "export": "Exportă Inventar",
+            "export_button": "Exportă Inventar",
+            "export_sub": "Exportă formatul CSV standard pentru Homebox. Această acțiune ca exporta toate articolele din inventar.",
+            "import": "Importă Inventar",
+            "import_button": "Importă Inventar",
+            "import_sub": "Importă formatul standard CSV pentru Homebox. Fără un '<code>' HB.import_ref '</code>' coloană, aceasta va'<b>'nu'</b>' suprascrie orice elemente existente în inventarul dvs., adăugați doar elemente noi. Rânduri cu'<code>'HB.import_ref'</code>' coloana sunt îmbinate în elementele existente cu același import_ref, dacă există unul."
+        },
+        "import_export_sub": "Importați și exportați inventarul într-un fișier CSV. Acest lucru este util atunci când se migrează inventarul către o instanță nouă de Homebox.",
+        "reports": "Rapoarte",
+        "reports_set": {
+            "asset_labels": "Etichete de identificare a activului",
+            "asset_labels_button": "Generator de etichete",
+            "asset_labels_sub": "Generează un PDF imprimabil conținând etichete pentru o serie de ID-uri de activ. Acestea nu sunt specifice inventarului tău așadar etichetele se pot imprima din timp și se pot aplica ulterior.",
+            "bill_of_materials": "Lista Materialelor",
+            "bill_of_materials_button": "Generează BOM",
+            "bill_of_materials_sub": "Generează un fișier CSV (Valori separate prin virgulă) care poate fi importat într-un program de foi de calcul. Acesta este un sumar ar inventarului cu informații minimale legate de articole și prețuri."
+        },
+        "reports_sub": "Generați rapoarte diferite pentru inventarul tău."
+    }
+}

@@ -1,0 +1,92 @@
+version: "2"
+linters:
+  default: none
+  enable:
+    - asciicheck
+    - bodyclose
+    - copyloopvar
+    - depguard
+    - dogsled
+    - errcheck
+    - errorlint
+    - exhaustive
+    - forbidigo
+    - gochecknoinits
+    - goconst
+    - gocritic
+    - gocyclo
+    - goprintffuncname
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - revive
+    - sqlclosecheck
+    - staticcheck
+    - tagalign
+    - testifylint
+    - unconvert
+    - unused
+    - whitespace
+    - zerologlint
+  settings:
+    depguard:
+      rules:
+        main:
+          deny:
+            - pkg: io/util
+              desc: |
+                Deprecated: As of Go 1.16, the same functionality is now provided by
+                package io or package os, and those implementations should be
+                preferred in new code. See the specific function documentation for
+                details.
+    exhaustive:
+      default-signifies-exhaustive: true
+    forbidigo:
+      forbid:
+        - pattern: ^log\.Fatal.*$
+          msg: Do not use log.Fatal - return errors instead
+      analyze-types: true
+    goconst:
+      min-len: 5
+      min-occurrences: 5
+    gocritic:
+      enabled-checks:
+        - ruleguard
+    revive:
+      confidence: 3
+      severity: warning
+    tagalign:
+      order:
+        - json
+        - schema
+        - yaml
+        - yml
+        - toml
+        - validate
+    testifylint:
+      enable-all: true
+  exclusions:
+    generated: lax
+    paths:
+      - internal/data/ent.*
+      - third_party$
+      - builtin$
+      - examples$
+    rules:
+      - path: '(.+)_test\.go'
+        linters:
+          - forbidigo
+issues:
+  fix: false
+formatters:
+  enable:
+    - gofmt
+    - swaggo
+  exclusions:
+    generated: lax
+    paths:
+      - internal/data/ent.*
+      - third_party$
+      - builtin$
+      - examples$

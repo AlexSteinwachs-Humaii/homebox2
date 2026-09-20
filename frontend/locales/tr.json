@@ -1,0 +1,611 @@
+{
+    "components": {
+        "app": {
+            "create_modal": {
+                "createAndAddAnother": "Başka bir tane oluşturmak ve eklemek için {shiftKey} + {enterKey} tuşlarını kullanın.",
+                "enter": "Giriş",
+                "shift": "Üst Karakter"
+            },
+            "import_dialog": {
+                "change_warning": "Mevcut import_refs ile içe aktarmaların davranışı değişti. CSV dosyasında bir import_ref varsa, \nöğe CSV dosyasındaki değerlerle güncellenecektir.",
+                "description": "Öğelerinizi, etiketlerinizi ve konumlarınızı içeren bir CSV dosyasını içe aktarın. Daha fazla\nbilgi için dökümanları okuyun.",
+                "title": "CSV dosyasını içeri aktar",
+                "toast": {
+                    "import_failed": "İçe aktarım başarısız. Lütfen daha sonra tekrar deneyin.",
+                    "import_success": "İçe aktarma başarılı!",
+                    "please_select_file": "Lütfen içe aktarılacak dosyayı seçin."
+                }
+            },
+            "outdated": {
+                "current_version": "Güncel Sürüm",
+                "dismiss": "Yok say",
+                "latest_version": "Son Sürüm",
+                "new_version_available": "Yeni sürüm mevcut",
+                "new_version_available_link": "Sürüm notlarını görüntülemek için buraya tıklayın"
+            }
+        },
+        "color_selector": {
+            "clear": "Rengi temizle",
+            "color": "Renk",
+            "no_color": "Renksiz",
+            "no_color_selected": "Renk seçilmedi",
+            "randomize": "Rastgele renk"
+        },
+        "form": {
+            "password": {
+                "toggle_show": "Şifreyi Göster/Gizle"
+            }
+        },
+        "global": {
+            "copy_text": {
+                "documentation": "dokümantasyon",
+                "failed_to_copy": "Metin panoya kopyalanamadı",
+                "https_required": "çünkü HTTPS gereklidir",
+                "learn_more": "Daha fazla bilgi edinmek için"
+            },
+            "date_time": {
+                "ago": "{0} önce",
+                "days": "gün",
+                "hour": "saat",
+                "hours": "saat",
+                "in": "{0} içinde",
+                "just-now": "az önce",
+                "last-month": "geçen ay",
+                "last-week": "geçen hafta",
+                "last-year": "geçen yıl",
+                "minute": "dakika",
+                "minutes": "dakika",
+                "months": "ay",
+                "next-month": "gelecek ay",
+                "next-week": "gelecek hafta",
+                "next-year": "gelecek yıl",
+                "second": "saniye",
+                "seconds": "saniye",
+                "tomorrow": "yarın",
+                "week": "hafta",
+                "weeks": "hafta",
+                "years": "yıl",
+                "yesterday": "dün"
+            },
+            "label_maker": {
+                "browser_print": "Tarayıcıdan Yazdır",
+                "confirm_description": "Bu etiketi yazdırmak istediğinizden emin misiniz?",
+                "download": "Etiketi İndir",
+                "print": "Etiketi yazdır",
+                "server_print": "Sunucuda yazdır",
+                "titles": "Etiketler",
+                "toast": {
+                    "load_status_failed": "Durum yüklenemedi",
+                    "print_failed": "Etiket yazdırma başarısız",
+                    "print_success": "Etiket yazdırıldı"
+                }
+            },
+            "page_qr_code": {
+                "page_url": "Sayfa URL'si",
+                "qr_tooltip": "QR Kodu Göster"
+            },
+            "password_score": {
+                "password_strength": "Şifre güvenlik seviyesi"
+            }
+        },
+        "item": {
+            "attachments_list": {
+                "download": "İndir",
+                "open_new_tab": "Yeni sekmede aç"
+            },
+            "create_modal": {
+                "clear_template": "Şablonu Temizle",
+                "delete_photo": "Fotoğrafı sil",
+                "item_description": "Ürün Açıklaması",
+                "item_name": "Ürün Adı",
+                "item_photo": "Öğe Fotoğrafı 📷",
+                "item_quantity": "Öğe Miktarı",
+                "parent_item": "Ana Öğe",
+                "product_tooltip_input_barcode": "Elle girilen barkod ile otomatik doldur",
+                "product_tooltip_scan_barcode": "Fotoğrafdaki barkod ile doldur",
+                "rotate_photo": "Fotoğrafı döndür",
+                "set_as_primary_photo": "{isPrimary, select, true {non} false {} other {}}ana fotoğraf olarak ayarla",
+                "title": "Eşya Oluştur",
+                "toast": {
+                    "already_creating": "Zaten bir ürün oluşturuluyor",
+                    "create_failed": "Üürn oluşturulamadı",
+                    "create_success": "Ürün yaratıldı",
+                    "failed_load_parent": "Ana öğe yüklenemedi - lütfen elle seçin",
+                    "no_canvas_support": "Tarayıcınız canvas işlemlerini desteklemiyor",
+                    "please_select_location": "Lütfen bir konum seçin.",
+                    "rotate_failed": "Fotoğraf döndürme başarısız: { error }",
+                    "rotate_process_failed": "Döndürülmüş görüntü işlenemedi",
+                    "some_photos_failed": "{count, plural, =0 {Yüklenecek fotoğraf yok.} =1 {1 fotoğraf yüklenemedi.} other {Bazı fotoğraflar yüklenemedi.}}",
+                    "upload_failed": "Fotoğraf yüklenemedi: { photoName }",
+                    "upload_success": "{count, plural, =0 {Fotoğraf yüklenmedi.} =1 {Fotoğraf başarıyla yüklendi.} other {Tüm fotoğraflar başarıyla yüklendi.}}",
+                    "uploading_photos": "{count, plural, =0 {Yüklenecek fotoğraf yok} =1 {1 fotoğraf yükleniyor...} other {{count} fotoğraf yükleniyor...}}"
+                },
+                "upload_photos": "Fotoğrafları Yükle",
+                "uploaded": "Yüklenen Fotoğraf"
+            },
+            "product_import": {
+                "barcode": "Ürün barkodu",
+                "db_source": "Veritabanı kaynağı",
+                "error_exception": "Barkoddaki ürün bulunurken bir hata meydana geldi: ",
+                "error_invalid_barcode": "Geçersiz barkod girildi",
+                "error_not_found": "Girilen barkoda ait ürün bulunamadı.",
+                "search_item": "Ürün ara",
+                "title": "Ürünü içe aktar"
+            },
+            "selector": {
+                "clear": "Öğe Seçimini Temizle",
+                "no_results": "Sonuç Bulunamadı",
+                "placeholder": "Seç…",
+                "search_placeholder": "Aramak için yazın…",
+                "searching": "Aranıyor…"
+            },
+            "view": {
+                "change_details": {
+                    "add_tags": "Etiketler Ekle",
+                    "failed_to_update_item": "Ürün güncellemesi başarısız oldu",
+                    "remove_tags": "Etiketleri Kaldır",
+                    "title": "Ürün detaylarını değiştir"
+                },
+                "selectable": {
+                    "card": "Kart",
+                    "items": "Öğeler",
+                    "no_items": "Görüntülenecek Öge Yok",
+                    "select_all": "Hepsini Seç",
+                    "select_card": "Kart Seç",
+                    "select_row": "Satır Seç",
+                    "table": "Tablo"
+                },
+                "table": {
+                    "dropdown": {
+                        "actions": "Eylemler",
+                        "change_location": "Bölge Değiştir",
+                        "change_location_success": "Bölge Değişti",
+                        "create_maintenance_item": "Ürün için Bakım Girişi Oluştur",
+                        "create_maintenance_selected": "Seçili Ürünler için Bakım Girişi Oluştur",
+                        "create_maintenance_success": "Bakım Girişi Oluşturuldu",
+                        "delete_confirmation": "Seçili ürünleri silmek istediğine emin misin? Bu işlem geri alınamaz.",
+                        "delete_item": "Ürünü Sil",
+                        "delete_selected": "Seçili Ürünleri Sil",
+                        "download_csv": "Tabloyu CSV Olarak İndir",
+                        "download_json": "Tabloyu JSON Olarak İndir",
+                        "duplicate_item": "Ürünü Çoğalt",
+                        "duplicate_selected": "Seçilen Ürünleri Çoğalt",
+                        "error_deleting": "Ürün Silinirken Hata Oldu",
+                        "error_duplicating": "Ürün Çoğaltılırken Hata Oldu",
+                        "open_menu": "Menüyü aç",
+                        "open_multi_tab_warning": "Güvenlik sebepleri nedeniyle bir browserda birden fazla sekme açılması yasak. Bunu değiştirmek için dokümantasyona bakın:",
+                        "toggle_expand": "Genişletmeyi Aç/Kapat",
+                        "view_item": "Ürünü göster",
+                        "view_items": "Ürünleri göster"
+                    },
+                    "headers": "Başlıklar",
+                    "page": "Sayfa",
+                    "quick_actions": "Hızlı İşlemleri ve Seçimi Etkinleştir",
+                    "rows_per_page": "Sayfa başına satır sayısı",
+                    "selected_rows": "{total} satırda {selected} tanesi seçildi.",
+                    "table_settings": "Tablo Ayarları",
+                    "view_item": "Ürünü Göster"
+                }
+            }
+        },
+        "location": {
+            "create_modal": {
+                "location_description": "Konum Açıklaması",
+                "location_name": "Konum Adı",
+                "title": "Konum oluştur",
+                "toast": {
+                    "already_creating": "Zaten bir konum oluşturuluyor",
+                    "create_failed": "Konum oluşturulamadı",
+                    "create_success": "Konum oluşturuldu"
+                }
+            },
+            "selector": {
+                "no_location_found": "Konum bulunamadı",
+                "parent_location": "Üst Konum",
+                "search_location": "Konumları Ara",
+                "select_location": "Konumu Seç"
+            },
+            "tree": {
+                "no_locations": "Mevcut konum yok. Navigasyon çubuğundaki\n.'<span class=\"link-primary\">'Oluştur'</span>' düğmesiyle yeni konumlar ekleyin."
+            }
+        },
+        "quick_menu": {
+            "no_results": "Sonuç bulunamadı.",
+            "shortcut_hint": "Bir eylemi hızlı bir şekilde seçmek için sayı tuşlarını kullanın."
+        }
+    },
+    "errors": {
+        "api_failure": "Backend API çağrısı başarısız oldu: "
+    },
+    "global": {
+        "add": "Ekle",
+        "archived": "Arşivlendi",
+        "build": "Sürüm: { build }",
+        "cancel": "İptal",
+        "confirm": "Onaylayın",
+        "create": "Oluştur",
+        "create_and_add": "Oluştur ve Bir Tane Daha Ekle",
+        "create_subitem": "Alt Öğe Oluştur",
+        "created": "Oluşturuldu",
+        "delete": "Sil",
+        "delete_confirm": "Bu öğeyi silmek istediğinizden emin misiniz? ",
+        "demo_instance": "Bu bir tanıtım örneğidir",
+        "details": "Detaylar",
+        "duplicate": "Kopyala",
+        "edit": "Düzenle",
+        "email": "Elektronik posta",
+        "follow_dev": "Geliştiriciyi takip edin",
+        "footer": {
+            "api_link": "'<a href=\"https://homebox.software/en/api/\" target=\"_blank\">'API'</a>'",
+            "version_link": "'<'a href=\"https://github.com/sysadminsmedia/homebox/releases/tag/{ version }\" target=\"_blank\"'>' Sürüm: { version } Yapı: { build }'</a>"
+        },
+        "github": "GitHub Projesi",
+        "insured": "Sigortalı",
+        "items": "Öğeler",
+        "join_discord": "Discord'a Katılın",
+        "loading": "Yükleniyor…",
+        "locations": "Konumlar",
+        "maintenance": "Bakım",
+        "name": "İsim",
+        "navigate": "Gezin",
+        "password": "Şifre",
+        "preview": "Önizleme",
+        "quantity": "Miktar",
+        "read_docs": "Dokümanları okuyun",
+        "return_home": "Anasayfaya Dön",
+        "save": "Kaydet",
+        "search": "Ara",
+        "sign_out": "Oturumu kapat",
+        "submit": "Gönder",
+        "unknown": "Bilinmeyen",
+        "update": "Güncelle",
+        "updating": "Güncelleniyor",
+        "value": "Değer",
+        "version": "Versiyon:{ version }",
+        "welcome": "Hoşgeldin, { username }"
+    },
+    "home": {
+        "quick_statistics": "Hızlı İstatistikler",
+        "recently_added": "Yakında Eklendi",
+        "storage_locations": "Saklama Konumları",
+        "total_items": "Toplam Ürün",
+        "total_locations": "Toplam Konum",
+        "total_value": "Toplam Değer"
+    },
+    "index": {
+        "disabled_registration": "Kayıt olma devre dışı",
+        "dont_join_group": "Bir gruba katılmak istemiyor musunuz?",
+        "joining_group": "Mevcut bir gruba katılıyorsunuz!",
+        "login": "Oturum Aç",
+        "register": "Kaydolun",
+        "remember_me": "Beni Hatırla",
+        "set_email": "E-posta adresiniz nedir?",
+        "set_name": "Adınız nedir?",
+        "set_password": "Şifrenizi belirleyin",
+        "tagline": "Eşyalarınızı Takip Edin, Düzenleyin ve Yönetin.",
+        "title": "Eşyalarınızı Düzenleyin ve Etiketleyin",
+        "toast": {
+            "invalid_email": "Geçersiz e-posta adresi",
+            "invalid_email_password": "Geçersiz e-posta veya şifre",
+            "login_success": "Başarıyla oturum açıldı",
+            "problem_registering": "Kullanıcı kaydedilirken sorun oluştu",
+            "user_registered": "Kullanıcı kaydedildi"
+        }
+    },
+    "items": {
+        "add": "Ekle",
+        "advanced": "İleri Seviye",
+        "archived": "Arşivlendi",
+        "asset_id": "Öğe Kimliği",
+        "associated_with_multiple": "Bu varlık kimliği birden fazla öğe ile ilişkilidir",
+        "attachment": "Ek",
+        "attachments": "Ekler",
+        "changes_persisted_immediately": "Eklerde yapılan değişiklikler hemen kaydedilecektir",
+        "created_at": "Oluşturulma",
+        "custom_fields": "Özel Alanlar",
+        "delete_attachment_confirm": "Bu eki silmek istediğinizden emin misiniz?",
+        "delete_item_confirm": "Bu öğeyi silmek istediğinizden emin misiniz?",
+        "description": "Açıklama",
+        "details": "Detaylar",
+        "drag_and_drop": "Dosyaları buraya sürükleyip bırakın veya dosyaları seçmek için tıklayın",
+        "duplicate": {
+            "copy_attachments": "Eklentileri Kopyala",
+            "copy_custom_fields": "Özel Alanları Kopyala",
+            "copy_maintenance": "Kopyalama Bakımı",
+            "custom_prefix": "Öneki Kopyala",
+            "enable_custom_prefix": "Öneki etkinleştir",
+            "override_instructions": "Bu ayarları görmezden gelmek için kopyasını oluştur düğmesine basarken Shifte basılı tutun.",
+            "prefix": "Kopyası ",
+            "prefix_instructions": "Bu ön ek kopyalanan kalemin ismine eklenecek. Ön ekin sonuna boşluk ekleyerek ön ek ile kalem ismi arasına bir boşluk ekleyebilirsin.",
+            "temporary_title": "Geçici Ayarlar",
+            "title": "Ayarların Kopyasını Oluştur"
+        },
+        "edit": {
+            "edit_attachment_dialog": {
+                "attachment_title": "Ek Başlığı",
+                "attachment_type": "Ek Türü",
+                "primary_photo": "Ana Fotoğraf",
+                "primary_photo_sub": "Bu seçenek yalnızca fotoğraflar için kullanılabilir. Yalnızca bir fotoğraf birincil olarak seçilebilir. Bu seçeneği seçerseniz, varsa mevcut ana fotoğraf seçili durumdan kaldırılır.",
+                "select_type": "Tür seçin",
+                "title": "Eki Düzenle"
+            },
+            "view_image": "Görseli göster"
+        },
+        "edit_details": "Detayları Düzenle",
+        "field_selector": "Alan Seçici",
+        "field_value": "Alan Değeri",
+        "first": "Birinci",
+        "include_archive": "Arşivlenen Öğeleri Dahil Et",
+        "insured": "Sigortalı",
+        "invalid_asset_id": "Geçersiz Varlık Kimliği",
+        "last": "Son",
+        "lifetime_warranty": "Ömür Boyu Garanti",
+        "location": "Konum",
+        "manual": "Kılavuz",
+        "manuals": "Kullanım Kılavuzları",
+        "manufacturer": "Üretici",
+        "model_number": "Model Numarası",
+        "name": "İsim",
+        "next_page": "Sonraki Sayfa",
+        "no_attachments": "Ek bulunamadı",
+        "no_results": "Öğe Bulunamadı",
+        "notes": "Notlar",
+        "only_with_photo": "Sadece fotoğraflı öğeler",
+        "only_without_photo": "Sadece fotoğrafsız öğeler",
+        "options": "Seçenekler",
+        "order_by": "Sıralama ölçütü",
+        "pages": "Sayfa { page }/{ totalPages }",
+        "parent_item": "Ana Öğe",
+        "photo": "Fotoğraf",
+        "photos": "Fotoğraflar",
+        "prev_page": "Önceki Sayfa",
+        "purchase_date": "Satın Alma Tarihi",
+        "purchase_details": "Satın Alma Detayları",
+        "purchase_price": "Satınalma Fiyatı",
+        "purchased_from": "Satın Alındığı Yer",
+        "quantity": "Miktar",
+        "query_id": "Varlık Kimlik Numarası Sorgulanıyor: { id }",
+        "receipt": "Fatura",
+        "receipts": "Faturalar",
+        "reset_search": "Aramayı Sıfırla",
+        "results": "{ total } Sonuç",
+        "select_field": "Alan seçin",
+        "serial_number": "Seri Numarası",
+        "show_advanced_view_options": "Gelişmiş Seçenekleri Göster",
+        "sold_at": "Satıldığı Yer",
+        "sold_details": "Satış Detayları",
+        "sold_price": "Satış Fiyatı",
+        "sold_to": "Satılan Kişi",
+        "sync_child_locations": "Alt öğelerin konumlarını senkronize et",
+        "tip_1": "Konum ve etiket filtreleri 'veya' işlemini kullanır. Eğer birden fazla seçilirse sadece biri \neşleştirme için kullanılacaktır.",
+        "tip_2": "'#' ile başlayan aramalar bir varlık kimliğini sorgular (örneğin '#000-001')",
+        "tip_3": "Alan filtreleri 'VEYA' işlemini kullanır. Birden fazla seçenek seçilirse, eşleşme için yalnızca birinin \nkarşılanması yeterlidir.",
+        "tips": "İpuçları",
+        "tips_sub": "Arama İpuçları",
+        "toast": {
+            "asset_not_found": "Varlık bulunamadı",
+            "attachment_deleted": "Ek silindi",
+            "attachment_updated": "Ek güncellendi",
+            "attachment_uploaded": "Ek yüklendi",
+            "child_items_location_no_longer_synced": "Alt öğelerin konumları artık bu öğeyle senkronize edilmeyecek.",
+            "child_items_location_synced": "Alt öğelerin konumları bu öğeyle senkronize edildi",
+            "child_location_desync": "Konumu değiştirmek, üst öğenin konumundan senkronizasyonu kaldıracaktır",
+            "error_loading_parent_data": "Üst veriler yüklenmeye çalışılırken bir hata oluştu",
+            "failed_adjust_quantity": "Miktar ayarlanamadı",
+            "failed_delete_attachment": "Ek silinemedi",
+            "failed_delete_item": "Öğe silinemedi",
+            "failed_duplicate_item": "Öğe çoğaltılamadı",
+            "failed_load_asset": "Varlık yüklenemedi",
+            "failed_load_item": "Öğe yüklenemedi",
+            "failed_load_items": "Öğeler yüklenemedi",
+            "failed_save": "Öğe kaydedilemedi",
+            "failed_save_no_location": "Öğe kaydedilemedi: konum seçilmedi",
+            "failed_search_items": "Öğe aratılamadı",
+            "failed_update_attachment": "Ek güncellenemedi",
+            "failed_upload_attachment": "Ek yüklenemedi",
+            "item_deleted": "Öğe silindi",
+            "item_saved": "Öğe kaydedildi",
+            "quantity_cannot_negative": "Miktar negatif olamaz"
+        },
+        "updated_at": "Güncelleme",
+        "warranty": "Garanti",
+        "warranty_details": "Garanti Bilgileri",
+        "warranty_expires": "Garanti Bitiş Tarihi"
+    },
+    "languages": {
+        "bs-BA": "Boşnakça",
+        "ca": "Katalanca",
+        "cs-CZ": "Çekçe",
+        "de": "Almanca",
+        "en": "İngilizce",
+        "es": "İspanyolca",
+        "fi-FI": "Fince",
+        "fr": "Fransızca",
+        "hu": "Macarca",
+        "id-ID": "Endonezce",
+        "it": "İtalyanca",
+        "ja-JP": "Japonca",
+        "ko-KR": "Korece",
+        "lb-LU": "Lüksemburgca (Lüksemburg)",
+        "lt-LT": "Litvanca (Litvanya)",
+        "nb-NO": "Norveççe (Bokmål)",
+        "nl": "Hollandaca",
+        "pl": "Lehçe",
+        "pt-BR": "Brezilya Portekizcesi",
+        "pt-PT": "Portekizce (Portekiz)",
+        "ru": "Rusça",
+        "sl": "Slovence",
+        "sq-AL": "Arnavutça",
+        "sv": "İsveççe",
+        "ta-IN": "Tamilce",
+        "th-TH": "Tayca",
+        "tr": "Türkçe",
+        "uk-UA": "Ukraynaca",
+        "vi-VN": "Vietnamca",
+        "zh-CN": "Basitleştirilmiş Çince",
+        "zh-HK": "Çince (Hong Kong)",
+        "zh-MO": "Çince (Macau)",
+        "zh-TW": "Geleneksel Çince"
+    },
+    "languages.da-DK": "Danca",
+    "languages.ro-RO": "Romence",
+    "languages.sk-SK": "Slovakça",
+    "locations": {
+        "child_locations": "Alt konumlar",
+        "collapse_tree": "Ağacı Daralt",
+        "expand_tree": "Ağacı Genişlet",
+        "location_items_delete_confirm": "Bu konumu ve tüm öğelerini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+        "no_results": "Konum bulunamadı",
+        "toast": {
+            "failed_delete_location": "Konum silinemedi",
+            "failed_load_location": "Konum yüklenemedi",
+            "failed_update_location": "Konum güncellenemedi",
+            "location_deleted": "Konum silindi",
+            "location_updated": "Konum güncellendi"
+        },
+        "update_location": "Konumu Güncelle"
+    },
+    "maintenance": {
+        "filter": {
+            "both": "İkisi de",
+            "completed": "Tamamlanmış",
+            "scheduled": "Planlanmış"
+        },
+        "list": {
+            "complete": "Tamamla",
+            "create_first": "İlk Kaydınızı Oluşturun",
+            "delete": "Sil",
+            "duplicate": "Kopyala",
+            "edit": "Düzenle",
+            "new": "Yeni"
+        },
+        "modal": {
+            "completed_date": "Tamamlanma Tarihi",
+            "cost": "Maliyet",
+            "delete_confirmation": "Bu kaydı silmek istediğinizden emin misiniz?",
+            "edit_action": "Güncelle",
+            "edit_title": "Kaydı Düzenle",
+            "entry_name": "Kayıt Adı",
+            "new_action": "Oluştur",
+            "new_title": "Yeni Kayıt",
+            "notes": "Notlar",
+            "scheduled_date": "Planlanan Tarih"
+        },
+        "monthly_average": "Aylık Ortalama",
+        "toast": {
+            "failed_to_create": "Kayıt oluşturulamadı",
+            "failed_to_delete": "Kayıt silinemedi",
+            "failed_to_update": "Kayıt güncellenemedi"
+        },
+        "total_cost": "Toplam Maliyet",
+        "total_entries": "Toplam Kayıt"
+    },
+    "menu": {
+        "create_item": "Öğe / Varlık",
+        "create_location": "Konum",
+        "home": "Ev",
+        "locations": "Konumlar",
+        "maintenance": "Bakım",
+        "profile": "Profil",
+        "scanner": "Tarayıcı",
+        "search": "Ara"
+    },
+    "profile": {
+        "active": "Aktif",
+        "change_password": "Şifre Değiştir",
+        "currency_format": "Para Birimi Biçimi",
+        "current_password": "Mevcut Şifre",
+        "delete_account": "Hesabı Sil",
+        "delete_account_confirm": "Hesabınızı silmek istediğinizden emin misiniz? Grubunuzun son üyesiyseniz tüm verileriniz silinir. Bu işlem geri alınamaz.",
+        "delete_account_sub": "Hesabınızı ve ona bağlı tüm verileri silin. Bu işlem geri alınamaz.",
+        "delete_notifier_confirm": "Bu uyarıcıyı silmek istediğinizden emin misiniz?",
+        "display_legacy_header": "{ currentValue, select, true {Eski Başlığı Devre Dışı Bırak} false {Eski Başlığı Etkinleştir} other {Vurulmadı}}",
+        "enabled": "Etkinleştirildi",
+        "example": "Örnek",
+        "group_settings": "Grup Ayarları",
+        "group_settings_sub": "Paylaşılan Grup Ayarları. Bazı ayarların uygulanabilmesi için tarayıcınızı yenilemeniz gerekebilir.",
+        "inactive": "Etkin Değil",
+        "language": "Dil",
+        "legacy_image_fit": "{ currentValue, select, true {Eski Sığmayı Kapat: Çubuklar ile Sığdır} false {Eski Sığmayı Aç: Resmi Keserek Doldur} other {Vurulmadı}}",
+        "new_password": "Yeni Şifre",
+        "no_notifiers": "Yapılandırılmış bildirimci yok",
+        "no_override": "Geçersiz kılma yok",
+        "notifier_modal": "{ type, select, true {Edit} false {Create} other {Other}} Bildirici",
+        "notifiers": "Bildirimde Bulunanlar",
+        "notifiers_sub": "Yaklaşan bakım hatırlatmaları için bildirimler alın",
+        "override_locale": "Tarih ve Para Birimi Dilini Geçersiz Kıl",
+        "test": "Test",
+        "theme_settings": "Tema Ayarları",
+        "theme_settings_sub": "Tema ayarları tarayıcınızın yerel depolama alanında saklanır. Temayı istediğiniz zaman değiştirebilirsiniz. \nTemanızı ayarlamakta sorun yaşıyorsanız, tarayıcınızı yenilemeyi deneyin.",
+        "toast": {
+            "account_deleted": "Hesabınız silindi.",
+            "failed_change_password": "Şifre değiştirilemedi.",
+            "password_changed": "Şifre başarıyla değiştirildi."
+        },
+        "update_group": "Grubu Güncelle",
+        "update_language": "Dili Güncelle",
+        "url": "URL",
+        "user_profile": "Kullanıcı Profili",
+        "user_profile_sub": "Kullanıcıları davet edin ve hesabınızı yönetin."
+    },
+    "reports": {
+        "label_generator": {
+            "generate_page": "Sayfayı Oluştur",
+            "label_height": "Etiket Yüksekliği",
+            "label_width": "Etiket Genişliği",
+            "page_height": "Sayfa Yüksekliği",
+            "tips": "İpuçları",
+            "title": "Etiket Oluşturucu",
+            "toast": {
+                "page_too_small_card": "Sayfa boyutu kart boyutu için çok küçük"
+            }
+        }
+    },
+    "scanner": {
+        "error": "Tarama yapılırken bir hata oluştu",
+        "invalid_url": "Geçersiz barkod URL'si",
+        "no_sources": "Video kaynağı mevcut değil",
+        "permission_denied": "Kamera izni reddedildi, lütfen tarayıcı ayarlarınızda kameraya erişime izin verin",
+        "select_video_source": "Video kaynağı seçin",
+        "title": "Tarayıcı",
+        "unsupported": "Media Stream API, HTTPS olmadan desteklenmez"
+    },
+    "tools": {
+        "actions": "Envanter İşlemleri",
+        "actions_set": {
+            "ensure_ids": "Varlık Kimliklerini Sağlayın",
+            "ensure_ids_button": "Varlık Kimliklerini Sağlayın",
+            "ensure_ids_sub": "Envanterinizdeki tüm öğelerin geçerli bir asset_id alanına sahip olmasını sağlar. Bu, veritabanındaki en yüksek mevcut asset_id alanını bulup, ayarlanmamış asset_id alanına sahip her öğeye bir sonraki değeri uygulayarak yapılır. Bu işlem, created_at alanına göre sıralanarak gerçekleştirilir.",
+            "ensure_import_refs": "İçe Aktarma Referanslarını Sağlayın",
+            "ensure_import_refs_button": "İçe Aktarma Referanslarını Sağlayın",
+            "ensure_import_refs_sub": "Envanterinizdeki tüm öğelerin geçerli bir import_ref alanına sahip olmasını sağlar. Bu, ayarlanmamış import_ref alanına sahip her öğe için rastgele 8 karakterli bir dize oluşturarak yapılır.",
+            "set_primary_photo": "Ana Fotoğrafı Ayarla",
+            "set_primary_photo_button": "Ana Fotoğrafı Ayarla",
+            "set_primary_photo_sub": "Homebox'un v0.10.0 sürümünde, fotoğraf türündeki ekler için birincil görüntü alanı eklendi. Bu işlem, veritabanındaki ekler dizisindeki ilk görüntüyü, eğer zaten ayarlanmamışsa, birincil görüntü alanı olarak ayarlayacaktır. '<a class=\"link\" href=\"https://github.com/hay-kot/homebox/pull/576\">'GitHub #576'yı Gör'</a>",
+            "zero_datetimes": "Sıfır Öğesi Tarih Saatleri",
+            "zero_datetimes_button": "Sıfır Öğe Tarih Saatleri",
+            "zero_datetimes_sub": "Tarih saat alanlarındaki tüm zaman değerlerini en baştaki tarihe sıfırlar. Bu, sitenin geliştirilmesi sırasında erken aşamalarda ortaya çıkan ve zaman değerinin saklanmasına neden olan bir hatayı düzeltmek içindir; bu da tarih alanlarının doğru değerler göstermesinde sorunlara yol açıyordu. '<a class=\"link\" href=\"https://github.com/hay-kot/homebox/issues/236\" target=\"_blank\">'Daha fazla bilgi için Github Sorunu #236'ya Bakın.'</a>'"
+        },
+        "actions_sub": "Envanterinize toplu olarak işlemler uygulayın. Bu işlemler geri alınamaz. '<b>'Dikkatli olun.'</b>",
+        "import_export": "İçe Aktar/Dışa Aktar",
+        "import_export_set": {
+            "export": "Envanteri Dışa Aktar",
+            "export_button": "Envanteri Dışa Aktar",
+            "export_sub": "Homebox için standart CSV formatını dışa aktarır. Bu, envanterinizdeki tüm öğeleri dışa aktaracaktır.",
+            "import": "Envanteri İçe Aktar",
+            "import_button": "Envanteri İçe Aktar",
+            "import_sub": "Homebox için standart CSV formatını içe aktarır. '<code>'HB.import_ref'</code>' sütunu olmadan, bu mevcut envanterinizdeki herhangi bir öğeyi '<b>'üzerine yazmaz'</b>', yalnızca yeni öğeler ekler. '<code>'HB.import_ref'</code>' sütununa sahip satırlar, varsa aynı import_ref'e sahip mevcut öğelerle birleştirilir."
+        },
+        "import_export_sub": "Envanterinizi bir CSV dosyasına içe ve dışa aktarın. Bu, envanterinizi yeni bir Homebox örneğine taşımak için faydalıdır.",
+        "reports": "Raporlar",
+        "reports_set": {
+            "asset_labels": "Varlık Kimlik Etiketleri",
+            "asset_labels_button": "Etiket Oluşturucu",
+            "asset_labels_sub": "Bir dizi Varlık Kimliği için yazdırılabilir bir PDF etiketleri oluşturur. Bu etiketler envanterinize özgü değildir, bu nedenle etiketleri önceden yazdırabilir ve onları aldığınızda envanterinize uygulayabilirsiniz.",
+            "bill_of_materials": "Malzeme Listesi",
+            "bill_of_materials_button": "Malzeme Listesi Oluştur",
+            "bill_of_materials_sub": "Bir elektronik tablo programına içe aktarılabilen bir CSV (Virgülle Ayrılmış Değerler) dosyası oluşturur. Bu, envanterinizin temel öğe ve fiyat bilgileriyle birlikte bir özetidir."
+        },
+        "reports_sub": "Envanteriniz için farklı raporlar oluşturun."
+    }
+}

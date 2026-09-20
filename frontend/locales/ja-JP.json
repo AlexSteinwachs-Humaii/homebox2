@@ -1,0 +1,703 @@
+{
+    "collection": {
+        "copy_invite": "招待リンクをコピー",
+        "create_invite": "招待を作成",
+        "delete_collection": "プロファイルの削除",
+        "delete_confirm": "このプロファイルを削除してもよろしいですか？操作は取り消せません。",
+        "deleted_collection": "プロファイルを削除しました",
+        "expires_at": "有効期限",
+        "invite_token": "招待コード",
+        "invite_token_hidden": "このコードは表示されません",
+        "invite_token_warning": "招待コードは一度しか表示されません。コードをコピーしてください。ページを離れたり、更新したりすると、招待コードは確認できなくなります。",
+        "invites": "招待",
+        "invites_delete_confirm": "招待を削除しますか？",
+        "leave_collection": "プロファイルとの紐付けを解除",
+        "leave_confirm": "このプロファイルのメンバーから離脱してもよろしいですか？",
+        "left_collection": "プロファイルの登録を解除しました",
+        "manage_collection": "プロファイルの管理",
+        "members": {
+            "cannot_remove_last": "最後のメンバーのため、登録解除ができません。",
+            "email": "メール",
+            "empty": "プロファイルにメンバーが存在しません",
+            "member": "メンバー",
+            "name": "名前",
+            "owner": "管理者",
+            "remove_confirm": "このメンバーを削除してもよろしいですか？",
+            "removed": "メンバーを削除しました"
+        },
+        "no_collections": {
+            "create": "プロファイルの新規作成",
+            "title": "プロファイルが見つかりません"
+        },
+        "no_invites": "招待コードはありません",
+        "remaining_uses": "残りの使用可能回数",
+        "tabs": {
+            "invites": "招待",
+            "members": "メンバー",
+            "notifiers": "通知機能",
+            "settings": "設定",
+            "tools": "ツール"
+        },
+        "uses": "使用可能回数"
+    },
+    "components": {
+        "app": {
+            "create_modal": {
+                "createAndAddAnother": "{shiftKey} + {enterKey}を使用すると、別のアイテムをそのまま追加できます。",
+                "enter": "Enter",
+                "shift": "シフト"
+            },
+            "import_dialog": {
+                "change_warning": "【注意】インポート時の動作が変更されました'<br>'\n選択されたCSVファイルにimport_refsの値が存在する場合、該当するアイテムはCSVファイルの値で上書きされます。",
+                "description": "アイテム、ラベル、ロケーション情報を含む CSV ファイルをインポートします。\nデータの形式など詳細については、ドキュメントを参照してください。",
+                "title": ".csvファイルのインポート",
+                "toast": {
+                    "import_failed": "読み込みに失敗しました。もう一度お試しください。",
+                    "import_success": "インポートに成功しました",
+                    "please_select_file": "ファイルを選択してください"
+                }
+            },
+            "outdated": {
+                "current_version": "現在のバージョン",
+                "dismiss": "却下",
+                "latest_version": "最新バージョン",
+                "new_version_available": "利用可能な更新があります",
+                "new_version_available_link": "クリックしてリリースノートを表示"
+            }
+        },
+        "collection": {
+            "create_modal": {
+                "name_label": "プロファイル名",
+                "title": "プロファイルの新規作成",
+                "toast": {
+                    "already_creating": "既にこのプロファイルは作成されています",
+                    "create_failed": "プロファイルの作成に失敗しました",
+                    "create_success": "プロファイルを作成しました",
+                    "please_enter_name": "プロファイル名を入力してください"
+                }
+            },
+            "invite_create_modal": {
+                "toast": {
+                    "invalid_uses": "1から100までの数字を入力してください"
+                }
+            },
+            "join_modal": {
+                "invite_code_label": "招待コード",
+                "invites_should_look_like": "招待コードは以下のような形式です",
+                "join": "参加する",
+                "title": "参加する",
+                "toast": {
+                    "already_joining": "既に参加しています",
+                    "join_failed": "招待を受けることができませんでした",
+                    "join_success": "参加しました",
+                    "please_enter_valid_join_code": "招待コードの形式が間違っています"
+                }
+            },
+            "selector": {
+                "collection_options": "プロファイル設定",
+                "create_collection": "プロファイルの新規作成",
+                "join_collection": "プロファイルに参加",
+                "no_collection_found": "プロファイルが見つかりません",
+                "search_collections": "プロファイルの検索",
+                "select_collection": "プロファイルの選択",
+                "your_collections": "あなたのプロファイル"
+            }
+        },
+        "color_selector": {
+            "clear": "色をリセット",
+            "color": "色",
+            "no_color": "色設定なし",
+            "no_color_selected": "色を選択していません",
+            "randomize": "色をランダムに変更する"
+        },
+        "form": {
+            "password": {
+                "toggle_show": "パスワードの表示を切り替え"
+            }
+        },
+        "global": {
+            "copy_text": {
+                "documentation": "ドキュメント",
+                "failed_to_copy": "テキストをクリップボードにコピーできませんでした",
+                "https_required": "( HTTPSに非対応なため )",
+                "learn_more": "詳しくはこちら"
+            },
+            "date_time": {
+                "ago": "{0} 前",
+                "days": "日",
+                "hour": "時間",
+                "hours": "時間",
+                "in": "{0}内",
+                "just-now": "たった今",
+                "last-month": "先月",
+                "last-week": "先週",
+                "last-year": "去年",
+                "minute": "分",
+                "minutes": "分",
+                "months": "か月",
+                "next-month": "来月",
+                "next-week": "来週",
+                "next-year": "来年",
+                "second": "秒",
+                "seconds": "秒",
+                "tomorrow": "明日",
+                "week": "週",
+                "weeks": "週",
+                "years": "年",
+                "yesterday": "昨日"
+            },
+            "label_maker": {
+                "browser_print": "印刷画面を開く",
+                "confirm_description": "この管理ラベルを印刷しますか？",
+                "download": "画像として保存",
+                "print": "プリンターで印刷",
+                "server_print": "サーバーで印刷",
+                "titles": "管理ラベルの出力",
+                "toast": {
+                    "load_status_failed": "ステータスの読み込みに失敗しました",
+                    "print_failed": "ラベルの印刷に失敗しました",
+                    "print_success": "ラベルを印刷しました"
+                }
+            },
+            "page_qr_code": {
+                "page_url": "ページ URL",
+                "qr_tooltip": "QRコードを表示"
+            },
+            "password_score": {
+                "password_strength": "パスワード強度"
+            }
+        },
+        "item": {
+            "attachments_list": {
+                "download": "ダウンロード",
+                "open_new_tab": "新しいタブで開く"
+            },
+            "create_modal": {
+                "delete_photo": "写真を削除",
+                "item_description": "説明",
+                "item_name": "名称",
+                "item_photo": "商品写真 📷",
+                "item_quantity": "数量",
+                "parent_item": "関連アイテム",
+                "product_tooltip_input_barcode": "バーコードを手動入力して自動取得を試みる",
+                "product_tooltip_scan_barcode": "バーコードを撮影して自動取得を試みる",
+                "rotate_photo": "写真を回転",
+                "set_as_primary_photo": "{isPrimary, select, true {non} false {} other {}} サムネイルに設定",
+                "title": "アイテムの追加",
+                "toast": {
+                    "already_creating": "既に同じアイテムがあります",
+                    "create_failed": "アイテムを作成できませんでした",
+                    "create_success": "アイテムを作成しました",
+                    "failed_load_parent": "親アイテムの読み込みに失敗しました。手動で選択してください",
+                    "no_canvas_support": "このブラウザはHTML5 canvasをサポートしていません",
+                    "please_select_location": "ロケーションを選択",
+                    "rotate_failed": "画像の回転ができませんでした。エラー内容: { error }",
+                    "rotate_process_failed": "画像回転の処理でエラーが発生しました",
+                    "some_photos_failed": "{count, plural, = 0 {アップロードする写真がありません。} = 1 {1枚の写真をアップロードできませんでした。} other {一部の写真をアップロードできませんでした。}}",
+                    "upload_failed": "画像のアップロードに失敗しました ({ photoName })",
+                    "upload_success": "{count, plural, = 0 {画像はアップロードされていません} = 1 {画像をアップロードしました} other {すべての画像をアップロードしました}}",
+                    "uploading_photos": "{count, plural, = 0 {アップロード可能な画像がありません} = 1 {画像をアップロードしています} other {{count}枚の画像をアップロードしています…}}"
+                },
+                "upload_photos": "画像をアップロード",
+                "uploaded": "アップロードした画像"
+            },
+            "product_import": {
+                "barcode": "商品のバーコード",
+                "db_source": "情報提供元",
+                "error_exception": "バーコード情報を取得できませんでした ",
+                "error_invalid_barcode": "このバーコードは使えません",
+                "error_not_found": "一致するバーコードが見つかりませんでした。",
+                "search_item": "商品を検索",
+                "title": "商品をインポート"
+            },
+            "selector": {
+                "no_results": "一致するものがありません",
+                "placeholder": "選択してください…",
+                "search_placeholder": "入力してください",
+                "searching": "検索中…"
+            },
+            "view": {
+                "selectable": {
+                    "card": "カード",
+                    "items": "アイテム",
+                    "no_items": "ここにアイテムはありません",
+                    "table": "テーブル"
+                },
+                "table": {
+                    "headers": "ヘッダー",
+                    "page": "ページ",
+                    "rows_per_page": "表示件数",
+                    "selected_rows": "{total} 件中 {selected} 件選択済み",
+                    "table_settings": "テーブル表示の設定",
+                    "view_item": "アイテムを見る"
+                }
+            }
+        },
+        "location": {
+            "create_modal": {
+                "location_description": "場所の詳細",
+                "location_name": "名称",
+                "title": "ロケーション(場所)の追加",
+                "toast": {
+                    "already_creating": "既に同じロケーションがあります",
+                    "create_failed": "ロケーションを作成できませんでした",
+                    "create_success": "ロケーションを作成しました"
+                }
+            },
+            "selector": {
+                "no_location_found": "一致するロケーションがありません",
+                "parent_location": "親項目 (選択された項目の下位にネスト)",
+                "search_location": "ロケーションを検索",
+                "select_location": "ロケーションを選択"
+            },
+            "tree": {
+                "no_locations": "ロケーションが設定されていません。\n左上の '<span class=\"link-primary\">'項目の追加'</span>' ボタンでロケーションを追加してください。"
+            }
+        },
+        "quick_menu": {
+            "no_results": "一致する項目はありません",
+            "shortcut_hint": "数字キーを入力することで対応する操作を実行できます"
+        },
+        "template": {
+            "form": {
+                "template_name": "テンプレート名"
+            }
+        }
+    },
+    "errors": {
+        "api_failure": "サーバーとの通信に失敗しました "
+    },
+    "global": {
+        "add": "追加",
+        "archived": "アーカイブ済み",
+        "build": "ビルド番号: { build }",
+        "cancel": "キャンセル",
+        "confirm": "確認が必要です",
+        "create": "項目の追加",
+        "create_and_add": "続けて追加できます",
+        "create_subitem": "サブアイテムを作成",
+        "created": "作成済み",
+        "delete": "削除",
+        "delete_confirm": "このアイテムを削除しますか？ ",
+        "demo_instance": "これはデモ環境です。データは新しいバージョンになると初期化されます。",
+        "details": "製品の情報",
+        "duplicate": "複製",
+        "edit": "編集",
+        "email": "メール",
+        "follow_dev": "開発者をフォローする",
+        "footer": {
+            "api_link": "'<a href=\"https://homebox.software/en/api/\" target=\"_blank\">'APIリファレンス(英語)'</a>'",
+            "version_link": "'<'a href=\"https://github.com/sysadminsmedia/homebox/releases/tag/{ version }\" target=\"_blank\"'>' Version: { version } Build: { build } '</a>'"
+        },
+        "github": "GitHub プロジェクト",
+        "insured": "保険適用",
+        "items": "アイテム",
+        "join_discord": "Discordサーバーへの参加",
+        "loading": "読込中…",
+        "locations": "ロケーション",
+        "maintenance": "メンテナンス情報",
+        "name": "名前",
+        "navigate": "移動",
+        "password": "パスワード",
+        "quantity": "数量",
+        "read_docs": "ドキュメントを読む",
+        "return_home": "トップページに戻る",
+        "save": "保存",
+        "search": "検索",
+        "sign_out": "ログアウト",
+        "submit": "送信",
+        "unknown": "不明",
+        "update": "アップデート",
+        "updating": "更新中",
+        "value": "値",
+        "version": "現在のバージョン: { version }",
+        "welcome": "{ username } でログイン中"
+    },
+    "home": {
+        "quick_statistics": "統計",
+        "recently_added": "最近追加したアイテム",
+        "storage_locations": "ロケーション",
+        "total_items": "アイテム数",
+        "total_locations": "合計ロケーション数",
+        "total_value": "合計金額"
+    },
+    "index": {
+        "disabled_registration": "アカウントの新規登録は無効化されています",
+        "dont_join_group": "グループに参加せずに新規登録をする",
+        "joining_group": "既存のグループの招待を受け取りました！",
+        "login": "ログイン",
+        "register": "新規登録",
+        "remember_me": "ログインしたままにする",
+        "set_email": "メールアドレスを入力してください",
+        "set_name": "お名前は何ですか？",
+        "set_password": "パスワードを入力してください",
+        "tagline": "Track, Organize, and Manage your Things.",
+        "title": "Organize and Tag Your Stuff",
+        "toast": {
+            "invalid_email": "無効なメールアドレス",
+            "invalid_email_password": "無効なメールアドレスまたはパスワードです",
+            "login_success": "ログインしました",
+            "problem_registering": "ユーザー情報を登録できませんでした",
+            "user_registered": "ユーザーを登録しました"
+        }
+    },
+    "items": {
+        "add": "項目を追加",
+        "advanced": "詳細項目の表示",
+        "archived": "アーカイブ済み",
+        "asset_id": "Asset ID",
+        "associated_with_multiple": "このAsset IDは重複しています",
+        "attachment": "添付ファイル",
+        "attachments": "添付ファイル",
+        "changes_persisted_immediately": "添付ファイルの保存は自動で行われます",
+        "created_at": "作成日",
+        "custom_fields": "カスタム項目",
+        "delete_attachment_confirm": "この添付ファイルを削除しますか？",
+        "delete_item_confirm": "このアイテムを削除しますか？",
+        "description": "説明",
+        "details": "この製品の情報",
+        "drag_and_drop": "添付ファイルはドラッグ＆ドロップ、もしくはクリックで追加できます",
+        "edit": {
+            "edit_attachment_dialog": {
+                "attachment_title": "添付ファイルのタイトル",
+                "attachment_type": "添付ファイルの種類",
+                "primary_photo": "サムネイルに設定",
+                "primary_photo_sub": "この画像をアイテムサムネイルに設定します。既に画像が設定されている場合は、このチェックボックスを有効にすると設定が上書きされます。",
+                "select_type": "種類を選択する",
+                "title": "添付ファイルの編集"
+            }
+        },
+        "edit_details": "基本的な情報の編集",
+        "field_selector": "カスタム値で絞り込む",
+        "field_value": "フィールド値",
+        "first": "最初の",
+        "include_archive": "「現在は使用していない」にチェックを入れた項目を検索に含める",
+        "insured": "保険適用",
+        "invalid_asset_id": "このAsset IDは無効です",
+        "last": "最後",
+        "lifetime_warranty": "無期限保証",
+        "location": "場所",
+        "manual": "取扱説明書",
+        "manuals": "取扱説明書",
+        "manufacturer": "製造・販売者",
+        "model_number": "型番",
+        "name": "名称",
+        "next_page": "次の ページ",
+        "no_attachments": "添付ファイルはありません",
+        "no_results": "一致する項目はありません",
+        "notes": "備考",
+        "only_with_photo": "写真付きのアイテムのみ",
+        "only_without_photo": "写真のないアイテムのみ",
+        "options": "オプション",
+        "order_by": "並べ替え",
+        "pages": "{ page } / { totalPages } ページ",
+        "parent_item": "関連アイテム",
+        "photo": "画像",
+        "photos": "画像",
+        "prev_page": "前のページ",
+        "purchase_date": "購入日",
+        "purchase_details": "購入時の情報",
+        "purchase_price": "購入価格",
+        "purchased_from": "購入場所",
+        "quantity": "数量",
+        "query_id": "識別ID { id } の情報を取得しています",
+        "receipt": "領収書・レシート",
+        "receipts": "レシート(領収書)",
+        "reset_search": "検索条件をクリア",
+        "results": "検索結果: { total } 件",
+        "select_field": "フィールドを選択",
+        "serial_number": "シリアル番号(S/N)",
+        "show_advanced_view_options": "高度なオプションを表示",
+        "sold_at": "売却日",
+        "sold_details": "売却時の情報",
+        "sold_price": "売却価格",
+        "sold_to": "売却先",
+        "sync_child_locations": "ペア設定されたアイテムの場所も同時に変更する",
+        "tip_1": "フィルター条件を複数選択した場合、\nいずれかに該当している項目すべてをフィルター条件に一致しているとみなします。",
+        "tip_2": "Asset IDで検索する場合は「#」を先頭に入力してください (例: '#000-001')",
+        "tip_3": "カスタム値絞り込み(Field Selector)は、\n複数選択された場合にどれかが該当するアイテムすべてを一致しているとみなしします。",
+        "tips": "ヒント",
+        "tips_sub": "検索に関するヒント",
+        "toast": {
+            "asset_not_found": "アイテムがありません",
+            "attachment_deleted": "添付ファイルを削除しました",
+            "attachment_updated": "添付ファイルを更新",
+            "attachment_uploaded": "添付ファイルをアップロードしました",
+            "child_items_location_no_longer_synced": "子アイテムのロケーションはこのアイテムと同期されなくなります。",
+            "child_items_location_synced": "子アイテムのロケーションはこのアイテムと同期されています",
+            "child_location_desync": "ロケーションを変更すると、親アイテムのロケーション同期が解除されます",
+            "error_loading_parent_data": "親アイテムの読み込み中にエラーが発生しました",
+            "failed_adjust_quantity": "数量の変更に失敗しました",
+            "failed_delete_attachment": "添付ファイルの削除に失敗しました",
+            "failed_delete_item": "アイテムの削除に失敗しました",
+            "failed_duplicate_item": "アイテムの複製に失敗しました",
+            "failed_load_asset": "アセットの読み込みに失敗しました",
+            "failed_load_item": "アイテムの読み込みに失敗しました",
+            "failed_load_items": "アイテムの読み込みに失敗しました",
+            "failed_save": "アイテム設定の保存に失敗しました",
+            "failed_save_no_location": "アイテム設定の保存に失敗しました: ロケーションを選択してください",
+            "failed_search_items": "アイテム検索に失敗しました",
+            "failed_update_attachment": "添付ファイルの更新に失敗しました",
+            "failed_upload_attachment": "添付ファイルのアップロードに失敗しました",
+            "item_deleted": "アイテムを削除しました",
+            "item_saved": "アイテム設定を保存しました",
+            "quantity_cannot_negative": "数量はマイナスにできません",
+            "sync_child_location": "ペア設定されたアイテムのロケーションも更新されました。"
+        },
+        "updated_at": "更新日",
+        "warranty": "保証書",
+        "warranty_details": "保証に関する情報",
+        "warranty_expires": "保証期間"
+    },
+    "languages": {
+        "bs-BA": "ボスニア語 (Bosnia and Herzegovina)",
+        "ca": "カタルーニャ語 (カタロニア語)",
+        "cs-CZ": "チェコ語",
+        "de": "ドイツ語",
+        "en": "英語",
+        "es": "スペイン語",
+        "fi-FI": "フィンランド語",
+        "fr": "フランス語",
+        "hu": "ハンガリー語",
+        "id-ID": "インドネシア語",
+        "it": "イタリア語",
+        "ja-JP": "日本語",
+        "ko-KR": "韓国語",
+        "lb-LU": "ルクセンブルク語 (Luxembourg)",
+        "lt-LT": "リトアニア語 (Lithuania)",
+        "nb-NO": "ノルウェー語 (ブークモール)",
+        "nl": "オランダ語",
+        "pl": "ポーランド語",
+        "pt-BR": "ポルトガル語 (ブラジル)",
+        "pt-PT": "ポルトガル語 (ポルトガル)",
+        "ru": "ロシア語",
+        "sl": "スロベニア語",
+        "sv": "スウェーデン語",
+        "ta-IN": "タミル語",
+        "th-TH": "タイ語",
+        "tr": "トルコ語",
+        "uk-UA": "ウクライナ語",
+        "vi-VN": "ベトナム語",
+        "zh-CN": "中国語 (簡体字)",
+        "zh-HK": "中国語 (香港)",
+        "zh-MO": "中国語 (マカオ)",
+        "zh-TW": "中国語 (繁体字)"
+    },
+    "languages.da-DK": "デンマーク語",
+    "languages.ro-RO": "ルーマニア語",
+    "languages.sk-SK": "スロバキア語",
+    "languages.sq-AL": "アルバニア語",
+    "locations": {
+        "child_locations": "属しているその他のロケーション",
+        "collapse_tree": "ツリーを折りたたむ",
+        "expand_tree": "ツリーを展開",
+        "location_items_delete_confirm": "このロケーションと、紐づいているアイテムをすべて削除します。'<br>'このロケーションに紐づけられたアイテムはすべて削除されます。'<br>'元に戻すことはできません。",
+        "no_results": "ロケーションはありません",
+        "toast": {
+            "failed_delete_location": "ロケーションの削除に失敗しました",
+            "failed_load_location": "ロケーションの読み込みに失敗しました",
+            "failed_update_location": "ロケーション設定の更新に失敗しました",
+            "location_deleted": "ロケーションを削除しました",
+            "location_updated": "ロケーション設定を更新しました"
+        },
+        "update_location": "場所情報の変更"
+    },
+    "maintenance": {
+        "filter": {
+            "both": "すべて",
+            "completed": "完了した項目",
+            "scheduled": "予定されている項目"
+        },
+        "list": {
+            "complete": "完了",
+            "create_first": "修理・メンテナンスに関する情報はありません'<br>'クリックすると追加できます",
+            "delete": "削除",
+            "duplicate": "複製",
+            "edit": "編集",
+            "new": "新規作成"
+        },
+        "modal": {
+            "completed_date": "作業を完了した日付",
+            "cost": "費用",
+            "delete_confirmation": "この項目を削除しますがよろしいですか？",
+            "edit_action": "変更の確定",
+            "edit_title": "修理・メンテナンス情報の編集",
+            "entry_name": "項目の名称",
+            "new_action": "入力を確定し追加する",
+            "new_title": "修理・メンテナンス情報の追加",
+            "notes": "備考",
+            "scheduled_date": "予定されている日付"
+        },
+        "monthly_average": "月平均",
+        "toast": {
+            "failed_to_create": "エントリを作成できませんでした",
+            "failed_to_delete": "エントリを削除できませんでした",
+            "failed_to_update": "エントリを更新できませんでした"
+        },
+        "total_cost": "合計金額",
+        "total_entries": "合計項目数"
+    },
+    "menu": {
+        "collection": "プロファイル",
+        "create_item": "アイテム",
+        "create_location": "場所",
+        "home": "ホーム",
+        "locations": "ロケーション",
+        "maintenance": "メンテナンス情報",
+        "profile": "ユーザー設定",
+        "scanner": "スキャナー",
+        "search": "検索"
+    },
+    "pages": {
+        "templates": {
+            "title": "テンプレート"
+        }
+    },
+    "profile": {
+        "active": "有効",
+        "change_password": "パスワードを変更",
+        "currency_format": "通貨の種類",
+        "current_password": "現在のパスワード",
+        "delete_account": "アカウントの削除 (永久的です！)",
+        "delete_account_confirm": "アカウントを削除しますか？あなたがこのグループのメンバーの最後の一人の場合、アイテム・ロケーション・ラベルなどすべてのデータが削除されます。'<br>'【最終確認】'<u>'この削除機能に再確認ポップアップはありません。続行した場合、すぐにデータが削除され復元もできません。'<u>'",
+        "delete_account_sub": "アカウントと関連するデータをすべて削除します。元に戻すことはできません。",
+        "delete_notifier_confirm": "この通知設定を削除してもよろしいですか？",
+        "display_legacy_header": "{currentValue, select, true {レガシーヘッダーを無効にする} false {レガシーヘッダーを有効にする} other {ヒットしない}}",
+        "enabled": "有効",
+        "example": "例",
+        "group_settings": "グループ設定",
+        "group_settings_sub": "一部の設定の反映には再読み込みが必要です",
+        "inactive": "停止中",
+        "language": "言語",
+        "moved_notice_body": "通知、招待、通貨の設定はプロファイルページに移動しました。",
+        "moved_notice_description": "設定は、プロファイルごと管理されるようになりました。",
+        "moved_notice_link_invites": "プロファイルに招待する",
+        "moved_notice_link_notifiers": "通知機能",
+        "moved_notice_link_settings": "通貨設定",
+        "new_password": "新しいパスワード",
+        "no_notifiers": "通知機能は設定されていません",
+        "no_override": "既定の言語",
+        "notifier_modal": "{type, select, true {編集} false {作成} other {その他}}通知者",
+        "notifiers": "通知",
+        "notifiers_sub": "メンテナンスなどのリマインダー通知を受け取れます",
+        "override_locale": "日時・通貨の言語を設定 (上記の言語設定とは別の言語を設定可能)",
+        "test": "テスト",
+        "theme_settings": "テーマ設定",
+        "theme_settings_sub": "テーマ設定はブラウザに保存されます。いつでも変更できます。\nテーマ設定によって問題が発生した場合は、再読み込みを行ってください。",
+        "toast": {
+            "account_deleted": "アカウントを削除しました",
+            "failed_change_password": "パスワードを変更できませんでした",
+            "failed_create_notifier": "通知設定の作成に失敗しました。",
+            "failed_delete_account": "アカウントの削除に失敗しました",
+            "failed_delete_notifier": "通知設定の削除に失敗しました",
+            "failed_get_currencies": "通貨情報の取得に失敗しました",
+            "failed_test_notifier": "通知の送信テストに失敗しました",
+            "failed_update_group": "グループ設定の更新に失敗しました",
+            "failed_update_notifier": "通知設定の更新に失敗しました",
+            "group_updated": "グループ設定を更新しました",
+            "notifier_test_success": "通知の送信テストに成功しました",
+            "password_changed": "パスワードを変更しました"
+        },
+        "update_group": "グループ設定を更新",
+        "update_language": "言語更新",
+        "url": "URL",
+        "user_profile": "ユーザー情報",
+        "user_profile_sub": "アカウントの管理やユーザーの招待など"
+    },
+    "reports": {
+        "label_generator": {
+            "asset_end": "Asset ID 印刷終了位置 (このIDは含みません)",
+            "asset_start": "Asset ID 印刷開始位置 (このIDを含みます)",
+            "base_url": "QRコードのURL (通常変更する必要はありません。URL見本を参照し設定してください。)",
+            "bordered_labels": "ラベルの境界線を印刷",
+            "generate_page": "印刷プレビューを取得",
+            "input_placeholder": "ここに入力",
+            "instruction_1": "Homebox ラベルジェネレーターは、Homeboxに登録されたアイテムの管理シールを印刷するツールです。\nシールはアイテムを登録する前に印刷できるため、事前に大量作成することが可能です！",
+            "instruction_2": "シールには、HomeboxのQRコードやAsset IDを印刷できます。\nAsset IDを無効にしている場合でもこのツールは使用できますが、Asset IDを利用してアイテムページを開く機能などは利用できません。",
+            "instruction_3": "この機能はまだ開発中であり、今後の更新で改修される可能性があります。\nバグ情報や機能提案がある方は、ぜひ'<a href=\"https://github.com/sysadminsmedia/homebox/discussions/53\">'GitHubディスカッションに投稿をお願いします。'</a>'",
+            "label_height": "シール 高さ",
+            "label_width": "シール 横幅",
+            "measure_type": "メジャータイプ",
+            "page_bottom_padding": "用紙 下余白",
+            "page_height": "用紙サイズ 高さ",
+            "page_left_padding": "用紙 左余白",
+            "page_right_padding": "用紙 右余白",
+            "page_top_padding": "用紙 上余白",
+            "page_width": "用紙サイズ 横幅",
+            "qr_code_example": "QRコード URL見本",
+            "tip_1": "この機能の既定値は、'<a href=\"https://www.avery.com/templates/5260\">'Avery 5260 label sheets'</a>'と適合する値になっています。\nそれ以外のシートを使用する場合は、必ず設定を調整する必要があります。",
+            "tip_2": "シールをカスタマイズする場合、寸法はインチ単位で設定してください。\n5260シートも、既定値が寸法と一致しないことがあります。\n'<br>' '<b>'試行錯誤が必要になることを覚悟してください。'<u>'必ず寸法や印刷位置の検証を行ってから、シール用紙に印刷してください。'</u>' '</b>'",
+            "tip_3": "印刷時は、以下のことに気を付けてください\n'<ol><li>'余白を0 または なし に設定する\n'</li><li>'拡大率を100%に設定する\n'</li><li>'両面印刷を無効にする\n'</li><li>'ページを印刷する前に必ずテスト印刷をする\n'</li><li>'たくさんの紙くずが発生することを覚悟する",
+            "tips": "仕様",
+            "title": "管理シール印刷機能",
+            "toast": {
+                "page_too_small_card": "印刷可能範囲がシールサイズより小さいため印刷プレビューを生成できません。用紙サイズ・シールサイズ・余白を変更してください。"
+            }
+        }
+    },
+    "scanner": {
+        "barcode_detected_message": "バーコードが見つかりました",
+        "barcode_fetch_data": "製品のデータを取得",
+        "error": "不明なエラーが発生しました。スキャンは利用できません。",
+        "invalid_url": "バーコードが無効です",
+        "no_sources": "映像デバイスが見つかりません",
+        "permission_denied": "カメラアクセスが拒否されています。ブラウザ設定・スマホ設定で許可してください。",
+        "select_video_source": "映像デバイスを選択",
+        "title": "スキャン",
+        "unsupported": "メディアストリームAPIはHTTPSのみをサポートしています"
+    },
+    "tools": {
+        "actions": "全てのアイテムに対する変更",
+        "actions_set": {
+            "create_missing_thumbnails": "サムネイルを自動設定",
+            "create_missing_thumbnails_button": "サムネイルを作成",
+            "create_missing_thumbnails_confirm": "サムネイルを作成してもよろしいですか？件数によっては時間がかかる場合があり、一時停止することはできません。既存のサムネイルは上書きされません。元に戻すことはできません。",
+            "create_missing_thumbnails_sub": "アップロードされた添付ファイルのサムネイルを自動で作成します。既にサムネイルがある場合はスキップされます。サムネイルが存在しない場合に、自動で作成します。性能やファイル数により、処理が完了するまでに時間がかかる場合があります。",
+            "ensure_ids": "アイテムのAsset IDの確認",
+            "ensure_ids_button": "確認の実行",
+            "ensure_ids_confirm": "すべてのアイテムにAsset IDがあることを確認します。この処理には時間がかかる場合があり、この処理によってAsset IDが変更されても元に戻すことはできません。",
+            "ensure_ids_sub": "全てのアイテムに、有効なAsset IDが存在することを確認します。'<br>'もし存在しないアイテムがあった場合は、登録された日付が古い順にAsset IDの登録を行います。",
+            "ensure_import_refs": "import_refsの確認",
+            "ensure_import_refs_button": "確認する",
+            "ensure_import_refs_sub": "全てのアイテムに、有効な import_ref の値 が設定されていることを確認します。'<br>' 設定されていない場合は、ランダムな8文字の文字列を設定します。'<br>'import_refは内部管理用のIDで、ユーザーは見ることができません。",
+            "set_primary_photo": "アイテムサムネイルの自動設定",
+            "set_primary_photo_button": "操作を実行",
+            "set_primary_photo_confirm": "サムネイルを自動設定します。'<br>'件数によっては時間がかかる場合があり、元に戻すことはできません。",
+            "set_primary_photo_sub": "Homebox v0.10.0 (2023年10月10日リリース)にて、アイテムのサムネイル画像を設定できるようになりました。'<br>'サムネイルが設定されていないアイテムは、この機能を利用して自動で設定できます。'<br>'この機能は、サムネイルが未設定のアイテムの添付画像の中で最も古い画像ファイルを自動的にサムネイルとして設定します。'<br>'詳しくは、'<a class=\"link\" target=\"_brank\" href=\"https://github.com/hay-kot/homebox/pull/576\">'このページをご覧ください (GitHub PR #576)'</a>'",
+            "zero_datetimes": "アイテムに設定された日時を消去",
+            "zero_datetimes_button": "操作を実行",
+            "zero_datetimes_confirm": "すべてアイテムの日付と時刻の値をリセットします。'<br>'件数によっては時間がかかる場合があり、元に戻すことはできません。",
+            "zero_datetimes_sub": "全てのアイテムの'<b>'日付をリセット'</b>'します。'<br>'これは、初期(v0.8.0 / 2023-02-18以前)に発生したバグの修正に必要です。日付が適切に表示されなくなるといった問題が発生している場合に限り、実行してください。'<br>'バグが発生していない場合は実行は不要です。'<a class=\"link\" href=\"https://github.com/hay-kot/homebox/issues/236\" target=\"_blank\">'詳しくはこちらをご覧ください (GitHub Issue #236)'</a>'"
+        },
+        "actions_sub": "以下の機能は、すべてのアイテムのデータに影響を与えます。'<b>'これらの操作を元に戻すことはできません。'</b>'",
+        "import_export": "インポート / エクスポート (CSV形式)",
+        "import_export_set": {
+            "export": "エクスポート (出力)",
+            "export_button": "エクスポートの実行",
+            "export_sub": "Homeboxで利用可能なCSV形式のファイルをエクスポートします。'<br>'すべてのアイテムが対象です。一部のアイテムを選択してエクスポートすることはできません。",
+            "import": "インポート (CSVの取り込み)",
+            "import_button": "CSVファイルを選択",
+            "import_ref_confirm": "すべてのアイテムに import_ref の値があることを確認します。'<br>'件数によっては時間がかかる場合があり、元に戻すことはできません。",
+            "import_sub": "Homeboxで利用可能なCSVファイルをインポートします。\n'<code>'HB.import_ref'</code>'が存在しないアイテムに重複がある場合は上書きされません。\n'<code>'HB.import_ref'</code>'が存在するアイテムに重複がある場合は、同じ'<code>'HB.import_ref'</code>'を持つアイテムのデータが上書きされます。\nどちらも、重複していない場合は関係なく追加されます。"
+        },
+        "import_export_sub": "登録されたアイテムをCSVファイルにインポートおよびエクスポートします。Homeboxのソフトウェアを切り替える場合などに便利です。",
+        "reports": "レポート",
+        "reports_set": {
+            "asset_labels": "管理ラベルの作成",
+            "asset_labels_button": "作成ページへ移動",
+            "asset_labels_sub": "備品管理などに使用できるラベルシールを印刷可能なPDFファイル形式で出力できます。'<br>'まだ使用されていないAsset IDに対応するQRコードを印刷し、新しいものを登録したときに使用することも可能です。",
+            "bill_of_materials": "部品表",
+            "bill_of_materials_button": "部品表(BOM)を生成する",
+            "bill_of_materials_sub": "CSV形式のファイルを出力します。基本的なアイテム情報と価格情報を含むアイテムの概要が含まれています。'<br>'UTF-8形式で出力されるため、Microsoft OfficeのExcelで開くと文字化けする恐れがあります。"
+        },
+        "reports_sub": "アイテムに関するデータの含まれたファイルを作成できます。",
+        "toast": {
+            "asset_success": "{results}件のアイテムが更新されました。",
+            "failed_create_missing_thumbnails": "サムネイルの自動作成ができませんでした。",
+            "failed_ensure_ids": "Asset IDの確認に失敗しました。",
+            "failed_ensure_import_refs": "import_ref の確認に失敗しました。",
+            "failed_set_primary_photos": "サムネイルの設定に失敗しました。",
+            "failed_zero_datetimes": "日時のリセットに失敗しました。"
+        }
+    }
+}

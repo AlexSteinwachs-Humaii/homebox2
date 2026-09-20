@@ -1,0 +1,114 @@
+{
+    "collection": {
+        "copy_invite": "Kopijuoti pakvietimo nuorodą",
+        "create_invite": "Sukurti kvietimą",
+        "expires_at": "Nustoja galioti",
+        "invite_token_hidden": "Nebėra matoma",
+        "invites": "Pakvietimai",
+        "invites_delete_confirm": "Ar tikrai norite ištrinti šį pakvietimą?",
+        "members": {
+            "cannot_remove_last": "Negalite panaikinti paskutinio nario.",
+            "email": "El. paštas",
+            "member": "Narys",
+            "name": "Vardas",
+            "owner": "Savininkas",
+            "remove_confirm": "Ar tikrai norite pašalinti šį narį?",
+            "removed": "Narys pašalintas",
+            "role": "Prieiga"
+        },
+        "no_invites": "Nėra pakvietimų",
+        "remaining_uses": "Likę panaudojimai",
+        "tabs": {
+            "invites": "Pakvietimai",
+            "members": "Nariai",
+            "settings": "Nustatymai",
+            "tools": "Įrankiai"
+        },
+        "uses": "Panaudojimai"
+    },
+    "components": {
+        "app": {
+            "create_modal": {
+                "createAndAddAnother": "Naudok {shiftKey} + {enterKey}, kad pridėtumei kitą"
+            },
+            "import_dialog": {
+                "change_warning": "Pasikeitė importo su esamais import_refs elgesys. Jei CSV faile yra import_ref, \nelementas bus atnaujintas su CSV failo reikšmėmis.",
+                "description": "Importuokite CSV dokumentą, kuriame yra jūsų elementai, etiketės ir vietos. Peržiūrėkite dokumentaciją dėl platesnės informacijos.",
+                "title": "Importuoti CSV dokumentą"
+            },
+            "outdated": {
+                "current_version": "Dabartinė Versija",
+                "dismiss": "Atmesti",
+                "new_version_available": "Galima Nauja Versija",
+                "new_version_available_link": "Spauskite čia Norėdami peržiūrėti išleidimo pastabas"
+            }
+        },
+        "global": {
+            "copy_text": {
+                "documentation": "dokumentas",
+                "failed_to_copy": "Nepavyko nukopijuoti teksto į mainų sritį",
+                "https_required": "kadangi reikalingas HTTPS",
+                "learn_more": "Sužinokite daugiau mūsų"
+            },
+            "date_time": {
+                "ago": "{0} prieš",
+                "days": "dieną",
+                "hour": "valanda",
+                "hours": "valandos",
+                "in": "į {0}",
+                "just-now": "tik dabar",
+                "last-month": "praėjusį mėnesį",
+                "last-week": "praėjusią savaitę",
+                "last-year": "praėjusiais metais",
+                "minute": "minutė",
+                "minutes": "protokolas",
+                "months": "mėnesių",
+                "next-month": "kitą mėnesį",
+                "next-week": "kitą savaitę",
+                "next-year": "kitąmet",
+                "second": "antras",
+                "seconds": "sekundės",
+                "tomorrow": "rytoj",
+                "weeks": "savaičių",
+                "years": "metai",
+                "yesterday": "vakar"
+            },
+            "label_maker": {
+                "browser_print": "Spausdinti iš naršyklės",
+                "confirm_description": "Ar tikrai norite atspausdinti šią etiketę?",
+                "download": "Atsisiųsti Etiketę",
+                "print": "Spausdinti etiketę",
+                "server_print": "Spausdinti serveryje",
+                "titles": "Etiketė"
+            },
+            "page_qr_code": {
+                "page_url": "Puslapio URL",
+                "qr_tooltip": "Rodyti KR kodą"
+            },
+            "password_score": {
+                "password_strength": "Slaptažodžio Stiprumas"
+            }
+        },
+        "item": {
+            "create_modal": {
+                "item_description": "Prekės Aprašymas",
+                "item_name": "Prekės Pavadinimas",
+                "item_photo": "Prekės Nuotrauka 📷",
+                "item_quantity": "Prekės Kiekis",
+                "title": "Sukurti Elementą",
+                "upload_photos": "Įkelti Nuotraukas"
+            },
+            "view": {
+                "selectable": {
+                    "card": "Kortelė",
+                    "items": "Elementas",
+                    "no_items": "Nėra rodomų elementų",
+                    "table": "Lentelė"
+                },
+                "table": {
+                    "page": "Puslapis"
+                }
+            }
+        }
+    }
+}

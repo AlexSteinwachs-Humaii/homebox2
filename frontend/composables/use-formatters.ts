@@ -1,0 +1,115 @@
+import { format, formatDistance } from "date-fns";
+import { reactive } from "vue";
+/* eslint import/namespace: ['error', { allowComputed: true }] */
+import * as Locales from "date-fns/locale";
+import { isDateOnlyString, parseDateOnly } from "~/lib/datelib/dateOnly";
+import { fmtCurrency, fmtCurrencyAsync } from "./utils";
+
+const cache = reactive({
+  currency: "",
+});
+
+export function resetCurrency() {
+  cache.currency = "";
+}
+
+export function setCurrency(currency: string) {
+  cache.currency = currency;
+}
+
+export async function useFormatCurrency() {
+  if (cache.currency === "") {
+    const client = useUserApi();
+
+    const { data: group } = await client.group.get();
+
+    if (group && cache.currency === "") {
+      cache.currency = group.currency;
+    }
+  }
+
+  // Pre-load currency decimals for better formatting (optional, non-blocking)
+  if (cache.currency && cache.currency.trim() !== "") {
+    try {
+      await fmtCurrencyAsync(0, cache.currency, getLocaleCode());
+    } catch (error) {
+      // Silently swallow preload errors - formatter will still work, just without pre-cached decimals
+      console.debug("Currency preload failed (non-fatal):", error);
+    }
+  }
+
+  return (value: number | string) => fmtCurrency(value, cache.currency, getLocaleCode());
+}
+
+export type DateTimeFormat = "relative" | "long" | "short" | "human";
+export type DateTimeType = "date" | "time" | "datetime";
+
+export function getLocaleCode() {
+  const { $i18nGlobal } = useNuxtApp();
+  const preferences = useViewPreferences();
+  // TODO: make reactive
+  if (preferences.value.overrideFormatLocale) {
+    return preferences.value.overrideFormatLocale;
+  }
+  return ($i18nGlobal?.locale?.value as string) ?? "en-US";
+}
+
+function getLocaleForDate() {
+  const localeCode = getLocaleCode();
+  const lang = localeCode.length > 1 ? localeCode.substring(0, 2) : localeCode;
+  const region = localeCode.length > 2 ? localeCode.substring(3) : "";
+  return Locales[(lang + region) as keyof typeof Locales] ?? Locales[lang as keyof typeof Locales] ?? Locales.enUS;
+}
+
+export function fmtDate(
+  value: string | Date | number,
+  fmt: DateTimeFormat = "human",
+  type: DateTimeType = "date"
+): string {
+  // YYYY-MM-DD must be parsed via local components — `new Date("2026-04-17")`
+  // is UTC midnight, which renders as the previous day in any timezone west
+  // of UTC.
+  let dt: Date | null;
+  if (isDateOnlyString(value)) {
+    dt = parseDateOnly(value);
+  } else if (typeof value === "string" || typeof value === "number") {
+    dt = new Date(value);
+  } else {
+    dt = value;
+  }
+
+  if (!dt || !validDate(dt)) {
+    return "";
+  }
+
+  const localeOptions = { locale: getLocaleForDate() };
+
+  if (fmt === "relative") {
+    return `${formatDistance(dt, new Date(), { ...localeOptions, addSuffix: true })} (${fmtDate(dt, "short", "date")})`;
+  }
+
+  if (type === "time") {
+    return format(dt, "p", localeOptions);
+  }
+
+  let formatStr: string;
+
+  switch (fmt) {
+    case "human":
+      formatStr = "PPP";
+      break;
+    case "long":
+      formatStr = "PP";
+      break;
+    case "short":
+      formatStr = "P";
+      break;
+    default:
+      return "";
+  }
+  if (type === "datetime") {
+    formatStr += "p";
+  }
+
+  return format(dt, formatStr, localeOptions);
+}

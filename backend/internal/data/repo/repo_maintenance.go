@@ -1,0 +1,78 @@
+package repo
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/ent"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/ent/entity"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/ent/group"
+	"github.com/sysadminsmedia/homebox/backend/internal/data/ent/maintenanceentry"
+)
+
+type (
+	MaintenanceEntryWithDetails struct {
+		MaintenanceEntry
+		ItemName string    `json:"itemName"`
+		ItemID   uuid.UUID `json:"itemID"`
+	}
+)
+
+var (
+	mapEachMaintenanceEntryWithDetails = mapTEachFunc(mapMaintenanceEntryWithDetails)
+)
+
+func mapMaintenanceEntryWithDetails(entry *ent.MaintenanceEntry) MaintenanceEntryWithDetails {
+	return MaintenanceEntryWithDetails{
+		MaintenanceEntry: mapMaintenanceEntry(entry),
+		ItemName:         entry.Edges.Entity.Name,
+		ItemID:           entry.EntityID,
+	}
+}
+
+type MaintenanceFilterStatus string
+
+const (
+	MaintenanceFilterStatusScheduled MaintenanceFilterStatus = "scheduled"
+	MaintenanceFilterStatusCompleted MaintenanceFilterStatus = "completed"
+	MaintenanceFilterStatusBoth      MaintenanceFilterStatus = "both"
+)
+
+type MaintenanceFilters struct {
+	Status MaintenanceFilterStatus `json:"status" schema:"status"`
+}
+
+func (r *MaintenanceEntryRepository) GetAllMaintenance(ctx context.Context, groupID uuid.UUID, filters MaintenanceFilters) ([]MaintenanceEntryWithDetails, error) {
+	query := r.db.MaintenanceEntry.Query().Where(
+		maintenanceentry.HasEntityWith(
+			entity.HasGroupWith(group.IDEQ(groupID)),
+		),
+	)
+
+	switch filters.Status {
+	case MaintenanceFilterStatusScheduled:
+		query = query.Where(maintenanceentry.Or(
+			maintenanceentry.DateIsNil(),
+			maintenanceentry.DateEQ(time.Time{}),
+		))
+	case MaintenanceFilterStatusCompleted:
+		query = query.Where(
+			maintenanceentry.Not(maintenanceentry.Or(
+				maintenanceentry.DateIsNil(),
+				maintenanceentry.DateEQ(time.Time{})),
+			))
+	case MaintenanceFilterStatusBoth:
+		// No additional filters needed
+	default:
+		return nil, fmt.Errorf("unknown status %s", filters.Status)
+	}
+	entries, err := query.WithEntity().Order(maintenanceentry.ByScheduledDate()).All(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return mapEachMaintenanceEntryWithDetails(entries), nil
+}
