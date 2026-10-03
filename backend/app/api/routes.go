@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"mime"
 	"net/http"
 	"net/url"
@@ -299,8 +300,12 @@ func registerMimes() {
 // notFoundHandler perform the main logic around handling the internal SPA embed and ensuring that
 // the client side routing is handled correctly.
 func notFoundHandler() errchain.HandlerFunc {
-	tryRead := func(fs embed.FS, prefix, requestedPath string, w http.ResponseWriter) error {
-		f, err := fs.Open(path.Join(prefix, requestedPath))
+	return staticPageHandler(public, larineContextFromEnvironment())
+}
+
+func staticPageHandler(files fs.FS, context larineContext) errchain.HandlerFunc {
+	tryRead := func(prefix, requestedPath string, w http.ResponseWriter) error {
+		f, err := files.Open(path.Join(prefix, requestedPath))
 		if err != nil {
 			return err
 		}
@@ -311,18 +316,30 @@ func notFoundHandler() errchain.HandlerFunc {
 			return ErrDir
 		}
 
-		contentType := mime.TypeByExtension(filepath.Ext(requestedPath))
+		extension := filepath.Ext(requestedPath)
+		contentType := mime.TypeByExtension(extension)
 		w.Header().Set("Content-Type", contentType)
+		if extension == ".html" {
+			content, readErr := io.ReadAll(f)
+			if readErr != nil {
+				return readErr
+			}
+			// The app shell contains runtime deployment context. Do not reuse
+			// an HTML response across deployments with different associations.
+			w.Header().Set("Cache-Control", "no-store")
+			_, err = w.Write(context.injectHTML(content))
+			return err
+		}
 		_, err = io.Copy(w, f)
 		return err
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) error {
-		err := tryRead(public, "static/public", r.URL.Path, w)
+		err := tryRead("static/public", r.URL.Path, w)
 		if err != nil {
 			// Fallback to the index.html file.
 			// should succeed in all cases.
-			err = tryRead(public, "static/public", "index.html", w)
+			err = tryRead("static/public", "index.html", w)
 			if err != nil {
 				return err
 			}

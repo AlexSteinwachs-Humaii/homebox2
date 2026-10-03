@@ -1,5 +1,9 @@
 import { defineNuxtConfig } from "nuxt/config";
 
+// This is a public widget token embedded in generated HTML, not a server API key.
+// Provision it for the frontend build; runtime backend variables cannot change it.
+const larineWidgetToken = process.env.LARINE_WIDGET_TOKEN?.trim();
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   ssr: false,
@@ -51,7 +55,24 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      script: [{ src: "/set-theme.js" }],
+      script: [
+        { src: "/set-theme.js" },
+        ...(larineWidgetToken
+          ? [
+              {
+                src: "https://next.larine.dev/larine-feedback.js",
+                // Use the widget server's CORS permission under COEP require-corp.
+                crossorigin: "anonymous",
+                defer: true,
+                "data-token": larineWidgetToken,
+                "data-api-url": "https://api-stage.larine.dev",
+                "data-enabled": "always",
+                "data-shortcut": "mod+shift+f",
+                "data-source": "HomeBox - Test 1",
+              },
+            ]
+          : []),
+      ],
     },
   },
 
@@ -59,6 +80,10 @@ export default defineNuxtConfig({
 
   pwa: {
     workbox: {
+      // HTML contains runtime Larine deployment context from the Go server.
+      // Never serve an app shell cached with a previous launch's associations.
+      globIgnores: ["**/*.html"],
+      navigateFallback: null,
       navigateFallbackDenylist: [/^\/api/],
       cleanupOutdatedCaches: true,
       runtimeCaching: [
