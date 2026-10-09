@@ -1672,6 +1672,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/groups/statistics/export": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Fixed columns: metric,breakdown,breakdown_id,breakdown_label,value,unit,date. Collection summaries and organizer breakdowns are collection-wide; start/end apply only to the purchase-price time series, as in the JSON statistics API. Time-series entries are aggregated by UTC day, never exported as inventory records.",
+                "produces": [
+                    "text/csv"
+                ],
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "Export dashboard summary statistics as CSV",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "start date (YYYY-MM-DD; default one month ago)",
+                        "name": "start",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "end date (YYYY-MM-DD; default now)",
+                        "name": "end",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/groups/statistics/locations": {
             "get": {
                 "security": [

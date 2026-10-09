@@ -12,6 +12,23 @@ import (
 	"github.com/sysadminsmedia/homebox/backend/internal/web/adapters"
 )
 
+// statisticsDateRange is shared by the JSON report and CSV export so omitted
+// dates and date parsing have exactly the same meaning.
+func statisticsDateRange(r *http.Request, now time.Time) (time.Time, time.Time, error) {
+	parseDate := func(value string, fallback time.Time) (time.Time, error) {
+		if value == "" {
+			return fallback, nil
+		}
+		return time.Parse("2006-01-02", value)
+	}
+	start, err := parseDate(r.URL.Query().Get("start"), now.AddDate(0, -1, 0))
+	if err != nil {
+		return time.Time{}, time.Time{}, err
+	}
+	end, err := parseDate(r.URL.Query().Get("end"), now)
+	return start, end, err
+}
+
 // HandleGroupStatisticsLocations godoc
 //
 //	@Summary	Get Location Statistics
@@ -74,22 +91,10 @@ func (ctrl *V1Controller) HandleGroupStatistics() errchain.HandlerFunc {
 //	@Router		/v1/groups/statistics/purchase-price [GET]
 //	@Security	Bearer
 func (ctrl *V1Controller) HandleGroupStatisticsPriceOverTime() errchain.HandlerFunc {
-	parseDate := func(datestr string, defaultDate time.Time) (time.Time, error) {
-		if datestr == "" {
-			return defaultDate, nil
-		}
-		return time.Parse("2006-01-02", datestr)
-	}
-
 	return func(w http.ResponseWriter, r *http.Request) error {
 		ctx := services.NewContext(r.Context())
 
-		startDate, err := parseDate(r.URL.Query().Get("start"), time.Now().AddDate(0, -1, 0))
-		if err != nil {
-			return validate.NewRequestError(err, http.StatusBadRequest)
-		}
-
-		endDate, err := parseDate(r.URL.Query().Get("end"), time.Now())
+		startDate, endDate, err := statisticsDateRange(r, time.Now())
 		if err != nil {
 			return validate.NewRequestError(err, http.StatusBadRequest)
 		}
