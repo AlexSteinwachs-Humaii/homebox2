@@ -521,6 +521,7 @@
         :items="items"
         :location-flat-tree="locationFlatTree"
         :pagination="pagination"
+        :default-column-preset="['assetId', 'name', 'quantity', 'insured', 'purchasePrice', 'location', 'createdAt']"
         disable-sort
         @refresh="async () => search()"
       />
