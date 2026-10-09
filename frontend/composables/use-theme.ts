@@ -57,6 +57,7 @@ export const themes = [
   "theme-black",
   "theme-bumblebee",
   "theme-cmyk",
+  "theme-claude",
   "theme-corporate",
   "theme-cupcake",
   "theme-cyberpunk",
