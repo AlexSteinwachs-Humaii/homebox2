@@ -183,7 +183,7 @@
           >
             <div class="flex h-1/2 items-center gap-2 sm:h-auto">
               <SidebarTrigger variant="default" />
-              <NuxtLink to="/home">
+              <NuxtLink to="/home" aria-label="HomeBox">
                 <AppHeaderText class="h-6" />
               </NuxtLink>
             </div>
@@ -197,12 +197,12 @@
                 @keyup.enter="triggerSearch"
               />
               <div>
-                <Button size="icon" @click="triggerSearch">
+                <Button size="icon" :aria-label="$t('global.search')" @click="triggerSearch">
                   <MdiMagnify />
                 </Button>
               </div>
               <div>
-                <Button size="icon" @click="openScanner">
+                <Button size="icon" :aria-label="$t('menu.scanner')" @click="openScanner">
                   <MdiQrcodeScan />
                 </Button>
               </div>

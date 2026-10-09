@@ -257,7 +257,9 @@
   }
 
   async function search() {
-    if (searchLocked.value) {
+    // Debounced searches and async initialization can outlive navigation back to Home.
+    // Never write this page's query onto the destination route.
+    if (searchLocked.value || router.currentRoute.value.path !== "/items") {
       return;
     }
 

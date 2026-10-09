@@ -10,6 +10,17 @@ import type {
   GroupStatistics,
 } from "../../lib/api/types/data-contracts";
 
+// Provide a virtual camera for the scanner smoke test without requiring host hardware.
+test.use({
+  launchOptions: async ({ browserName }, use) => {
+    await use(
+      browserName === "chromium"
+        ? { args: ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"] }
+        : {}
+    );
+  },
+});
+
 const savedHeaders = [
   { value: "insured", enabled: true },
   { value: "name", enabled: true },
@@ -250,4 +261,120 @@ test("Home keeps mobile cards, sidebar state and legacy header preference", asyn
     sections(page).nth(1).getByRole("link", { name: workshop.item.name, exact: false }).first()
   ).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("home-mobile.png"), fullPage: true });
+});
+
+async function returnHome(page: Page) {
+  await page.getByRole("link", { name: "HomeBox", exact: true }).click();
+  await expect(page).toHaveURL(/\/home$/);
+  await expect(sections(page).nth(1)).toContainText("Recently Added");
+  // Check that a pending inventory search cannot overwrite the destination URL.
+  await expect(page).toHaveURL(/\/home$/);
+}
+
+test("Home search uses the submitted query and recent names open their own records", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const { first, workshop } = await setup(page);
+  const source = await json<EntityOut>(page.request, "GET", `/entities/${workshop.item.id}`, undefined, first.id);
+  const other = await json<EntityOut>(
+    page.request,
+    "POST",
+    "/entities",
+    {
+      name: "Camping tent & lantern",
+      description: "Another recent record, not the illustrative drill",
+      quantity: 1,
+      tagIds: [],
+      parentId: workshop.location.id,
+      entityTypeId: source.entityType!.id,
+    },
+    first.id
+  );
+  await page.reload();
+
+  await page.locator("[data-sidebar=menu]").getByRole("link", { name: "Search", exact: true }).click();
+  await expect(page).toHaveURL(/\/items$/);
+  await returnHome(page);
+
+  // Focus alone must not navigate or substitute the prototype's fixed drill query.
+  const search = page.getByRole("searchbox");
+  for (const [query, submit] of [
+    ["Workshop inventory & café + #1 / 50%?", "enter"],
+    ["Camping tent & lantern + #2 / 100%?", "button"],
+  ] as const) {
+    await search.focus();
+    await expect(page).toHaveURL(/\/home$/);
+    await search.fill(query);
+    if (submit === "enter") await search.press("Enter");
+    else await page.getByRole("button", { name: "Search", exact: true }).click();
+    await expect(page).toHaveURL(url => url.pathname === "/items" && url.searchParams.get("q") === query);
+    // Vue Router may normalize spaces to +; reserved characters must still stay in q.
+    const url = new URL(page.url());
+    expect([...url.searchParams.keys()]).toEqual(["q"]);
+    expect(url.hash).toBe("");
+    expect(url.search).toContain("%26");
+    expect(url.search).toContain("%23");
+    await expect(search).toHaveValue("");
+    await returnHome(page);
+  }
+
+  for (const item of [workshop.item, other]) {
+    const name = sections(page).nth(1).getByRole("link", { name: item.name, exact: true });
+    await expect(name).toHaveAttribute("href", `/item/${item.id}`);
+    await name.click();
+    await expect(page).toHaveURL(new RegExp(`/item/${item.id}$`));
+    await expect(page.locator("main")).toContainText(item.name);
+    await returnHome(page);
+  }
+});
+
+test.describe("Shell integrations with a camera", () => {
+  test("Home shell retains unrelated destinations, creation dialogs and scanner integration", async ({
+    page,
+    context,
+    browserName,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await setup(page);
+    const sidebar = page.locator("[data-sidebar=menu]");
+    for (const [label, path] of [
+      ["Locations", "/locations"],
+      ["Tags", "/tags"],
+      ["Templates", "/templates"],
+      ["Maintenance", "/maintenance"],
+      ["Profile", "/profile"],
+      ["Collection", "/collection/members"],
+      ["Invites", "/collection/invites"],
+      ["Notifiers", "/collection/notifiers"],
+      ["Settings", "/collection/settings"],
+      ["Entity Types", "/collection/entity-types"],
+      ["Tools", "/collection/tools"],
+    ]) {
+      const link = sidebar.getByRole("link", { name: label, exact: true });
+      await expect(link).toHaveAttribute("href", path!);
+      await link.click();
+      await expect(page).toHaveURL(url => url.pathname === path);
+      await returnHome(page);
+    }
+
+    for (const label of ["Item", "Location", "Tag"]) {
+      await page.getByRole("button", { name: "Create", exact: true }).click();
+      await page.getByRole("menuitem", { name: label, exact: false }).click();
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      await expect(dialog).toContainText(label);
+      await dialog.getByRole("button", { name: "Close", exact: true }).click();
+      await expect(dialog).toHaveCount(0);
+      await expect(page).toHaveURL(/\/home$/);
+    }
+
+    // Only Chromium provides this virtual camera; other projects still check navigation and creation.
+    if (browserName === "chromium") {
+      await context.grantPermissions(["camera"]);
+      await page.getByRole("button", { name: "Scanner", exact: true }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await expect(page.getByRole("dialog").locator("video")).toBeVisible();
+      await page.getByRole("dialog").getByRole("button", { name: "Close", exact: true }).click();
+      await expect(page).toHaveURL(/\/home$/);
+    }
+  });
 });
