@@ -11,9 +11,10 @@
 
   const { t } = useI18n();
 
-  const columns = computed(() => makeColumns({ t }).filter(c => c.enableHiding !== false));
+  const columnPreset = ["assetId", "name", "quantity", "purchasePrice", "location", "createdAt"];
+  const columns = computed(() => makeColumns({ t }).filter(c => columnPreset.includes(c.id ?? "")));
 </script>
 
 <template>
-  <DataTable view="table" :data="items" :columns="columns" disable-controls />
+  <DataTable view="table" :data="items" :columns="columns" :column-preset="columnPreset" disable-controls />
 </template>

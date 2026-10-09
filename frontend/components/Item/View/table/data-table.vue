@@ -31,6 +31,8 @@
     columns: ColumnDef<EntitySummary, TValue>[];
     data: EntitySummary[];
     disableControls?: boolean;
+    /** Fixed columns for embedded tables, independent of saved inventory-search preferences. */
+    columnPreset?: string[];
     view: "table" | "card";
     locationFlatTree?: FlatTreeItem[];
     externalPagination?: Pagination;
@@ -47,6 +49,7 @@
 
   const tableHeaders = computed(
     () =>
+      props.columnPreset?.map(value => ({ value, enabled: true })) ??
       tableHeadersData ??
       props.columns
         .filter(c => c.enableHiding !== false)
@@ -124,6 +127,8 @@
   });
 
   const persistHeaders = () => {
+    if (props.columnPreset) return;
+
     const headers = table
       .getAllColumns()
       .filter(column => column.getCanHide())
@@ -172,7 +177,7 @@
 
 <template>
   <div>
-    <Dialog :dialog-id="DialogID.ItemTableSettings">
+    <Dialog v-if="!props.disableControls" :dialog-id="DialogID.ItemTableSettings">
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{{ $t("components.item.view.table.table_settings") }}</DialogTitle>
