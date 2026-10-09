@@ -35,6 +35,9 @@
       </div>
       <div class="col-span-4 flex grow flex-col gap-y-1 p-4 pt-2">
         <h2 class="line-clamp-2 text-ellipsis text-wrap text-lg font-bold">{{ item.name }}</h2>
+        <p v-if="showAssetId" class="break-all text-sm text-muted-foreground">
+          {{ $t("items.asset_id") }}: {{ item.assetId }}
+        </p>
         <Separator class="mb-1" />
         <TooltipProvider :delay-duration="0">
           <div class="flex items-center gap-2">
@@ -108,6 +111,10 @@
   });
 
   const props = defineProps({
+    showAssetId: {
+      type: Boolean,
+      default: false,
+    },
     item: {
       type: Object as () => EntityOut | EntitySummary,
       required: true,

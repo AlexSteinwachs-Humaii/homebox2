@@ -26,11 +26,13 @@
   import DataTableControls from "./data-table-controls.vue";
   import type { Pagination } from "../pagination";
   import Switch from "~/components/ui/switch/Switch.vue";
+  import { withVisibleColumns } from "./visibility";
 
   const props = defineProps<{
     columns: ColumnDef<EntitySummary, TValue>[];
     data: EntitySummary[];
     disableControls?: boolean;
+    visibleColumns?: string[];
     view: "table" | "card";
     locationFlatTree?: FlatTreeItem[];
     externalPagination?: Pagination;
@@ -106,7 +108,8 @@
         return sorting.value;
       },
       get columnVisibility() {
-        return columnVisibility.value;
+        // Apply surface-specific requirements without modifying shared preferences.
+        return withVisibleColumns(columnVisibility.value, props.visibleColumns);
       },
       get rowSelection() {
         return rowSelection.value;
