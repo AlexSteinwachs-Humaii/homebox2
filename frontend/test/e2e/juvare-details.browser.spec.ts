@@ -206,3 +206,118 @@ test("item identity, real details and purchase data survive Home/search entry an
     fullPage: true,
   });
 });
+
+for (const state of ["collapsed", "expanded"] as const) {
+  test(`item return paths use existing routes and browser history with ${state} sidebar`, async ({ page }) => {
+    test.setTimeout(120_000);
+    const email = `returns-${randomUUID()}@example.com`;
+    const password = "InventoryReturnTest123!";
+    await json(page.request, "POST", "/users/register", {
+      email,
+      name: "Return Member",
+      password,
+      token: "",
+    });
+    await json(page.request, "POST", "/users/login", {
+      username: email,
+      password,
+      stayLoggedIn: true,
+    });
+    const [group] = await json<Group[]>(page.request, "GET", "/groups/all");
+    const types = await json<EntityTypeSummary[]>(page.request, "GET", "/entity-types", undefined, group!.id);
+    const records: EntityOut[] = [];
+    // Neither fixture is a drill: navigation must use the user's query, not the prototype preset.
+    for (const name of ["Inspection camera", "Cable & socket kit"]) {
+      records.push(
+        await json<EntityOut>(
+          page.request,
+          "POST",
+          "/entities",
+          {
+            name,
+            description: "Return navigation fixture",
+            quantity: 1,
+            tagIds: [],
+            entityTypeId: types.find(type => !type.isLocation)!.id,
+          },
+          group!.id
+        )
+      );
+    }
+    await page.context().addCookies([
+      {
+        name: "sidebar:state",
+        value: String(state === "expanded"),
+        url: new URL(test.info().project.use.baseURL ?? "http://localhost:3000").origin,
+      },
+    ]);
+    await page.addInitScript(collectionId => {
+      localStorage.setItem(
+        "homebox/preferences/location",
+        JSON.stringify({
+          collectionId,
+          language: "en",
+          itemDisplayView: "table",
+        })
+      );
+    }, group!.id);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto("/home");
+    const sidebar = page.locator(`[data-state='${state}'][data-variant='sidebar']`);
+    const menu = page.locator("[data-sidebar=menu]");
+    const heading = page.locator("main").getByRole("heading", { level: 1 });
+    const headerInput = page.locator("input[type=search]");
+    const searchInput = page.getByRole("textbox", { name: "Search", exact: true });
+    for (const record of records) {
+      for (const control of ["Home", "HomeBox"] as const) {
+        await page.locator("main").getByRole("link", { name: record.name, exact: true }).first().click();
+        await expect(page).toHaveURL(url => url.pathname === `/item/${record.id}`);
+        await expect(heading).toHaveText(record.name);
+        await expect(sidebar).toBeVisible();
+        const link =
+          control === "Home"
+            ? menu.getByRole("link", { name: "Home", exact: true })
+            : page.getByRole("link", { name: "HomeBox", exact: true });
+        await expect(link).toHaveAttribute("href", "/home");
+        await link.click();
+        await expect(page).toHaveURL(url => url.pathname === "/home" && !url.search);
+        await expect(page.locator("main")).toContainText("Recently Added");
+      }
+      await page.locator("main").getByRole("link", { name: record.name, exact: true }).first().click();
+      const searchLink = menu.getByRole("link", { name: "Search", exact: true });
+      await expect(searchLink).toHaveAttribute("href", "/items");
+      await searchLink.click();
+      await expect(page).toHaveURL(url => url.pathname === "/items" && !url.searchParams.has("q"));
+      await expect(searchInput).toHaveValue("");
+      // Open via actual results, then preserve native Back including the query string.
+      await headerInput.fill(record.name);
+      await headerInput.press("Enter");
+      await expect(page).toHaveURL(url => url.pathname === "/items" && url.searchParams.get("q") === record.name);
+      await page.locator("tbody").getByRole("link", { name: record.name, exact: true }).click();
+      await expect(heading).toHaveText(record.name);
+      await page.goBack();
+      await expect(page).toHaveURL(url => url.pathname === "/items" && url.searchParams.get("q") === record.name);
+      await expect(searchInput).toHaveValue(record.name);
+      await page.locator("tbody").getByRole("link", { name: record.name, exact: true }).click();
+      await expect(heading).toHaveText(record.name);
+      const other = records.find(item => item.id !== record.id)!;
+      // Both Enter and the search button are supported submission paths from details.
+      await headerInput.fill(other.name);
+      if (record === records[0]) await headerInput.press("Enter");
+      else await page.getByRole("button", { name: "Search", exact: true }).first().click();
+      await expect(page).toHaveURL(url => url.pathname === "/items" && url.searchParams.get("q") === other.name);
+      await expect(searchInput).toHaveValue(other.name);
+      await expect(headerInput).toHaveValue("");
+      await expect(page.locator("tbody").getByRole("link", { name: other.name, exact: true })).toBeVisible();
+      await expect(sidebar).toBeVisible();
+      // Sidebar Search intentionally starts an unqueried search, even after searching earlier.
+      await page.locator("tbody").getByRole("link", { name: other.name, exact: true }).click();
+      await expect(heading).toHaveText(other.name);
+      await searchLink.click();
+      await expect(page).toHaveURL(url => url.pathname === "/items" && !url.searchParams.has("q"));
+      await expect(searchInput).toHaveValue("");
+      await page.getByRole("link", { name: "HomeBox", exact: true }).click();
+      await expect(page).toHaveURL(url => url.pathname === "/home");
+    }
+  });
+}
