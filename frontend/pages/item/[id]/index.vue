@@ -71,15 +71,18 @@
     return route.fullPath.split("/").at(-1) !== itemId.value;
   });
 
-  const { data: item, refresh } = useAsyncData(itemId.value, async () => {
-    const { data, error } = await api.items.get(itemId.value);
-    if (error) {
-      toast.error(t("items.toast.failed_load_item"));
-      navigateTo("/home");
-      return;
+  const { data: item, refresh } = useAsyncData(
+    () => itemId.value,
+    async () => {
+      const { data, error } = await api.items.get(itemId.value);
+      if (error) {
+        toast.error(t("items.toast.failed_load_item"));
+        navigateTo("/home");
+        return;
+      }
+      return data;
     }
-    return data;
-  });
+  );
   onMounted(() => {
     refresh();
   });
@@ -376,10 +379,6 @@
   const purchaseDetails = computed<Details>(() => {
     const v: Details = [
       {
-        name: "items.purchased_from",
-        text: item.value?.purchaseFrom || "",
-      },
-      {
         name: "items.purchase_price",
         text: String(item.value?.purchasePrice) || "",
         type: "currency",
@@ -389,6 +388,10 @@
         text: item.value?.purchaseDate || "",
         type: "date",
         date: true,
+      },
+      {
+        name: "items.purchased_from",
+        text: item.value?.purchaseFrom || "",
       },
     ];
 
@@ -466,14 +469,14 @@
         to: `/item/${itemId.value}`,
       },
       {
-        id: "log",
-        name: "global.maintenance",
-        to: `/item/${itemId.value}/maintenance`,
-      },
-      {
         id: "edit",
         name: "global.edit",
         to: `/item/${itemId.value}/edit`,
+      },
+      {
+        id: "log",
+        name: "global.maintenance",
+        to: `/item/${itemId.value}/maintenance`,
       },
     ];
   });
@@ -613,7 +616,11 @@
       return;
     }
 
-    toast.success(t("components.template.toast.saved_as_template", { name: templateData.name }));
+    toast.success(
+      t("components.template.toast.saved_as_template", {
+        name: templateData.name,
+      })
+    );
     navigateTo(`/template/${data.id}`);
   }
 
@@ -653,15 +660,15 @@
     </Dialog>
 
     <section>
-      <Card class="p-3">
-        <header :class="{ 'mb-2': item.description }">
-          <div class="flex flex-wrap items-end gap-2">
+      <Card class="overflow-hidden">
+        <header class="p-3">
+          <div class="flex flex-wrap items-start gap-2">
             <div
               class="mb-auto flex size-12 items-center justify-center rounded-full bg-secondary text-secondary-foreground"
             >
               <MdiPackageVariant class="size-7" />
             </div>
-            <div>
+            <div class="min-w-0 flex-1 basis-48 break-words">
               <Breadcrumb v-if="fullpath && fullpath.length > 0">
                 <BreadcrumbList>
                   <BreadcrumbItem v-for="(part, idx) in fullpath" :key="part.id">
@@ -699,7 +706,7 @@
                 </div>
               </div>
             </div>
-            <div class="ml-auto mt-2 flex flex-wrap items-center justify-between gap-2">
+            <div class="ml-auto flex flex-wrap items-center gap-2">
               <LabelMaker
                 v-if="typeof item.assetId === 'string' && item.assetId != ''"
                 :id="item.assetId"
@@ -738,7 +745,7 @@
           </div>
         </header>
         <Separator v-if="item.description" />
-        <div v-if="item.description" class="prose max-w-full p-1">
+        <div v-if="item.description" class="prose max-w-full break-words px-3 py-2">
           <Markdown class="text-base" :source="item.description" />
         </div>
       </Card>
@@ -784,12 +791,24 @@
               <div class="flex items-center">
                 {{ detail.text }}
                 <span
-                  class="my-0 ml-4 inline-flex gap-2 opacity-10 transition-opacity duration-75 group-hover:opacity-100"
+                  class="my-0 ml-4 inline-flex gap-2 opacity-100 transition-opacity duration-75 sm:opacity-10 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100"
                 >
-                  <Button size="icon" variant="outline" class="size-8 rounded-full" @click="adjustQuantity(-1)">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    class="size-8 rounded-full"
+                    :aria-label="$t('items.quantity') + ' -1'"
+                    @click="adjustQuantity(-1)"
+                  >
                     <MdiMinus class="size-3" />
                   </Button>
-                  <Button size="icon" variant="outline" class="size-8 rounded-full" @click="adjustQuantity(1)">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    class="size-8 rounded-full"
+                    :aria-label="$t('items.quantity') + ' +1'"
+                    @click="adjustQuantity(1)"
+                  >
                     <MdiPlus class="size-3" />
                   </Button>
                 </span>
@@ -842,7 +861,9 @@
               </template>
             </DetailsSection>
             <div v-else>
-              <p class="px-6 pb-4 text-foreground/70">{{ $t("items.no_attachments") }}</p>
+              <p class="px-6 pb-4 text-foreground/70">
+                {{ $t("items.no_attachments") }}
+              </p>
             </div>
           </BaseCard>
 
