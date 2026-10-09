@@ -85,7 +85,7 @@ async function setup(page: Page, saved = false) {
   );
   const updated = await json<EntityOut>(page.request, "GET", `/entities/${drill.id}`, undefined, group!.id);
   for (let i = 0; i < 12; i++) await create(`Spare drill ${String(i).padStart(2, "0")}`, false);
-  await create("Hand saw", false);
+  const saw = await create("Hand saw", false);
   const archived = await create("Archived drill", false);
   await json(
     page.request,
@@ -156,7 +156,7 @@ async function setup(page: Page, saved = false) {
   await page.goto("/items?q=drill");
   await expect(page.locator("tbody")).toContainText("Cordless drill");
   await expect(page.locator("main button .animate-spin")).toHaveCount(0);
-  return { drill: updated, group: group!, other, garage, tag };
+  return { drill: updated, saw, group: group!, other, garage, tag };
 }
 
 const rows = (page: Page) => page.locator("tbody tr");
@@ -302,4 +302,95 @@ test("saved columns take precedence and loading/errors are retained", async ({ p
   release();
   await expect(page.locator("[data-sonner-toast]")).toContainText("Failed to search items");
   await expect(page.locator("tbody")).not.toContainText("Cordless drill");
+});
+
+async function headerQuery(page: Page, text: string, submit: "enter" | "button") {
+  const input = page.getByRole("searchbox");
+  await input.fill(text);
+  if (submit === "enter") await input.press("Enter");
+  else await page.getByRole("button", { name: "Search", exact: true }).first().click();
+  await expect(page).toHaveURL(url => url.pathname === "/items" && url.searchParams.get("q") === text);
+  await expect(queryInput(page)).toHaveValue(text);
+  await expect(input).toHaveValue("");
+}
+
+test("header queries on search and result names navigate to actual matching IDs", async ({ page }) => {
+  const { drill, saw } = await setup(page);
+  // Stay on the mounted search page: both header submit paths must refresh its query and results.
+  await headerQuery(page, saw.name, "enter");
+  await expect(rows(page)).toHaveCount(1);
+  await expect(rows(page)).not.toContainText([drill.name]);
+  const sawLink = rows(page).getByRole("link", { name: saw.name, exact: true });
+  await expect(sawLink).toHaveAttribute("href", `/item/${saw.id}`);
+  await sawLink.focus();
+  await sawLink.press("Enter");
+  await expect(page).toHaveURL(url => url.pathname === `/item/${saw.id}`);
+  await expect(page.locator("main")).toContainText(saw.name);
+  await page.goBack();
+  await expect(queryInput(page)).toHaveValue(saw.name);
+
+  await headerQuery(page, drill.name, "button");
+  await expect(rows(page)).toHaveCount(1);
+  await expect(rows(page)).not.toContainText([saw.name]);
+  const drillLink = rows(page).getByRole("link", {
+    name: drill.name,
+    exact: true,
+  });
+  await expect(drillLink).toHaveAttribute("href", `/item/${drill.id}`);
+  await drillLink.click();
+  await expect(page).toHaveURL(url => url.pathname === `/item/${drill.id}`);
+  await expect(page.locator("main")).toContainText(drill.name);
+});
+
+for (const state of ["collapsed", "expanded"] as const) {
+  test(`Home and HomeBox return from search with ${state} sidebar`, async ({ page }) => {
+    await setup(page);
+    if (state === "expanded") await page.locator("[data-sidebar=trigger]").click();
+    const sidebar = page.locator(`[data-state='${state}'][data-variant='sidebar']`);
+    await expect(sidebar).toBeVisible();
+    for (const control of ["Home", "HomeBox"] as const) {
+      const link =
+        control === "Home"
+          ? page.locator("[data-sidebar=menu]").getByRole("link", { name: "Home", exact: true })
+          : page.getByRole("link", { name: "HomeBox", exact: true });
+      await expect(link).toHaveAttribute("href", "/home");
+      // Leave a debounce pending as the user returns to Home.
+      await queryInput(page).fill("pending navigation query");
+      await link.click();
+      await expect(page).toHaveURL(url => url.pathname === "/home" && !url.search);
+      await expect(page.locator("main")).toContainText("Recently Added");
+      await expect(sidebar).toBeVisible();
+      await page.locator("[data-sidebar=menu]").getByRole("link", { name: "Search", exact: true }).click();
+      await expect(page).toHaveURL(url => url.pathname === "/items");
+      await expect(sidebar).toBeVisible();
+      await query(page, "drill");
+      await expect(rows(page)).toContainText(["Cordless drill"]);
+    }
+  });
+}
+
+test("selection, action menu and location link do not open item details", async ({ page }) => {
+  const { drill, garage } = await setup(page);
+  const row = rows(page).filter({ hasText: drill.name });
+  await row.getByRole("checkbox").click();
+  await expect(row).toHaveAttribute("data-state", "selected");
+  await expect(page).toHaveURL(url => url.pathname === "/items");
+  await row.getByRole("checkbox").click();
+  await expect(row).not.toHaveAttribute("data-state", "selected");
+
+  await row.getByRole("button", { name: "Open menu", exact: true }).click();
+  await expect(page.getByRole("menu")).toBeVisible();
+  await expect(page.getByRole("menuitem", { name: "View item", exact: true })).toHaveAttribute(
+    "href",
+    `/item/${drill.id}`
+  );
+  await expect(page).toHaveURL(url => url.pathname === "/items");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("menu")).toHaveCount(0);
+
+  const location = row.getByRole("link", { name: garage.name, exact: true });
+  await expect(location).toHaveAttribute("href", `/location/${garage.id}`);
+  await location.click();
+  await expect(page).toHaveURL(url => url.pathname === `/location/${garage.id}`);
+  await expect(page.locator("main")).toContainText(garage.name);
 });
