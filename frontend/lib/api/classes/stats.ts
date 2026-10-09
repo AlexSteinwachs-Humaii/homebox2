@@ -12,9 +12,29 @@ function YYYY_MM_DD(date?: Date): string {
   return `${year}-${month}-${day}`;
 }
 export class StatsAPI extends BaseAPI {
+  /** Download the fixed-column dashboard summaries, not inventory records.
+   * Dates have the same semantics as totalPriceOverTime; other summaries are collection-wide.
+   */
+  async exportCSV(start?: Date, end?: Date): Promise<Blob> {
+    const result = await this.http.get<unknown>({
+      url: route("/groups/statistics/export", {
+        start: YYYY_MM_DD(start),
+        end: YYYY_MM_DD(end),
+      }),
+    });
+    const contentType = result.response.headers.get("Content-Type")?.split(";")[0]?.trim().toLowerCase();
+    if (result.error || contentType !== "text/csv") {
+      throw new Error("Dashboard CSV export failed");
+    }
+    return result.response.blob();
+  }
+
   totalPriceOverTime(start?: Date, end?: Date) {
     return this.http.get<ValueOverTime>({
-      url: route("/groups/statistics/purchase-price", { start: YYYY_MM_DD(start), end: YYYY_MM_DD(end) }),
+      url: route("/groups/statistics/purchase-price", {
+        start: YYYY_MM_DD(start),
+        end: YYYY_MM_DD(end),
+      }),
     });
   }
 

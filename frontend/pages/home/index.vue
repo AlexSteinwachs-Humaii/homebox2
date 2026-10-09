@@ -2,6 +2,8 @@
   import { useI18n } from "vue-i18n";
   import { statCardData } from "./statistics";
   import { itemsTable } from "./table";
+  import { useDashboardExport } from "~/composables/use-dashboard-export";
+  import { Button } from "~/components/ui/button";
   import { useTagStore } from "~/stores/tags";
   import { useLocationStore } from "~~/stores/locations";
   import BaseContainer from "@/components/Base/Container.vue";
@@ -33,13 +35,25 @@
 
   const itemTable = itemsTable(api);
   const stats = statCardData(api);
+  const { exporting, failed: exportFailed, exportCSV } = useDashboardExport(() => useUserApi().stats);
 </script>
 
 <template>
   <div>
     <BaseContainer class="flex flex-col gap-4">
       <section>
-        <Subtitle> {{ $t("home.quick_statistics") }} </Subtitle>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <Subtitle> {{ $t("home.quick_statistics") }} </Subtitle>
+          <Button type="button" variant="outline" :disabled="exporting" :aria-busy="exporting" @click="exportCSV()">
+            {{ exporting ? $t("home.exporting_csv") : $t("home.export_csv") }}
+          </Button>
+        </div>
+        <p role="status" aria-live="polite" class="text-sm">
+          {{ exporting ? $t("home.exporting_csv") : "" }}
+        </p>
+        <p v-if="exportFailed" role="alert" class="text-sm text-destructive">
+          {{ $t("home.export_csv_error") }}
+        </p>
         <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-6">
           <StatCard v-for="(stat, i) in stats" :key="i" :title="stat.label" :value="stat.value" :type="stat.type" />
         </div>
@@ -48,7 +62,9 @@
       <section>
         <Subtitle> {{ $t("home.recently_added") }} </Subtitle>
 
-        <p v-if="itemTable.items.length === 0" class="ml-2 text-sm">{{ $t("items.no_results") }}</p>
+        <p v-if="itemTable.items.length === 0" class="ml-2 text-sm">
+          {{ $t("items.no_results") }}
+        </p>
         <BaseCard v-else-if="breakpoints.lg">
           <Table :items="itemTable.items" />
         </BaseCard>
@@ -59,7 +75,9 @@
 
       <section>
         <Subtitle> {{ $t("home.storage_locations") }} </Subtitle>
-        <p v-if="locations.length === 0" class="ml-2 text-sm">{{ $t("locations.no_results") }}</p>
+        <p v-if="locations.length === 0" class="ml-2 text-sm">
+          {{ $t("locations.no_results") }}
+        </p>
         <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           <LocationCard v-for="location in locations" :key="location.id" :location="location" />
         </div>
@@ -67,7 +85,9 @@
 
       <section>
         <Subtitle> {{ $t("home.tags") }} </Subtitle>
-        <p v-if="tags.length === 0" class="ml-2 text-sm">{{ $t("tags.no_results") }}</p>
+        <p v-if="tags.length === 0" class="ml-2 text-sm">
+          {{ $t("tags.no_results") }}
+        </p>
         <div v-else class="flex flex-wrap gap-4">
           <TagChip v-for="tag in tags" :key="tag.id" size="lg" :tag="tag" class="shadow-md" />
         </div>

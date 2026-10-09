@@ -498,6 +498,9 @@
     },
     "home": {
         "quick_statistics": "Quick Statistics",
+        "export_csv": "Export CSV",
+        "exporting_csv": "Exporting CSV…",
+        "export_csv_error": "Could not export dashboard summaries. Please try again.",
         "recently_added": "Recently Added",
         "storage_locations": "Storage Locations",
         "tags": "Tags",
