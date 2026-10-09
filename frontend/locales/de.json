@@ -449,6 +449,9 @@
     },
     "home": {
         "quick_statistics": "Schnelle Statistiken",
+        "export_csv": "CSV exportieren",
+        "exporting_csv": "CSV wird exportiert…",
+        "export_csv_error": "Die Dashboard-Zusammenfassungen konnten nicht exportiert werden. Bitte versuche es erneut.",
         "recently_added": "Kürzlich hinzugefügt",
         "storage_locations": "Lagerorte",
         "tags": "Tags",

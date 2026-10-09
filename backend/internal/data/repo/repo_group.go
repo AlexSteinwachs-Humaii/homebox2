@@ -131,6 +131,7 @@ func (r *GroupRepository) StatsLocationsByPurchasePrice(ctx context.Context, gid
 		FROM entities parent
 		JOIN entity_types et ON et.id = parent.entity_type_entities
 		LEFT JOIN entities child ON child.entity_children = parent.id
+			AND child.group_entities = parent.group_entities
 			AND child.entity_type_entities IN (SELECT id FROM entity_types WHERE is_location = false)
 		WHERE parent.group_entities = $1 AND et.is_location = true
 		GROUP BY parent.id, parent.name
@@ -169,6 +170,7 @@ func (r *GroupRepository) StatsTagsByPurchasePrice(ctx context.Context, gid uuid
 
 			sq.Join(jt).On(sq.C(tag.FieldID), jt.C(tag.EntitiesPrimaryKey[0]))
 			sq.Join(entityTable).On(jt.C(tag.EntitiesPrimaryKey[1]), entityTable.C(entity.FieldID))
+			sq.Where(sql.EQ(entityTable.C(entity.GroupColumn), gid))
 
 			return sql.As(sql.Sum(entityTable.C(entity.FieldPurchasePrice)), "total")
 		}).

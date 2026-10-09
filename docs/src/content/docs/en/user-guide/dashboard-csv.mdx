@@ -1,0 +1,48 @@
+---
+title: Dashboard summary CSV
+description: The fixed CSV contract for exporting collection reporting summaries.
+---
+
+The reporting API provides `GET /api/v1/groups/statistics/export` as a synchronous CSV download named `homebox-dashboard-summary.csv`. It uses the same session or bearer authentication and collection-membership checks as the JSON statistics endpoints. Select a collection with the usual `X-Tenant` header (or `tenant` query parameter); without either, your default collection is used. No inventory is modified and no export job is created.
+
+## Scope and filters
+
+The export reuses the existing statistics queries: collection totals, purchase-price totals by location and tag, and purchase-price values over time. It does **not** contain inventory entity records, item names, serial numbers, or item IDs.
+
+The current dashboard's quick statistics and the location/tag statistics API are collection-wide: they do not have item-search, tag, location, or pagination filters. This CSV does not introduce new filter semantics. Optional `start` and `end` parameters (`YYYY-MM-DD`, parsed at UTC midnight) apply **only** to the purchase-price time series, just as they do in `/groups/statistics/purchase-price`. Defaults are the current instant minus one calendar month and the current instant, respectively. Pass explicit dates to compare a date-filtered report and its export. Invalid date syntax returns a request error, not a CSV download.
+
+The existing time-series query uses creation times, not purchase dates. Its start/end values sum prices strictly before the respective boundary; entries include creation times at or between both boundaries. All matching entries are combined into UTC-day totals for the CSV, so individual inventory rows are never exported. Dates do not filter the other summary rows. Pagination and visible-row limits never truncate breakdowns.
+
+Existing aggregation semantics are preserved: `totalItemPrice` includes quantity and excludes archived items and locations; organizer breakdowns sum prices using the existing organizer queries (they do not apply quantity or the time-series archive filter). Tag totals overlap when items have several tags, so adding breakdown totals is not equivalent to the collection total. Location breakdowns cover direct item children and omit zero-total locations, as the JSON API does. All joined items are restricted to the selected collection.
+
+## Fixed columns (version 1)
+
+The header and column order are always:
+
+```csv
+metric,breakdown,breakdown_id,breakdown_label,value,unit,date
+```
+
+| Column | Meaning |
+| --- | --- |
+| `metric` | Stable JSON-style metric key (listed below). |
+| `breakdown` | Empty for scalar summaries; `location`, `tag`, or `day` for breakdown rows. |
+| `breakdown_id` | Location or tag UUID, not an inventory item ID; otherwise empty. |
+| `breakdown_label` | Original organizer name (with spreadsheet-safety escaping when needed); otherwise empty. |
+| `value` | Unformatted numeric value, with a decimal point and no thousands separators. |
+| `unit` | `users`, `items`, `locations`, `tags`, or the selected collection's uppercase currency code. Unknown currency remains empty. |
+| `date` | `YYYY-MM-DD` for time-series boundary or UTC-day rows; otherwise empty. |
+
+Row order is fixed:
+
+1. `totalUsers`, `totalItems`, `totalLocations`, `totalTags`, `totalItemPrice`, `totalWithWarranty`.
+2. `purchasePrice` location breakdowns, sorted by UUID.
+3. `purchasePrice` tag breakdowns, sorted by UUID.
+4. `valueAtStart` and `valueAtEnd`, with their boundary dates.
+5. `purchasePrice` day breakdowns in ascending date order.
+
+An empty collection or date range still produces a header and the scalar values actually returned by the dashboard API, including its zero-valued totals. No missing breakdown, date, label, or unit is fabricated as zero; absent breakdowns produce no rows. The API itself defines empty purchase-price totals as zero.
+
+## Encoding and spreadsheet safety
+
+The file is UTF-8 CSV (without a BOM), with one header row. Standard CSV quoting preserves commas, double quotes, newlines, and non-ASCII names. Text fields starting with `=`, `+`, `-`, or `@` (including after leading whitespace, control characters, or a BOM) are prefixed with an apostrophe. Leading tab, carriage return, or newline is also neutralized. This prevents those cells from being evaluated as formulas by spreadsheet software; the apostrophe may appear in non-spreadsheet CSV readers. Numeric values, including negative numbers, remain numeric. Responses use `Cache-Control: no-store`.
