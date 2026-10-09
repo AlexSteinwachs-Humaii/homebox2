@@ -36,6 +36,43 @@
     --radius: 0.5rem;
 }
 
+  /* Claude is a light theme. Keep the existing system sans-serif typography,
+   * font sizes and spacing: no inherited font overrides in picker previews.
+   * All colors use the shared HSL token contract, including portaled surfaces.
+   */
+  .theme-claude {
+    --background: 40 33% 96%;
+    --background-accent: 36 20% 89%;
+    --foreground: 30 10% 16%;
+    --primary: 16 43% 39%;
+    --primary-foreground: 40 40% 98%;
+    --secondary: 30 10% 28%;
+    --secondary-foreground: 40 40% 98%;
+    --accent: 24 28% 88%;
+    --accent-foreground: 16 43% 30%;
+    --muted: 36 20% 91%;
+    --muted-foreground: 30 8% 38%;
+    --card: 40 40% 98%;
+    --card-foreground: 30 10% 16%;
+    --popover: 40 40% 98%;
+    --popover-foreground: 30 10% 16%;
+    --destructive: 0 58% 40%;
+    --destructive-foreground: 40 40% 98%;
+    --input: 30 10% 50%;
+    --border: 30 10% 50%;
+    --ring: 16 43% 39%;
+    --sidebar-background: 36 20% 91%;
+    --sidebar-foreground: 30 10% 16%;
+    --sidebar-primary: 16 43% 39%;
+    --sidebar-primary-foreground: 40 40% 98%;
+    --sidebar-accent: 24 28% 88%;
+    --sidebar-accent-foreground: 16 43% 30%;
+    --sidebar-border: 30 10% 50%;
+    --sidebar-ring: 16 43% 39%;
+
+    --radius: 0.5rem;
+  }
+
   /*
   * The below themes are based on the daisyUI themes which are licensed under the MIT License.
   * Copyright (c) 2020 Pouya Saadeghi

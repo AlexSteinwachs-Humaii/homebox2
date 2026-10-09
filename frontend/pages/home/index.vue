@@ -50,10 +50,10 @@
 
         <p v-if="itemTable.items.length === 0" class="ml-2 text-sm">{{ $t("items.no_results") }}</p>
         <BaseCard v-else-if="breakpoints.lg">
-          <Table :items="itemTable.items" />
+          <Table :items="itemTable.items" :visible-columns="['assetId']" />
         </BaseCard>
         <div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <ItemCard v-for="item in itemTable.items" :key="item.id" :item="item" />
+          <ItemCard v-for="item in itemTable.items" :key="item.id" :item="item" show-asset-id />
         </div>
       </section>
 
