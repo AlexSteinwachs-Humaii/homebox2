@@ -30,7 +30,7 @@
 
           <CollectionSelector />
 
-          <DropdownMenu>
+          <DropdownMenu :modal="false">
             <DropdownMenuTrigger as-child>
               <SidebarMenuButton
                 class="flex justify-center bg-primary text-primary-foreground drop-shadow-md hover:bg-primary/90 active:bg-primary/90 active:text-primary-foreground group-data-[collapsible=icon]:justify-start"
@@ -43,7 +43,11 @@
                 </span>
               </SidebarMenuButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent class="z-40 min-w-[var(--reka-dropdown-menu-trigger-width)]">
+            <DropdownMenuContent
+              side="bottom"
+              align="start"
+              class="z-40 min-w-[var(--reka-dropdown-menu-trigger-width)]"
+            >
               <DropdownMenuItem
                 v-for="btn in dropdown"
                 :key="btn.id"
@@ -53,10 +57,14 @@
                     if (btn.dialogId === DialogID.CreateEntity) {
                       if (btn.id == 0)
                         // create item
-                        openDialog(btn.dialogId, { params: { baseType: 'item' } });
+                        openDialog(btn.dialogId, {
+                          params: { baseType: 'item' },
+                        });
                       else if (btn.id == 1)
                         // create location
-                        openDialog(btn.dialogId, { params: { baseType: 'location' } });
+                        openDialog(btn.dialogId, {
+                          params: { baseType: 'location' },
+                        });
                     } else {
                       openDialog(btn.dialogId as NoParamDialogIDs);
                     }
@@ -64,11 +72,7 @@
                 "
               >
                 {{ btn.name.value }}
-                <Shortcut
-                  v-if="btn.shortcut"
-                  class="invisible ml-auto group-hover:visible"
-                  :keys="btn.shortcut.replace('Shift', '⇧').split('+')"
-                />
+                <Shortcut v-if="btn.shortcut" class="ml-auto" :keys="btn.shortcut.replace('Shift', '⇧').split('+')" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
