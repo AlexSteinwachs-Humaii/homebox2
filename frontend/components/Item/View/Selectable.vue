@@ -19,6 +19,7 @@
     locationFlatTree?: FlatTreeItem[];
     pagination?: Pagination;
     disableSort?: boolean;
+    defaultColumnPreset?: string[];
   }>();
 
   const emit = defineEmits<{
@@ -107,6 +108,7 @@
       :data="items"
       :location-flat-tree="locationFlatTree"
       :external-pagination="pagination"
+      :default-column-preset="defaultColumnPreset"
       @refresh="$emit('refresh')"
     />
   </section>

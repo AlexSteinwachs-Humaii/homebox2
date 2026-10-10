@@ -26,11 +26,16 @@
   import DataTableControls from "./data-table-controls.vue";
   import type { Pagination } from "../pagination";
   import Switch from "~/components/ui/switch/Switch.vue";
+  import { initialTableHeaders } from "./headers";
 
   const props = defineProps<{
     columns: ColumnDef<EntitySummary, TValue>[];
     data: EntitySummary[];
     disableControls?: boolean;
+    /** Fixed columns for embedded tables, independent of saved inventory-search preferences. */
+    columnPreset?: string[];
+    /** Initial inventory columns only; saved visibility/order always take precedence. */
+    defaultColumnPreset?: string[];
     view: "table" | "card";
     locationFlatTree?: FlatTreeItem[];
     externalPagination?: Pagination;
@@ -47,13 +52,13 @@
 
   const tableHeaders = computed(
     () =>
-      tableHeadersData ??
-      props.columns
-        .filter(c => c.enableHiding !== false)
-        .map(c => ({
-          value: c.id!,
-          enabled: defaultVisible.includes(c.id ?? ""),
-        }))
+      props.columnPreset?.map(value => ({ value, enabled: true })) ??
+      initialTableHeaders(
+        props.columns.filter(c => c.enableHiding !== false).map(c => c.id!),
+        tableHeadersData,
+        defaultVisible,
+        props.defaultColumnPreset
+      )
   );
 
   const sorting = ref<SortingState>([]);
@@ -124,8 +129,10 @@
   });
 
   const persistHeaders = () => {
+    if (props.columnPreset) return;
+
     const headers = table
-      .getAllColumns()
+      .getAllLeafColumns()
       .filter(column => column.getCanHide())
       .map(h => ({
         value: h.id as keyof EntitySummary,
@@ -172,7 +179,7 @@
 
 <template>
   <div>
-    <Dialog :dialog-id="DialogID.ItemTableSettings">
+    <Dialog v-if="!props.disableControls" :dialog-id="DialogID.ItemTableSettings">
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{{ $t("components.item.view.table.table_settings") }}</DialogTitle>
